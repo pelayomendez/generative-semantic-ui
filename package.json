@@ -9,6 +9,9 @@
   ],
   "scripts": {
     "build:core": "npm run build --workspace=@generative-semantic-ui/core",
+    "build:html": "npm run build --workspace=@generative-semantic-ui/html",
+    "build:shadcn": "npm run build --workspace=@generative-semantic-ui/shadcn",
+    "build:packages": "npm run build:core && npm run build:html && npm run build:shadcn",
     "dev:demo": "npm run dev --workspace=ui-jsx-demo",
     "build:demo": "npm run build --workspace=ui-jsx-demo",
     "generate:demo": "npm run generate --workspace=ui-jsx-demo"

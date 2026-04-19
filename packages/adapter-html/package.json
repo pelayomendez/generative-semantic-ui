@@ -1,0 +1,51 @@
+{
+  "name": "@generative-semantic-ui/html",
+  "version": "0.1.0",
+  "description": "Zero-dependency plain-HTML adapter for @generative-semantic-ui/core. Inline styles, no Tailwind, no setup.",
+  "keywords": [
+    "generative-semantic-ui",
+    "adapter",
+    "html",
+    "react"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@generative-semantic-ui/core": "*",
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "@generative-semantic-ui/core": "*",
+    "@types/react": "^19.2.7",
+    "react": "^19.2.3",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pelayomendez/generative-semantic-ui.git",
+    "directory": "packages/adapter-html"
+  },
+  "homepage": "https://github.com/pelayomendez/generative-semantic-ui#readme",
+  "bugs": "https://github.com/pelayomendez/generative-semantic-ui/issues",
+  "author": "Pelayo Méndez (https://github.com/pelayomendez)"
+}

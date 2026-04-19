@@ -13,19 +13,39 @@ A closed JSX vocabulary for LLM-generated UI, compiled at runtime (or build-time
 </Stack>
 ```
 
-The agent emits **that**. You adapt it to shadcn / MUI / Chakra / plain HTML via a ~60 line registry. Swap libraries by rewriting a single file.
+The agent emits **that**. You adapt it to shadcn / plain HTML / anything by installing an adapter package — or write your own in ~50 LOC.
 
 ## Packages
 
-- [`@generative-semantic-ui/core`](packages/core) — `compile()`, action dispatcher, prompt rules.
+| Package | What it is |
+|---|---|
+| [`@generative-semantic-ui/core`](packages/core) | `compile()`, actions, prompt rules. The brain. |
+| [`@generative-semantic-ui/html`](packages/adapter-html) | Zero-dep adapter. Inline styles. `npm i` and go. |
+| [`@generative-semantic-ui/shadcn`](packages/adapter-shadcn) | shadcn-style adapter with bundled Radix primitives. Needs Tailwind. |
+
+Install the batteries-included combo:
+
+```bash
+npm install @generative-semantic-ui/core @generative-semantic-ui/shadcn
+```
+
+Then:
+
+```tsx
+import { compile } from "@generative-semantic-ui/core";
+import { registry } from "@generative-semantic-ui/shadcn";
+import "@generative-semantic-ui/shadcn/styles.css";
+
+const element = compile(jsxFromAgent, registry);
+```
 
 ## Demo
 
-Live demo with 4 fixtures and a `runtime` vs `build-time generated` toggle:
+Live demo with 4 fixtures, `runtime`/`generated` toggle, and a `shadcn`/`html` adapter switch:
 
 ```bash
 npm install
-npm run build:core
+npm run build:packages
 npm run dev:demo
 ```
 

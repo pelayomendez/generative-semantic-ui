@@ -1,7 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ["class"],
-  content: ["./src/**/*.{ts,tsx,js,jsx,html}"],
+  content: [
+    "./src/**/*.{ts,tsx,js,jsx,html}",
+    "../packages/adapter-shadcn/dist/**/*.{js,cjs}",
+  ],
   theme: {
     container: {
       center: true,

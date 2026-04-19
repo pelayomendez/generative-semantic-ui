@@ -1,0 +1,59 @@
+{
+  "name": "@generative-semantic-ui/shadcn",
+  "version": "0.1.0",
+  "description": "shadcn/ui-style adapter for @generative-semantic-ui/core. Self-contained primitives built on Radix + class-variance-authority.",
+  "keywords": [
+    "generative-semantic-ui",
+    "adapter",
+    "shadcn",
+    "tailwind",
+    "react"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup && cp src/styles.css dist/styles.css",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@generative-semantic-ui/core": "*",
+    "react": ">=18"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.2.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.5.0"
+  },
+  "devDependencies": {
+    "@generative-semantic-ui/core": "*",
+    "@types/react": "^19.2.7",
+    "react": "^19.2.3",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pelayomendez/generative-semantic-ui.git",
+    "directory": "packages/adapter-shadcn"
+  },
+  "homepage": "https://github.com/pelayomendez/generative-semantic-ui#readme",
+  "bugs": "https://github.com/pelayomendez/generative-semantic-ui/issues",
+  "author": "Pelayo Méndez (https://github.com/pelayomendez)"
+}

@@ -1,10 +1,10 @@
 import { useState, type ReactNode, type ComponentType } from "react";
-import { compile, registerAction } from "@generative-semantic-ui/core";
-import { registry } from "./ui-jsx/components";
+import { compile, registerAction, type Registry } from "@generative-semantic-ui/core";
+import { registry as shadcnRegistry } from "@generative-semantic-ui/shadcn";
+import { registry as htmlRegistry } from "@generative-semantic-ui/html";
 import { FIXTURES } from "./fixtures";
 import * as Generated from "./components/generated";
 
-// Register some demo actions
 registerAction("login", () => console.log("login fired"));
 registerAction("save", () => console.log("save fired"));
 registerAction("cancel", () => console.log("cancel fired"));
@@ -14,6 +14,7 @@ registerAction("cancelProfile", () => console.log("cancelProfile fired"));
 
 type FixtureKey = keyof typeof FIXTURES;
 type Mode = "runtime" | "generated";
+type AdapterName = "shadcn" | "html";
 
 const GENERATED: Record<FixtureKey, ComponentType> = {
   login: Generated.Login,
@@ -22,16 +23,22 @@ const GENERATED: Record<FixtureKey, ComponentType> = {
   profile: Generated.Profile,
 };
 
+const ADAPTERS: Record<AdapterName, Registry> = {
+  shadcn: shadcnRegistry,
+  html: htmlRegistry,
+};
+
 const App = () => {
   const [key, setKey] = useState<FixtureKey>("login");
   const [mode, setMode] = useState<Mode>("runtime");
+  const [adapter, setAdapter] = useState<AdapterName>("shadcn");
 
   let rendered: ReactNode = null;
   let error: string | null = null;
 
   if (mode === "runtime") {
     try {
-      rendered = compile(FIXTURES[key], registry);
+      rendered = compile(FIXTURES[key], ADAPTERS[adapter]);
     } catch (e) {
       error = e instanceof Error ? e.message : String(e);
     }
@@ -43,14 +50,13 @@ const App = () => {
   return (
     <div className="p-8 max-w-2xl mx-auto space-y-6">
       <header className="space-y-2">
-        <h1 className="text-3xl font-semibold">ui-jsx demo</h1>
+        <h1 className="text-3xl font-semibold">Generative Semantic UI</h1>
         <p className="text-sm text-muted-foreground">
-          Same fixture, two render paths. Runtime: JSX → <code>compile()</code> → registry → shadcn.
-          Generated: JSX → <code>npm run generate</code> → real <code>.tsx</code> file → shadcn.
+          It's like HTML for AI agents. Same semantic JSX → different adapter → different render.
         </p>
       </header>
 
-      <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center gap-4">
         <div className="flex gap-2">
           {Object.keys(FIXTURES).map((k) => (
             <button
@@ -62,7 +68,7 @@ const App = () => {
             </button>
           ))}
         </div>
-        <div className="ml-auto flex gap-1 rounded-md border p-1">
+        <div className="flex gap-1 rounded-md border p-1">
           {(["runtime", "generated"] as Mode[]).map((m) => (
             <button
               key={m}
@@ -73,6 +79,19 @@ const App = () => {
             </button>
           ))}
         </div>
+        {mode === "runtime" && (
+          <div className="flex gap-1 rounded-md border p-1">
+            {(["shadcn", "html"] as AdapterName[]).map((a) => (
+              <button
+                key={a}
+                onClick={() => setAdapter(a)}
+                className={`px-3 py-1 rounded text-sm ${a === adapter ? "bg-primary text-primary-foreground" : ""}`}
+              >
+                {a}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="border rounded p-6">
@@ -81,10 +100,14 @@ const App = () => {
 
       <details>
         <summary className="cursor-pointer text-sm text-muted-foreground">
-          {mode === "runtime" ? "Source JSX (fed to compile)" : "Generated component source"}
+          {mode === "runtime"
+            ? `Source JSX (compiled with @generative-semantic-ui/${adapter})`
+            : "Generated component source"}
         </summary>
         <pre className="text-xs bg-muted p-3 mt-2 rounded overflow-x-auto">
-          {mode === "runtime" ? FIXTURES[key] : `// See src/components/generated/${key.charAt(0).toUpperCase() + key.slice(1)}.tsx`}
+          {mode === "runtime"
+            ? FIXTURES[key]
+            : `// See src/components/generated/${key.charAt(0).toUpperCase() + key.slice(1)}.tsx`}
         </pre>
       </details>
     </div>
