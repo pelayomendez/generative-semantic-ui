@@ -1,14 +1,16 @@
 {
-  "name": "semantic-html-ai",
+  "name": "generative-semantic-ui",
   "private": true,
   "version": "0.0.0",
+  "description": "It's like HTML for AI agents.",
   "workspaces": [
     "packages/*",
     "ui-jsx-demo"
   ],
   "scripts": {
-    "build:core": "npm run build --workspace=@semantic-html-ai/core",
+    "build:core": "npm run build --workspace=@generative-semantic-ui/core",
     "dev:demo": "npm run dev --workspace=ui-jsx-demo",
-    "build:demo": "npm run build --workspace=ui-jsx-demo"
+    "build:demo": "npm run build --workspace=ui-jsx-demo",
+    "generate:demo": "npm run generate --workspace=ui-jsx-demo"
   }
 }

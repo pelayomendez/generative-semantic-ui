@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
-    "@semantic-html-ai/core": "*",
+    "@generative-semantic-ui/core": "*",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "react": "^19.2.3",

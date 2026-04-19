@@ -1,13 +1,13 @@
-# @semantic-html-ai/core
+# @generative-semantic-ui/core
 
-**Semantic HTML for AI** — a closed JSX vocabulary for LLM-generated UI, compiled to your component library of choice.
+> **It's like HTML for AI agents** — a closed JSX vocabulary for LLM-generated UI, compiled to your component library of choice.
 
-The LLM never learns your UI library. It emits JSX against a small, library-agnostic vocabulary (`Stack`, `Button`, `Input`…) which you adapt to shadcn/ui, MUI, Chakra, plain HTML, anything. Output is 3–5× smaller than raw framework code, the prompt is ~300 tokens (perfect for `cache_control`), and swapping libraries means touching one file.
+Agents don't need to know what shadcn is. They emit JSX against a small, library-agnostic vocabulary (`Stack`, `Button`, `Input`…); you adapt it to shadcn/ui, MUI, Chakra, plain HTML, anything. Output is ~4× smaller than raw framework code, the prompt is ~300 tokens (perfect for `cache_control`), and swapping libraries means touching one file.
 
 ## Install
 
 ```bash
-npm install @semantic-html-ai/core
+npm install @generative-semantic-ui/core
 ```
 
 Peer dependency: React ≥ 18.
@@ -15,7 +15,7 @@ Peer dependency: React ≥ 18.
 ## Quick start
 
 ```tsx
-import { compile, registerAction, DEFAULT_PROMPT_RULES } from "@semantic-html-ai/core";
+import { compile, registerAction, dispatchAction, DEFAULT_PROMPT_RULES } from "@generative-semantic-ui/core";
 
 // 1. Define your registry (the only library-aware part)
 const registry = {
@@ -31,7 +31,7 @@ const registry = {
 // 2. Register action handlers
 registerAction("save", () => saveProfile());
 
-// 3. Ask the LLM for UI
+// 3. Ask the agent for UI
 const jsx = await callClaude({
   system: [{ type: "text", text: DEFAULT_PROMPT_RULES, cache_control: { type: "ephemeral" } }],
   messages: [{ role: "user", content: "a profile form with name, surname, address" }],
@@ -55,7 +55,7 @@ Parses a JSX string and renders it via the registry. Throws on:
 
 ### `registerAction(name, handler)` / `dispatchAction(name, payload?)`
 
-String-named action dispatcher. LLMs emit `onClick="save"`; your registry's `Button` wraps the real click with `dispatchAction("save")`.
+String-named action dispatcher. Agents emit `onClick="save"`; your registry's `Button` wraps the real click with `dispatchAction("save")`.
 
 ### `DEFAULT_PROMPT_RULES`
 
@@ -69,16 +69,16 @@ Add more by extending the registry and writing your own prompt block.
 
 ## Why
 
-LLMs trained on public code emit verbose, library-specific output — imports, className soup, closures. That's expensive per call and hard to cache. A closed semantic DSL gives you:
+Agents trained on public code emit verbose, library-specific output — imports, className soup, closures. That's expensive per call and hard to cache. A closed semantic DSL gives you:
 
-- **3–5× fewer output tokens** per component
+- **~4× fewer output tokens** per component
 - **A system prompt that never changes** → `cache_control` stays warm
 - **Library portability** — swap shadcn ↔ MUI by rewriting one file
 - **Runtime OR build-time** — same DSL, two render paths
 
 ## Safety
 
-`compile()` rejects anything off-vocabulary. Wrap the render in an error boundary; malformed LLM output fails loudly instead of rendering garbage.
+`compile()` rejects anything off-vocabulary. Wrap the render in an error boundary; malformed agent output fails loudly instead of rendering garbage.
 
 ## License
 

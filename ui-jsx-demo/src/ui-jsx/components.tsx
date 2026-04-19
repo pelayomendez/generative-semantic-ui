@@ -1,6 +1,6 @@
 import React from "react";
-import { dispatchAction } from "@semantic-html-ai/core";
-import type { Registry } from "@semantic-html-ai/core";
+import { dispatchAction } from "@generative-semantic-ui/core";
+import type { Registry } from "@generative-semantic-ui/core";
 import { Button as ShadcnButton } from "@/components/ui/button";
 import { Input as ShadcnInput } from "@/components/ui/input";
 

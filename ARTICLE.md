@@ -1,6 +1,6 @@
-# Semantic HTML for AI: stop asking LLMs to write React
+# Generative Semantic UI: it's like HTML for AI agents
 
-> A small DSL between the model and your component library reduces LLM output ~4× and makes the system prompt cacheable. Here's the shape of it, what you gain, and why you probably shouldn't let your LLM emit `className="flex flex-col gap-3"`.
+> A small DSL between the agent and your component library reduces output ~4× and makes the system prompt cacheable. Here's the shape of it, what you gain, and why you probably shouldn't let your agent emit `className="flex flex-col gap-3"`.
 
 ---
 
@@ -98,7 +98,7 @@ Swap shadcn for MUI: rewrite this file, nothing else changes. Same prompt, same 
 
 **4. Action dispatch.** LLMs can't emit real function references, so `onClick` is a string. Handlers live in an action registry; the button wraps the real click with `dispatchAction("save")`.
 
-That's the whole pattern. The [open-source `@semantic-html-ai/core`](packages/core) is <200 LOC.
+That's the whole pattern. The [open-source `@generative-semantic-ui/core`](packages/core) is <200 LOC.
 
 ## Token economics
 
@@ -180,7 +180,7 @@ Both paths use **the same vocabulary, the same prompt, the same LLM output**. Th
 | **Vercel AI SDK `generateObject`** | Schema-driven | Zod schema | JSON → React | Medium | Yes, but JSON not JSX |
 | **Assistant-UI / CopilotKit** | Chat harness + tool calls | No | React components | N/A | Tied to harness |
 | **Bolt / Lovable / Cursor** | Whole-app gen | No | Full project | No | No |
-| **`@semantic-html-ai/core`** | Open DSL + adapters | Yes, open | JSX string | Yes (~4× smaller) | Yes |
+| **`@generative-semantic-ui/core`** | Open DSL + adapters | Yes, open | JSX string | Yes (~4× smaller) | Yes |
 
 The closest prior art is **Thesys C1**, which ships a proprietary generative-UI DSL and a hosted render API. The ui-jsx pattern is the same core idea as open source, JSX instead of JSON, and bring-your-own-model.
 
@@ -205,8 +205,8 @@ The rule of thumb: if the UI is **scaffolding around data** (forms, panels, list
 ## Try it
 
 ```bash
-git clone https://github.com/semantic-html-ai/semantic-html-ai
-cd semantic-html-ai
+git clone https://github.com/pelayomendez/generative-semantic-ui
+cd generative-semantic-ui
 npm install
 npm run build:core
 npm run dev:demo
@@ -217,7 +217,7 @@ Open [http://localhost:3000](http://localhost:3000). Pick a fixture, toggle betw
 Install the core:
 
 ```bash
-npm install @semantic-html-ai/core
+npm install @generative-semantic-ui/core
 ```
 
 See [packages/core/README.md](packages/core/README.md) for API, or [ui-jsx-demo/src/ui-jsx/components.tsx](ui-jsx-demo/src/ui-jsx/components.tsx) for a complete shadcn adapter.

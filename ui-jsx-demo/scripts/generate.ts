@@ -127,7 +127,7 @@ function buildImports(imports: Imports): string {
   const lines: string[] = [];
   if (imports.shadcn.has("Button")) lines.push(`import { Button } from "@/components/ui/button";`);
   if (imports.shadcn.has("Input")) lines.push(`import { Input } from "@/components/ui/input";`);
-  if (imports.needsDispatch) lines.push(`import { dispatchAction } from "@semantic-html-ai/core";`);
+  if (imports.needsDispatch) lines.push(`import { dispatchAction } from "@generative-semantic-ui/core";`);
   return lines.join("\n");
 }
 
