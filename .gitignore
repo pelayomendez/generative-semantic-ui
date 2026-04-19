@@ -13,6 +13,15 @@ node_modules/
 
 # Build output
 dist/
+.next/
 
 # rsbuild profiling
 .rspack-profile-*/
+
+# TypeScript
+*.tsbuildinfo
+
+# Env
+.env
+.env.local
+.env.*.local
