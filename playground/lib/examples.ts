@@ -29,13 +29,23 @@ export const EXAMPLES: Example[] = [
 </Stack>`,
   },
   {
-    prompt: "a transform panel for a 3D object (x, y, z)",
-    jsx: `<Stack gap={2}>
-  <Heading level={3}>Transform</Heading>
-  <Input name="x" type="number" placeholder="X" />
-  <Input name="y" type="number" placeholder="Y" />
-  <Input name="z" type="number" placeholder="Z" />
-  <Button onClick="apply">Apply</Button>
+    prompt: "a form to buy a plane ticket",
+    jsx: `<Stack gap={3}>
+  <Heading level={2}>Book a flight</Heading>
+  <Row gap={2}>
+    <Input name="from" placeholder="From (e.g. MAD)" />
+    <Input name="to" placeholder="To (e.g. JFK)" />
+  </Row>
+  <Row gap={2}>
+    <Input name="departure" type="date" placeholder="Departure" />
+    <Input name="return" type="date" placeholder="Return" />
+  </Row>
+  <Input name="passengers" type="number" placeholder="Passengers" />
+  <Divider />
+  <Row gap={2}>
+    <Button onClick="cancelBooking">Cancel</Button>
+    <Button onClick="searchFlights">Search flights</Button>
+  </Row>
 </Stack>`,
   },
   {
