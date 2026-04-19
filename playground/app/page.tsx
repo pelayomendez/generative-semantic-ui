@@ -109,25 +109,28 @@ export default function Page() {
           It&apos;s like HTML for AI agents. Type a prompt → the model emits semantic JSX → your
           adapter renders it.
         </p>
-        <div className="flex flex-wrap gap-3 text-sm">
+        <div className="flex flex-wrap items-center gap-3 text-sm">
           <a
-            className="underline hover:no-underline"
+            className="rounded-md border px-2.5 py-1 hover:bg-accent"
             href="https://github.com/pelayomendez/generative-semantic-ui"
           >
             GitHub
           </a>
           <a
-            className="underline hover:no-underline"
+            className="rounded-md border px-2.5 py-1 hover:bg-accent"
             href="https://github.com/pelayomendez/generative-semantic-ui/blob/main/ARTICLE.md"
           >
             Read the article
           </a>
           <a
-            className="underline hover:no-underline"
+            className="rounded-md border px-2.5 py-1 hover:bg-accent"
             href="https://www.npmjs.com/package/@generative-semantic-ui/core"
           >
             npm
           </a>
+          <code className="rounded bg-muted px-2 py-1 text-xs">
+            npm i @generative-semantic-ui/core @generative-semantic-ui/shadcn
+          </code>
         </div>
       </header>
 

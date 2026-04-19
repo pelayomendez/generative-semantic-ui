@@ -40,20 +40,41 @@ jobs:
       - name: Publish @generative-semantic-ui/core
         if: ${{ github.event_name == 'release' || inputs.package == 'core' || inputs.package == 'all' }}
         working-directory: packages/core
-        run: npm publish --access public --provenance
+        run: |
+          LOCAL=$(node -p "require('./package.json').version")
+          PUBLISHED=$(npm view "@generative-semantic-ui/core@$LOCAL" version 2>/dev/null || true)
+          if [ -n "$PUBLISHED" ]; then
+            echo "@generative-semantic-ui/core@$LOCAL already on npm — skipping."
+            exit 0
+          fi
+          npm publish --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @generative-semantic-ui/html
         if: ${{ github.event_name == 'release' || inputs.package == 'html' || inputs.package == 'all' }}
         working-directory: packages/adapter-html
-        run: npm publish --access public --provenance
+        run: |
+          LOCAL=$(node -p "require('./package.json').version")
+          PUBLISHED=$(npm view "@generative-semantic-ui/html@$LOCAL" version 2>/dev/null || true)
+          if [ -n "$PUBLISHED" ]; then
+            echo "@generative-semantic-ui/html@$LOCAL already on npm — skipping."
+            exit 0
+          fi
+          npm publish --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @generative-semantic-ui/shadcn
         if: ${{ github.event_name == 'release' || inputs.package == 'shadcn' || inputs.package == 'all' }}
         working-directory: packages/adapter-shadcn
-        run: npm publish --access public --provenance
+        run: |
+          LOCAL=$(node -p "require('./package.json').version")
+          PUBLISHED=$(npm view "@generative-semantic-ui/shadcn@$LOCAL" version 2>/dev/null || true)
+          if [ -n "$PUBLISHED" ]; then
+            echo "@generative-semantic-ui/shadcn@$LOCAL already on npm — skipping."
+            exit 0
+          fi
+          npm publish --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
