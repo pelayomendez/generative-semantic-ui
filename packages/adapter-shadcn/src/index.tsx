@@ -1,11 +1,10 @@
 import React from "react";
-import { dispatchAction } from "@generative-semantic-ui/core";
-import type { Registry } from "@generative-semantic-ui/core";
-import { Button as ShadcnButton } from "@/components/ui/button";
-import { Input as ShadcnInput } from "@/components/ui/input";
+import { dispatchAction, type Registry } from "@generative-semantic-ui/core";
+import { ButtonPrimitive, InputPrimitive } from "./primitives";
 
-// Shadcn-backed adapter for the semantic vocabulary. The only file that
-// knows about the UI library.
+// shadcn/ui-style adapter. Self-contained: ships the Button and Input
+// primitives bundled (built on Radix + cva). Requires Tailwind and the
+// design-token CSS — import `@generative-semantic-ui/shadcn/styles.css` once.
 
 type Children = { children?: React.ReactNode };
 
@@ -44,7 +43,7 @@ export const Button = ({
   onClick,
   children,
 }: { onClick: string } & Children) => (
-  <ShadcnButton onClick={() => dispatchAction(onClick)}>{children}</ShadcnButton>
+  <ButtonPrimitive onClick={() => dispatchAction(onClick)}>{children}</ButtonPrimitive>
 );
 
 export const Input = ({
@@ -55,7 +54,7 @@ export const Input = ({
   name: string;
   placeholder?: string;
   type?: string;
-}) => <ShadcnInput name={name} placeholder={placeholder} type={type} />;
+}) => <InputPrimitive name={name} placeholder={placeholder} type={type} />;
 
 export const Image = ({ src, alt = "" }: { src: string; alt?: string }) => (
   <img src={src} alt={alt} />
@@ -74,3 +73,5 @@ export const registry: Registry = {
   Image,
   Divider,
 };
+
+export { ButtonPrimitive, InputPrimitive } from "./primitives";

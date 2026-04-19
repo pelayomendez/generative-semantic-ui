@@ -10,13 +10,11 @@
     "generate": "tsx scripts/generate.ts"
   },
   "dependencies": {
-    "@radix-ui/react-slot": "^1.2.4",
     "@generative-semantic-ui/core": "*",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
+    "@generative-semantic-ui/html": "*",
+    "@generative-semantic-ui/shadcn": "*",
     "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "tailwind-merge": "^3.5.0"
+    "react-dom": "^19.2.3"
   },
   "devDependencies": {
     "@babel/parser": "^7.29.2",

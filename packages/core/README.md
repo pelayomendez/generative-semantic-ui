@@ -12,7 +12,28 @@ npm install @generative-semantic-ui/core
 
 Peer dependency: React ≥ 18.
 
-## Quick start
+## Using a prebuilt adapter
+
+The fastest way to get started is to pair the core with one of the adapter packages:
+
+- [`@generative-semantic-ui/html`](https://github.com/pelayomendez/generative-semantic-ui/tree/main/packages/adapter-html) — zero-dep, plain HTML, inline styles
+- [`@generative-semantic-ui/shadcn`](https://github.com/pelayomendez/generative-semantic-ui/tree/main/packages/adapter-shadcn) — shadcn/ui-style with bundled Radix primitives
+
+```bash
+npm install @generative-semantic-ui/core @generative-semantic-ui/shadcn
+```
+
+```tsx
+import { compile } from "@generative-semantic-ui/core";
+import { registry } from "@generative-semantic-ui/shadcn";
+import "@generative-semantic-ui/shadcn/styles.css";
+
+const element = compile(jsxFromAgent, registry);
+```
+
+## Quick start (custom adapter)
+
+If you have your own design system, define a registry — it's ~50 LOC:
 
 ```tsx
 import { compile, registerAction, dispatchAction, DEFAULT_PROMPT_RULES } from "@generative-semantic-ui/core";
