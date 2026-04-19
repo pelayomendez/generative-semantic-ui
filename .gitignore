@@ -26,3 +26,6 @@ dist/
 .env.local
 .env.*.local
 .vercel
+
+# npm auth (never commit)
+.npmrc
