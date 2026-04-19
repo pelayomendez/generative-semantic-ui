@@ -28,4 +28,16 @@ export const FIXTURES: Record<string, string> = {
       <Button onClick="apply">Apply</Button>
     </Stack>
   `,
+  profile: `
+    <Stack gap={3}>
+      <Heading level={2}>Perfil</Heading>
+      <Input name="firstName" placeholder="Nombre" />
+      <Input name="lastName" placeholder="Apellidos" />
+      <Input name="address" placeholder="Dirección" />
+      <Row gap={2}>
+        <Button onClick="cancelProfile">Cancelar</Button>
+        <Button onClick="saveProfile">Guardar</Button>
+      </Row>
+    </Stack>
+  `,
 };

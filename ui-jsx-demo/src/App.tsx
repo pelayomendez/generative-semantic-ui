@@ -8,6 +8,8 @@ registerAction("login", () => console.log("login fired"));
 registerAction("save", () => console.log("save fired"));
 registerAction("cancel", () => console.log("cancel fired"));
 registerAction("apply", () => console.log("apply fired"));
+registerAction("saveProfile", () => console.log("saveProfile fired"));
+registerAction("cancelProfile", () => console.log("cancelProfile fired"));
 
 type FixtureKey = keyof typeof FIXTURES;
 
