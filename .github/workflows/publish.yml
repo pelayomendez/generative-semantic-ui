@@ -1,0 +1,59 @@
+name: Publish packages
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      package:
+        description: "Package to publish (core | html | shadcn | all)"
+        required: true
+        default: "all"
+        type: choice
+        options: [core, html, shadcn, all]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build packages
+        run: |
+          npm run build:core
+          npm run build:html
+          npm run build:shadcn
+
+      - name: Publish @generative-semantic-ui/core
+        if: ${{ github.event_name == 'release' || inputs.package == 'core' || inputs.package == 'all' }}
+        working-directory: packages/core
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @generative-semantic-ui/html
+        if: ${{ github.event_name == 'release' || inputs.package == 'html' || inputs.package == 'all' }}
+        working-directory: packages/adapter-html
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish @generative-semantic-ui/shadcn
+        if: ${{ github.event_name == 'release' || inputs.package == 'shadcn' || inputs.package == 'all' }}
+        working-directory: packages/adapter-shadcn
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
