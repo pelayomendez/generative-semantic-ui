@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build:core && npm run build:html && npm run build:shadcn && npm run build:playground",
+  "installCommand": "npm install",
+  "outputDirectory": "playground/.next",
+  "framework": "nextjs"
+}

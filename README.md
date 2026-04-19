@@ -39,17 +39,30 @@ import "@generative-semantic-ui/shadcn/styles.css";
 const element = compile(jsxFromAgent, registry);
 ```
 
-## Demo
+## Playground (hosted)
 
-Live demo with 4 fixtures, `runtime`/`generated` toggle, and a `shadcn`/`html` adapter switch:
+Type a prompt → agent emits semantic JSX → adapter renders it. Two modes:
+
+- **Shared demo key** (rate-limited): just click Generate.
+- **Bring your own Mistral key**: paste it once, stored in localStorage, unlimited use. Get a free one at [console.mistral.ai](https://console.mistral.ai/).
+
+Source: [playground/](playground). Dev:
 
 ```bash
 npm install
-npm run build:packages
-npm run dev:demo
+npm run build:core && npm run build:html && npm run build:shadcn
+npm run dev:playground     # http://localhost:3001
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+## Local demo
+
+rsbuild demo with 4 fixtures, `runtime`/`generated` toggle, `shadcn`/`html` adapter switch:
+
+```bash
+npm install
+npm run build:core && npm run build:html && npm run build:shadcn
+npm run dev:demo           # http://localhost:3000
+```
 
 ## Read the article
 
