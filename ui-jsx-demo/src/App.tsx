@@ -8,7 +8,8 @@ import * as Generated from "./components/generated";
 registerAction("login", () => console.log("login fired"));
 registerAction("save", () => console.log("save fired"));
 registerAction("cancel", () => console.log("cancel fired"));
-registerAction("apply", () => console.log("apply fired"));
+registerAction("searchFlights", () => console.log("searchFlights fired"));
+registerAction("cancelBooking", () => console.log("cancelBooking fired"));
 registerAction("saveProfile", () => console.log("saveProfile fired"));
 registerAction("cancelProfile", () => console.log("cancelProfile fired"));
 
@@ -19,7 +20,7 @@ type AdapterName = "shadcn" | "html";
 const GENERATED: Record<FixtureKey, ComponentType> = {
   login: Generated.Login,
   settings: Generated.Settings,
-  transform: Generated.Transform,
+  flight: Generated.Flight,
   profile: Generated.Profile,
 };
 
