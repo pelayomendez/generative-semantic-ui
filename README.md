@@ -2,7 +2,15 @@
 
 > **It's like HTML for AI agents.**
 
+[![core](https://img.shields.io/npm/v/%40generative-semantic-ui%2Fcore?label=%40generative-semantic-ui%2Fcore&color=blue)](https://www.npmjs.com/package/@generative-semantic-ui/core)
+[![html](https://img.shields.io/npm/v/%40generative-semantic-ui%2Fhtml?label=%2Fhtml&color=blue)](https://www.npmjs.com/package/@generative-semantic-ui/html)
+[![shadcn](https://img.shields.io/npm/v/%40generative-semantic-ui%2Fshadcn?label=%2Fshadcn&color=blue)](https://www.npmjs.com/package/@generative-semantic-ui/shadcn)
+[![playground](https://img.shields.io/badge/playground-live-success)](https://generative-semantic-ui.vercel.app)
+[![MIT](https://img.shields.io/badge/license-MIT-green)](#license)
+
 A closed JSX vocabulary for LLM-generated UI, compiled at runtime (or build-time) to your component library of choice. ~4× smaller output, prompt-cache friendly, library-agnostic.
+
+**→ Try the [live playground](https://generative-semantic-ui.vercel.app) ·  Read [the article](ARTICLE.md)**
 
 ```jsx
 <Stack gap={3}>
@@ -17,11 +25,11 @@ The agent emits **that**. You adapt it to shadcn / plain HTML / anything by inst
 
 ## Packages
 
-| Package | What it is |
-|---|---|
-| [`@generative-semantic-ui/core`](packages/core) | `compile()`, actions, prompt rules. The brain. |
-| [`@generative-semantic-ui/html`](packages/adapter-html) | Zero-dep adapter. Inline styles. `npm i` and go. |
-| [`@generative-semantic-ui/shadcn`](packages/adapter-shadcn) | shadcn-style adapter with bundled Radix primitives. Needs Tailwind. |
+| Package | Version | What it is |
+|---|---|---|
+| [`@generative-semantic-ui/core`](packages/core) | [![v](https://img.shields.io/npm/v/%40generative-semantic-ui%2Fcore?label=%20&color=blue)](https://www.npmjs.com/package/@generative-semantic-ui/core) | `compile()`, actions, prompt rules. The brain. |
+| [`@generative-semantic-ui/html`](packages/adapter-html) | [![v](https://img.shields.io/npm/v/%40generative-semantic-ui%2Fhtml?label=%20&color=blue)](https://www.npmjs.com/package/@generative-semantic-ui/html) | Zero-dep adapter. Inline styles. `npm i` and go. |
+| [`@generative-semantic-ui/shadcn`](packages/adapter-shadcn) | [![v](https://img.shields.io/npm/v/%40generative-semantic-ui%2Fshadcn?label=%20&color=blue)](https://www.npmjs.com/package/@generative-semantic-ui/shadcn) | shadcn-style adapter with bundled Radix primitives. Needs Tailwind. |
 
 Install the batteries-included combo:
 
@@ -41,9 +49,11 @@ const element = compile(jsxFromAgent, registry);
 
 ## Playground (hosted)
 
+👉 **https://generative-semantic-ui.vercel.app**
+
 Type a prompt → agent emits semantic JSX → adapter renders it. Two modes:
 
-- **Shared demo key** (rate-limited): just click Generate.
+- **Shared demo key** (rate-limited 5/IP/hour): just click Generate.
 - **Bring your own Mistral key**: paste it once, stored in localStorage, unlimited use. Get a free one at [console.mistral.ai](https://console.mistral.ai/).
 
 Source: [playground/](playground). Dev:
