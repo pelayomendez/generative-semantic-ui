@@ -1,10 +1,11 @@
 import React from "react";
+import { dispatchAction } from "@semantic-html-ai/core";
+import type { Registry } from "@semantic-html-ai/core";
 import { Button as ShadcnButton } from "@/components/ui/button";
 import { Input as ShadcnInput } from "@/components/ui/input";
-import { dispatchAction } from "./actions";
 
-// Semantic component registry, adapted to shadcn/ui + Tailwind.
-// The LLM only knows the names and prop signatures below.
+// Shadcn-backed adapter for the semantic vocabulary. The only file that
+// knows about the UI library.
 
 type Children = { children?: React.ReactNode };
 
@@ -62,8 +63,7 @@ export const Image = ({ src, alt = "" }: { src: string; alt?: string }) => (
 
 export const Divider = () => <hr className="my-2 border-t" />;
 
-// The registry the compiler uses to resolve tag names.
-export const registry = {
+export const registry: Registry = {
   Stack,
   Row,
   Box,
@@ -73,6 +73,4 @@ export const registry = {
   Input,
   Image,
   Divider,
-} as const;
-
-export type ComponentName = keyof typeof registry;
+};

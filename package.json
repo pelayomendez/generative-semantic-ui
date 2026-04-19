@@ -1,0 +1,14 @@
+{
+  "name": "semantic-html-ai",
+  "private": true,
+  "version": "0.0.0",
+  "workspaces": [
+    "packages/*",
+    "ui-jsx-demo"
+  ],
+  "scripts": {
+    "build:core": "npm run build --workspace=@semantic-html-ai/core",
+    "dev:demo": "npm run dev --workspace=ui-jsx-demo",
+    "build:demo": "npm run build --workspace=ui-jsx-demo"
+  }
+}
