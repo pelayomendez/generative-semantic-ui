@@ -1,9 +1,10 @@
 {
-  "name": "@semantic-html-ai/core",
+  "name": "@generative-semantic-ui/core",
   "version": "0.1.0",
-  "description": "Semantic HTML for AI — a closed JSX vocabulary for LLM-generated UI, compiled to your component library of choice.",
+  "description": "It's like HTML for AI agents — a closed JSX vocabulary for LLM-generated UI, compiled to your component library of choice.",
   "keywords": [
     "ai",
+    "ai-agents",
     "llm",
     "ui",
     "jsx",
@@ -13,6 +14,14 @@
     "anthropic",
     "openai"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pelayomendez/generative-semantic-ui.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/pelayomendez/generative-semantic-ui#readme",
+  "bugs": "https://github.com/pelayomendez/generative-semantic-ui/issues",
+  "author": "Pelayo Méndez (https://github.com/pelayomendez)",
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.cjs",

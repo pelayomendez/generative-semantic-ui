@@ -1,5 +1,5 @@
 import { useState, type ReactNode, type ComponentType } from "react";
-import { compile, registerAction } from "@semantic-html-ai/core";
+import { compile, registerAction } from "@generative-semantic-ui/core";
 import { registry } from "./ui-jsx/components";
 import { FIXTURES } from "./fixtures";
 import * as Generated from "./components/generated";

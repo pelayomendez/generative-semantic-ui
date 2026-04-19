@@ -6,7 +6,10 @@
       "Bash(cp /Users/pomf/Development/iaio/semantic-html-ai/.claude/skills/ui-jsx/compile.tsx /Users/pomf/Development/iaio/semantic-html-ai/ui-jsx-demo/src/ui-jsx/compile.tsx)",
       "Bash(cp /Users/pomf/Development/iaio/semantic-html-ai/.claude/skills/ui-jsx/prompt.md /Users/pomf/Development/iaio/semantic-html-ai/ui-jsx-demo/src/ui-jsx/prompt.md)",
       "Bash(rtk ls *)",
-      "Bash(git -C /Users/pomf/Development/iaio/semantic-html-ai/ui-jsx-demo rev-parse --show-toplevel)"
+      "Bash(git -C /Users/pomf/Development/iaio/semantic-html-ai/ui-jsx-demo rev-parse --show-toplevel)",
+      "Bash(gh api *)",
+      "Bash(npm run *)",
+      "Bash(git rebase *)"
     ]
   }
 }
