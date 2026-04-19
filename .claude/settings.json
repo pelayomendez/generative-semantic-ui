@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create *)",
+      "Bash(cp /Users/pomf/Development/iaio/semantic-html-ai/.claude/skills/ui-jsx/actions.ts /Users/pomf/Development/iaio/semantic-html-ai/ui-jsx-demo/src/ui-jsx/actions.ts)",
+      "Bash(cp /Users/pomf/Development/iaio/semantic-html-ai/.claude/skills/ui-jsx/compile.tsx /Users/pomf/Development/iaio/semantic-html-ai/ui-jsx-demo/src/ui-jsx/compile.tsx)",
+      "Bash(cp /Users/pomf/Development/iaio/semantic-html-ai/.claude/skills/ui-jsx/prompt.md /Users/pomf/Development/iaio/semantic-html-ai/ui-jsx-demo/src/ui-jsx/prompt.md)",
+      "Bash(rtk ls *)",
+      "Bash(git -C /Users/pomf/Development/iaio/semantic-html-ai/ui-jsx-demo rev-parse --show-toplevel)"
+    ]
+  }
+}
