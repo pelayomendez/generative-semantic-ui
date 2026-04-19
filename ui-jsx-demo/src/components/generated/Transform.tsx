@@ -3,7 +3,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { dispatchAction } from "@/ui-jsx/actions";
+import { dispatchAction } from "@semantic-html-ai/core";
 
 export function Transform() {
   return (

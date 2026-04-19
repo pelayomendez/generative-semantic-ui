@@ -1,6 +1,6 @@
 import { useState, type ReactNode, type ComponentType } from "react";
-import { compile } from "./ui-jsx/compile";
-import { registerAction } from "./ui-jsx/actions";
+import { compile, registerAction } from "@semantic-html-ai/core";
+import { registry } from "./ui-jsx/components";
 import { FIXTURES } from "./fixtures";
 import * as Generated from "./components/generated";
 
@@ -31,7 +31,7 @@ const App = () => {
 
   if (mode === "runtime") {
     try {
-      rendered = compile(FIXTURES[key]);
+      rendered = compile(FIXTURES[key], registry);
     } catch (e) {
       error = e instanceof Error ? e.message : String(e);
     }
