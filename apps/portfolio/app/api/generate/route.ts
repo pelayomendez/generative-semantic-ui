@@ -29,7 +29,7 @@ You will be asked questions about Pelayo. Render your answer as JSX using the vo
 - If asked something the dataset doesn't cover, render a short, honest \`<Paragraph>\` saying so, and offer one or two suggested follow-up questions inside a \`<Row>\` of \`<Badge>\`s.
 - Visual identity: prefer \`<Hero>\` for top-level intros, \`<Section title>\` for grouped answers, \`<Card>\` for individual projects/roles, \`<Grid cols={2}>\` for showcases. Use \`<Badge>\` for tags. Use \`<Link external={true}>\` for external URLs.
 - Keep prose tight — one or two short paragraphs max per answer.
-- Always emit a single root element.
+- Always emit a SINGLE root element. If your answer needs multiple sections (Hero + Section + Section), wrap them in an outer \`<Stack gap={8}>\`. Do not return sibling top-level elements.
 
 ## Bad vs good
 
@@ -60,6 +60,33 @@ function extractJSX(raw: string): string {
   const match = fence.exec(s);
   if (match) s = match[1].trim();
   return s;
+}
+
+// Defense-in-depth: if the model returned sibling top-level elements
+// (which the compiler rejects), wrap them in a single Stack.
+function ensureSingleRoot(jsx: string): string {
+  const s = jsx.trim();
+  // Count balanced top-level elements by walking through angle brackets.
+  let depth = 0;
+  let topLevelRoots = 0;
+  let i = 0;
+  while (i < s.length) {
+    if (s[i] === "<") {
+      const close = s.indexOf(">", i);
+      if (close === -1) break;
+      const tag = s.slice(i + 1, close);
+      const isClosing = tag.startsWith("/");
+      const isSelfClosing = tag.endsWith("/");
+      if (depth === 0 && !isClosing) topLevelRoots += 1;
+      if (isClosing) depth -= 1;
+      else if (!isSelfClosing) depth += 1;
+      i = close + 1;
+    } else {
+      i += 1;
+    }
+  }
+  if (topLevelRoots <= 1) return s;
+  return `<Stack gap={8}>\n${s}\n</Stack>`;
 }
 
 export async function POST(req: NextRequest) {
@@ -118,7 +145,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    return NextResponse.json({ jsx: extractJSX(text) });
+    return NextResponse.json({ jsx: ensureSingleRoot(extractJSX(text)) });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Upstream error";
     return NextResponse.json({ error: message }, { status: 502 });
