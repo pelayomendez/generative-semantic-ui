@@ -1,16 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ["class"],
-  content: [
-    "./src/**/*.{ts,tsx,js,jsx,html}",
-    "../packages/adapter-shadcn/dist/**/*.{js,cjs}",
-  ],
+  content: ["./app/**/*.{ts,tsx}", "./lib/**/*.{ts,tsx}"],
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: { "2xl": "1400px" },
-    },
     extend: {
       colors: {
         border: "hsl(var(--border))",
@@ -18,6 +10,10 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -25,10 +21,6 @@ export default {
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
@@ -44,12 +36,16 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      fontFamily: {
+        display: ["var(--font-display)", "ui-serif", "Georgia"],
+        sans: ["var(--font-sans)", "ui-sans-serif", "system-ui"],
+      },
     },
   },
-  // Safelist the dynamic gap/padding utilities used by Stack/Row/Box
   safelist: [
     { pattern: /^gap-\d+$/ },
     { pattern: /^p-\d+$/ },
+    { pattern: /^grid-cols-\d+$/ },
   ],
   plugins: [],
 };
