@@ -178,6 +178,24 @@ export const Image = ({ src, alt = "" }: { src: string; alt?: string }) => (
   <img src={src} alt={alt} className="rounded-md" />
 );
 
+export const Video = ({ src, title }: { src: string; title?: string }) => (
+  <figure className="space-y-2">
+    <div className="relative aspect-video overflow-hidden rounded-lg border bg-black">
+      <iframe
+        src={src}
+        title={title}
+        loading="lazy"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowFullScreen
+        className="absolute inset-0 h-full w-full border-0"
+      />
+    </div>
+    {title && (
+      <figcaption className="text-xs text-muted-foreground">{title}</figcaption>
+    )}
+  </figure>
+);
+
 export const Divider = () => <hr className="my-2 border-t" />;
 
 export const registry: Registry = {
@@ -199,6 +217,7 @@ export const registry: Registry = {
   Button,
   Input,
   Image,
+  Video,
   Divider,
 };
 
