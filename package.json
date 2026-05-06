@@ -5,18 +5,17 @@
   "description": "It's like HTML for AI agents.",
   "workspaces": [
     "packages/*",
-    "ui-jsx-demo",
-    "playground"
+    "playground",
+    "apps/*"
   ],
   "scripts": {
     "build:core": "npm run build --workspace=@generative-semantic-ui/core",
     "build:html": "npm run build --workspace=@generative-semantic-ui/html",
     "build:shadcn": "npm run build --workspace=@generative-semantic-ui/shadcn",
     "build:packages": "npm run build:core && npm run build:html && npm run build:shadcn",
-    "dev:demo": "npm run dev --workspace=ui-jsx-demo",
-    "build:demo": "npm run build --workspace=ui-jsx-demo",
-    "generate:demo": "npm run generate --workspace=ui-jsx-demo",
     "dev:playground": "npm run dev --workspace=playground",
-    "build:playground": "npm run build --workspace=playground"
+    "build:playground": "npm run build --workspace=playground",
+    "dev:portfolio": "npm run dev --workspace=portfolio",
+    "build:portfolio": "npm run build --workspace=portfolio"
   }
 }
