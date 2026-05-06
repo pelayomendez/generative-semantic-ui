@@ -23,6 +23,7 @@ Generate UI as JSX using ONLY these components:
 - \`Avatar(src, alt?, size?)\` — circular image (size: sm | md | lg)
 - \`Badge(variant?)\` — small inline label (variant: default | outline | accent)
 - \`Image(src, alt?)\` — image
+- \`Video(src, title?)\` — embedded video; src is a full Vimeo or YouTube URL (e.g. \`https://player.vimeo.com/video/139784150\`). Renders 16:9.
 - \`Link(href, external?)\` — anchor, content as children
 - \`List(variant?)\` + \`ListItem\` — variant: bullet | none
 
@@ -71,6 +72,22 @@ Output:
     <Badge>LLMs</Badge>
   </Row>
 </Hero>
+
+## Example — project deep-dive with video
+
+User: "tell me about Mugaritz: OFF-ROAD"
+
+Output:
+<Section title="Mugaritz: OFF-ROAD (2015)">
+  <Stack gap={4}>
+    <Video src="https://player.vimeo.com/video/139784150" title="Mugaritz: OFF-ROAD" />
+    <Paragraph>Documentary on the Michelin-starred restaurant directed by Pep Gatell — a visual interpretation of 18 years of restaurant data. Selected at San Sebastián and Berlin film festivals.</Paragraph>
+    <Row gap={2}>
+      <Badge>Data viz</Badge>
+      <Badge>Film</Badge>
+    </Row>
+  </Stack>
+</Section>
 
 ## Example — projects grid
 

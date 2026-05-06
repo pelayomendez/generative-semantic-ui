@@ -1,45 +1,52 @@
 "use client";
 
-import { forwardRef, useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
+import {
+  forwardRef,
+  useRef,
+  useState,
+  type FormEvent,
+  type ReactNode,
+} from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { compile } from "@generative-semantic-ui/core";
 import { portfolioRegistry } from "@/lib/adapter/registry";
 import { portfolio } from "@/lib/data/portfolio";
+import { Backdrop } from "@/lib/Backdrop";
 
 const SUGGESTIONS = [
   "Introduce yourself",
   "Show me your selected work",
+  "Tell me about Mugaritz: OFF-ROAD",
   "What are you working on now?",
-  "What's your background?",
   "How do I get in touch?",
 ];
 
-type Turn =
-  | { role: "user"; text: string }
-  | { role: "assistant"; jsx: string; element: ReactNode | null; error: string | null };
+type Answer = {
+  jsx: string;
+  element: ReactNode | null;
+  error: string | null;
+};
+
+type Current = {
+  question: string;
+  answer: Answer | null;
+};
 
 export default function Page() {
-  const [input, setInput] = useState("");
-  const [turns, setTurns] = useState<Turn[]>([]);
+  const [draft, setDraft] = useState("");
+  const [current, setCurrent] = useState<Current | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
 
-  const hasStarted = turns.length > 0 || loading;
-
-  // Auto-scroll on new turn
-  useEffect(() => {
-    if (!scrollRef.current) return;
-    scrollRef.current.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
-  }, [turns.length, loading]);
+  const hasStarted = current !== null;
 
   async function ask(prompt: string) {
     const text = prompt.trim();
     if (!text || loading) return;
     setError(null);
-    setInput("");
-    setTurns((t) => [...t, { role: "user", text }]);
+    setDraft("");
+    setCurrent({ question: text, answer: null });
     setLoading(true);
     try {
       const res = await fetch("/api/generate", {
@@ -50,6 +57,7 @@ export default function Page() {
       const data = await res.json();
       if (!res.ok) {
         setError(data.error ?? `HTTP ${res.status}`);
+        setCurrent({ question: text, answer: null });
         return;
       }
       const jsx = data.jsx as string;
@@ -60,10 +68,10 @@ export default function Page() {
       } catch (e) {
         compileError = e instanceof Error ? e.message : String(e);
       }
-      setTurns((t) => [
-        ...t,
-        { role: "assistant", jsx, element, error: compileError },
-      ]);
+      setCurrent({
+        question: text,
+        answer: { jsx, element, error: compileError },
+      });
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
     } finally {
@@ -74,15 +82,15 @@ export default function Page() {
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
-    ask(input);
+    ask(draft);
   }
 
   return (
     <main className="relative min-h-dvh overflow-hidden">
-      <div aria-hidden className="gsui-backdrop fixed inset-0 -z-10" />
+      <Backdrop />
 
       {/* Top brand bar */}
-      <header className="relative z-10 mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
+      <header className="relative z-20 mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
         <div className="flex items-center gap-2 text-sm">
           <span className="inline-block h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_hsl(var(--accent))]" />
           <span className="font-medium tracking-tight">{portfolio.profile.name}</span>
@@ -100,72 +108,109 @@ export default function Page() {
         </nav>
       </header>
 
-      {/* Conversation area */}
-      <div
-        ref={scrollRef}
-        className="relative z-0 mx-auto max-w-3xl overflow-y-auto px-6 pb-48"
-        style={{ maxHeight: "calc(100dvh - 80px)" }}
-      >
+      {/* Stage: either landing intro, or the latest answer */}
+      <section className="relative z-10 mx-auto max-w-3xl px-6 pb-48 pt-4">
         <AnimatePresence mode="wait" initial={false}>
           {!hasStarted ? (
-            <Landing key="landing" onAsk={ask} loading={loading} />
+            <Landing key="landing" />
           ) : (
             <motion.div
-              key="conversation"
-              initial={{ opacity: 0, y: 8 }}
+              key={current!.question}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="space-y-12 pt-8"
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className="space-y-4"
             >
-              {turns.map((t, i) => (
-                <TurnView key={i} turn={t} />
-              ))}
-              {loading && <Thinking />}
+              <p className="text-xs italic text-muted-foreground/80">
+                › {current!.question}
+              </p>
+              {!current!.answer ? (
+                <Thinking />
+              ) : current!.answer.error ? (
+                <div className="rounded-lg border border-red-300/50 bg-red-50 p-4 text-xs text-red-700">
+                  <p className="font-medium">Failed to render generated JSX</p>
+                  <p className="mt-1 font-mono text-[11px] opacity-80">
+                    {current!.answer.error}
+                  </p>
+                  <pre className="mt-2 overflow-x-auto text-[10px] opacity-70">
+                    {current!.answer.jsx}
+                  </pre>
+                </div>
+              ) : (
+                current!.answer.element
+              )}
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+      </section>
 
-      {/* Floating chat input (hidden on landing — landing has its own) */}
-      {hasStarted && (
-        <motion.form
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          onSubmit={onSubmit}
-          className="fixed inset-x-0 bottom-0 z-20 mx-auto w-full max-w-3xl px-6 pb-6"
-        >
-          <ChatInput
-            ref={inputRef}
-            value={input}
-            onChange={setInput}
-            onSubmit={() => ask(input)}
-            loading={loading}
-          />
-          {error && (
-            <p className="mt-2 text-center text-xs text-red-500">{error}</p>
+      {/* The single, morphing chat input */}
+      <motion.form
+        layout
+        onSubmit={onSubmit}
+        transition={{ type: "spring", stiffness: 260, damping: 32 }}
+        className={
+          hasStarted
+            ? "fixed bottom-6 left-1/2 z-30 w-full max-w-2xl -translate-x-1/2 px-6"
+            : "fixed left-1/2 top-1/2 z-30 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 px-6"
+        }
+      >
+        <ChatInput
+          ref={inputRef}
+          value={draft}
+          onChange={setDraft}
+          onSubmit={() => ask(draft)}
+          loading={loading}
+          placeholder={hasStarted ? "Ask another question…" : "Ask me anything…"}
+          autoFocus
+        />
+        {error && (
+          <p className="mt-2 text-center text-xs text-red-500">{error}</p>
+        )}
+        <p className="mt-2 text-center text-[10px] uppercase tracking-widest text-muted-foreground">
+          Generated UI · powered by Mistral · vocabulary by @generative-semantic-ui
+        </p>
+
+        <AnimatePresence>
+          {!hasStarted && (
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className="mt-4 flex flex-wrap justify-center gap-2"
+            >
+              {SUGGESTIONS.map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => ask(s)}
+                  disabled={loading}
+                  className="rounded-full border border-border bg-background/60 px-3.5 py-1.5 text-xs text-foreground/70 backdrop-blur-sm transition hover:border-foreground/40 hover:text-foreground disabled:opacity-50"
+                >
+                  {s}
+                </button>
+              ))}
+            </motion.div>
           )}
-          <p className="mt-2 text-center text-[10px] uppercase tracking-widest text-muted-foreground">
-            Generated UI · powered by Mistral · vocabulary by @generative-semantic-ui
-          </p>
-        </motion.form>
-      )}
+        </AnimatePresence>
+      </motion.form>
     </main>
   );
 }
 
 /* ---------------- Landing ---------------- */
 
-function Landing({ onAsk, loading }: { onAsk: (q: string) => void; loading: boolean }) {
-  const [draft, setDraft] = useState("");
+function Landing() {
   return (
     <motion.div
       key="landing-inner"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0, y: -12 }}
+      exit={{ opacity: 0, y: -16 }}
       transition={{ duration: 0.6 }}
-      className="mx-auto flex min-h-[calc(100dvh-80px)] max-w-2xl flex-col justify-center py-12"
+      className="mx-auto flex min-h-[calc(100dvh-340px)] max-w-2xl flex-col justify-end pb-8 pt-12"
     >
       <motion.p
         initial={{ opacity: 0, y: 12 }}
@@ -195,81 +240,6 @@ function Landing({ onAsk, loading }: { onAsk: (q: string) => void; loading: bool
         layouts. The UI is generated live from a constrained vocabulary I built
         for language models.
       </motion.p>
-
-      <motion.form
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.45 }}
-        onSubmit={(e) => {
-          e.preventDefault();
-          onAsk(draft);
-        }}
-        className="mt-10"
-      >
-        <ChatInput
-          value={draft}
-          onChange={setDraft}
-          onSubmit={() => onAsk(draft)}
-          loading={loading}
-          placeholder="e.g. what kind of work do you do?"
-          autoFocus
-        />
-      </motion.form>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.7, delay: 0.65 }}
-        className="mt-6 flex flex-wrap gap-2"
-      >
-        {SUGGESTIONS.map((s) => (
-          <button
-            key={s}
-            onClick={() => onAsk(s)}
-            disabled={loading}
-            className="rounded-full border border-border bg-background/40 px-3.5 py-1.5 text-xs text-foreground/70 backdrop-blur-sm transition hover:border-foreground/40 hover:text-foreground disabled:opacity-50"
-          >
-            {s}
-          </button>
-        ))}
-      </motion.div>
-    </motion.div>
-  );
-}
-
-/* ---------------- Turn view ---------------- */
-
-function TurnView({ turn }: { turn: Turn }) {
-  if (turn.role === "user") {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="flex justify-end"
-      >
-        <div className="rounded-2xl rounded-br-md bg-foreground px-4 py-2.5 text-sm text-background shadow-sm">
-          {turn.text}
-        </div>
-      </motion.div>
-    );
-  }
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="space-y-3"
-    >
-      {turn.error ? (
-        <div className="rounded-lg border border-red-300/50 bg-red-50 p-4 text-xs text-red-700 dark:bg-red-950/30 dark:text-red-300">
-          <p className="font-medium">Failed to render generated JSX</p>
-          <p className="mt-1 font-mono text-[11px] opacity-80">{turn.error}</p>
-          <pre className="mt-2 overflow-x-auto text-[10px] opacity-70">{turn.jsx}</pre>
-        </div>
-      ) : (
-        turn.element
-      )}
     </motion.div>
   );
 }
@@ -304,9 +274,12 @@ const ChatInput = forwardRef<
     placeholder?: string;
     autoFocus?: boolean;
   }
->(function ChatInput({ value, onChange, onSubmit, loading, placeholder, autoFocus }, ref) {
+>(function ChatInput(
+  { value, onChange, onSubmit, loading, placeholder, autoFocus },
+  ref,
+) {
   return (
-    <div className="group relative flex items-end gap-2 rounded-3xl border border-border bg-background/80 p-2 pl-5 shadow-lg backdrop-blur-md transition focus-within:border-foreground/40">
+    <div className="group relative flex items-end gap-2 rounded-3xl border border-border bg-background/85 p-2 pl-5 shadow-xl backdrop-blur-md transition focus-within:border-foreground/40">
       <textarea
         ref={ref}
         value={value}
@@ -325,10 +298,6 @@ const ChatInput = forwardRef<
       <button
         type="submit"
         disabled={loading || !value.trim()}
-        onClick={(e) => {
-          e.preventDefault();
-          onSubmit();
-        }}
         className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-foreground text-background shadow-md transition hover:scale-105 disabled:scale-100 disabled:opacity-40"
         aria-label="Send"
       >

@@ -283,6 +283,35 @@ export const Image = ({ src, alt = "" }: { src: string; alt?: string }) => (
   <img src={src} alt={alt} style={{ maxWidth: "100%", height: "auto" }} />
 );
 
+export const Video = ({ src, title }: { src: string; title?: string }) => (
+  <figure style={{ ...base, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+    <div
+      style={{
+        ...base,
+        position: "relative",
+        width: "100%",
+        paddingBottom: "56.25%",
+        borderRadius: 8,
+        overflow: "hidden",
+        background: "#000",
+        border: "1px solid #e4e4e7",
+      }}
+    >
+      <iframe
+        src={src}
+        title={title}
+        loading="lazy"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowFullScreen
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }}
+      />
+    </div>
+    {title && (
+      <figcaption style={{ fontSize: 12, color: "#71717a" }}>{title}</figcaption>
+    )}
+  </figure>
+);
+
 export const Divider = () => (
   <hr style={{ border: 0, borderTop: "1px solid #e4e4e7", margin: "8px 0" }} />
 );
@@ -306,5 +335,6 @@ export const registry: Registry = {
   Button,
   Input,
   Image,
+  Video,
   Divider,
 };

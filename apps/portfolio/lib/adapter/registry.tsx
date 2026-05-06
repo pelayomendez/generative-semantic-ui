@@ -340,6 +340,28 @@ export const Image = ({ src, alt = "" }: { src: string; alt?: string }) => (
   />
 );
 
+export const Video = ({ src, title }: { src: string; title?: string }) => (
+  <motion.figure variants={fadeUp} className="space-y-2">
+    <motion.div
+      whileHover={{ scale: 1.005 }}
+      transition={{ duration: 0.3 }}
+      className="relative aspect-video overflow-hidden rounded-2xl border border-border/60 bg-black shadow-lg"
+    >
+      <iframe
+        src={src}
+        title={title}
+        loading="lazy"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowFullScreen
+        className="absolute inset-0 h-full w-full border-0"
+      />
+    </motion.div>
+    {title && (
+      <figcaption className="text-xs text-muted-foreground">{title}</figcaption>
+    )}
+  </motion.figure>
+);
+
 export const Divider = () => (
   <motion.hr
     variants={fadeUp}
