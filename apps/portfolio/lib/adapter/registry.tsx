@@ -123,18 +123,32 @@ export const Grid = ({
   );
 };
 
-export const Card = ({ padding = 6, children }: { padding?: number } & Children) => (
-  <motion.div
-    variants={fadeUp}
-    whileHover={{ y: -2, transition: { duration: 0.2 } }}
-    className={`group relative overflow-hidden rounded-2xl border border-border/60 bg-card/60 p-${padding} shadow-sm backdrop-blur-sm transition-colors hover:border-border`}
-  >
-    <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-      <div className="absolute -inset-px rounded-2xl bg-gradient-to-br from-accent/10 via-transparent to-transparent" />
-    </div>
-    <div className="relative space-y-3">{children}</div>
-  </motion.div>
-);
+export const Card = ({ padding = 6, children }: { padding?: number } & Children) => {
+  const childArr = Children.toArray(children);
+  const hasCover =
+    childArr.length > 0 &&
+    isValidElement(childArr[0]) &&
+    childArr[0].type === Image;
+  const cover = hasCover ? childArr[0] : null;
+  const rest = hasCover ? childArr.slice(1) : childArr;
+  return (
+    <motion.div
+      variants={fadeUp}
+      whileHover={{ y: -2, transition: { duration: 0.2 } }}
+      className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card/60 shadow-sm backdrop-blur-sm transition-colors hover:border-border"
+    >
+      <div className="pointer-events-none absolute inset-0 z-10 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+        <div className="absolute -inset-px rounded-2xl bg-gradient-to-br from-accent/10 via-transparent to-transparent" />
+      </div>
+      {cover && (
+        <div className="aspect-video w-full overflow-hidden [&>img]:h-full [&>img]:w-full [&>img]:rounded-none [&>img]:object-cover">
+          {cover}
+        </div>
+      )}
+      <div className={`relative space-y-3 p-${padding}`}>{rest}</div>
+    </motion.div>
+  );
+};
 
 export const Hero = ({ eyebrow, children }: { eyebrow?: string } & Children) => (
   <motion.div
