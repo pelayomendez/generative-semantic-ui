@@ -31,6 +31,7 @@ You will be asked questions about Pelayo. Render your answer as JSX using the vo
 - When asked about a SPECIFIC project (e.g. "tell me about Mugaritz", "what was Parsifal?"), render its \`<Video>\` (using \`projects[i].video\` verbatim) inside a \`<Section title="...">\`, followed by a \`<Paragraph>\` of the summary, a \`<Row>\` of \`<Badge>\` tags, and a small \`<Paragraph>\` line for the role and year/location.
 - When asked for "selected work" / "your projects" / similar, render a \`<Section title="Selected work">\` containing a \`<Grid cols={2}>\` of \`<Card>\`s — each card is just \`<Heading level={3}>\`, a short \`<Paragraph>\`, and tag \`<Badge>\`s. Do NOT include the video in grid cells, only when zoomed into one project.
 - Keep prose tight — one or two short paragraphs max per answer.
+- Inside grid cells (\`<Card>\` within \`<Grid>\`), each \`<Paragraph>\` MUST be a single short sentence — 140 characters or fewer. Long blurbs belong in a deep-dive view, not a grid card. This prevents responses from being clipped mid-sentence.
 - Always emit a SINGLE root element. If your answer needs multiple sections (Hero + Section + Section), wrap them in an outer \`<Stack gap={8}>\`. Do not return sibling top-level elements.
 
 ## Bad vs good
@@ -77,6 +78,28 @@ function extractJSX(raw: string): string {
   const match = fence.exec(s);
   if (match) s = match[1].trim();
   return s;
+}
+
+// Cheap structural check: detect clearly clipped output (unterminated
+// string literal or an unclosed `<` at EOF). Not a full parser — just
+// enough to flag "this almost certainly won't compile" before the client
+// tries.
+function looksTruncated(jsx: string): string | null {
+  const s = jsx.trimEnd();
+  if (!s) return "empty response";
+  // Unclosed final tag — last `<` has no matching `>` after it.
+  const lastOpen = s.lastIndexOf("<");
+  const lastClose = s.lastIndexOf(">");
+  if (lastOpen > lastClose) return "unclosed tag at end of response";
+  // Unterminated string literal — scan for an odd count of unescaped
+  // double quotes on the final line.
+  const lastLine = s.split("\n").pop() ?? "";
+  let quoteCount = 0;
+  for (let i = 0; i < lastLine.length; i++) {
+    if (lastLine[i] === '"' && lastLine[i - 1] !== "\\") quoteCount++;
+  }
+  if (quoteCount % 2 !== 0) return "unterminated string literal";
+  return null;
 }
 
 // Defense-in-depth: if the model returned sibling top-level elements
@@ -151,9 +174,11 @@ export async function POST(req: NextRequest) {
         { role: "user", content: prompt },
       ],
       temperature: 0.3,
+      maxTokens: 4096,
     });
 
-    const content = response.choices?.[0]?.message?.content;
+    const choice = response.choices?.[0];
+    const content = choice?.message?.content;
     const text = typeof content === "string" ? content : "";
     if (!text) {
       return NextResponse.json(
@@ -162,7 +187,25 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    return NextResponse.json({ jsx: ensureSingleRoot(extractJSX(text)) });
+    const jsx = ensureSingleRoot(extractJSX(text));
+
+    // Mistral returns finish_reason === "length" when the response was
+    // capped by max_tokens. Combined with the structural check, this
+    // tells the client to render a friendly fallback instead of a
+    // half-parsed JSX dump.
+    const finishReason = choice?.finishReason;
+    const structural = looksTruncated(jsx);
+    const truncated = finishReason === "length" || structural !== null;
+    if (truncated) {
+      const reason =
+        finishReason === "length"
+          ? "max_tokens reached"
+          : (structural ?? "unknown truncation");
+      console.warn("[generate] truncated response", { reason, finishReason });
+      return NextResponse.json({ jsx, truncated: true, reason });
+    }
+
+    return NextResponse.json({ jsx, truncated: false });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Upstream error";
     return NextResponse.json({ error: message }, { status: 502 });
