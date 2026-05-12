@@ -93,10 +93,12 @@ export function Backdrop() {
   }, []);
 
   return (
+    // z-0 (not -z-10) so the canvas stacks above body's bg-background.
+    // Negative z-index would render behind the body fill and stay invisible.
     <canvas
       ref={ref}
       aria-hidden
-      className="pointer-events-none fixed inset-0 -z-10"
+      className="pointer-events-none fixed inset-0 z-0"
     />
   );
 }
