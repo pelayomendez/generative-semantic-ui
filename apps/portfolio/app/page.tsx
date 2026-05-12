@@ -26,6 +26,7 @@ type Answer = {
   jsx: string;
   element: ReactNode | null;
   error: string | null;
+  truncated: boolean;
 };
 
 type Current = {
@@ -71,16 +72,21 @@ export default function Page() {
         return;
       }
       const jsx = data.jsx as string;
+      const truncated = Boolean(data.truncated);
       let element: ReactNode | null = null;
       let compileError: string | null = null;
       try {
         element = compile(jsx, portfolioRegistry);
       } catch (e) {
         compileError = e instanceof Error ? e.message : String(e);
+        console.error("[portfolio] compile failed", { error: compileError, jsx });
+      }
+      if (truncated) {
+        console.warn("[portfolio] response truncated", { reason: data.reason, jsx });
       }
       setCurrent({
         question: text,
-        answer: { jsx, element, error: compileError },
+        answer: { jsx, element, error: compileError, truncated },
       });
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
@@ -161,16 +167,11 @@ export default function Page() {
                 </p>
                 {!current!.answer ? (
                   <Thinking />
-                ) : current!.answer.error ? (
-                  <div className="rounded-lg border border-red-300/50 bg-red-50 p-4 text-xs text-red-700">
-                    <p className="font-medium">Failed to render generated JSX</p>
-                    <p className="mt-1 font-mono text-[11px] opacity-80">
-                      {current!.answer.error}
-                    </p>
-                    <pre className="mt-2 overflow-x-auto text-[10px] opacity-70">
-                      {current!.answer.jsx}
-                    </pre>
-                  </div>
+                ) : current!.answer.error || current!.answer.truncated ? (
+                  <IncompleteAnswer
+                    onRetry={() => ask(current!.question)}
+                    disabled={loading}
+                  />
                 ) : (
                   current!.answer.element
                 )}
@@ -314,6 +315,47 @@ function Thinking() {
         <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
       </span>
       Composing the answer…
+    </motion.div>
+  );
+}
+
+/* ---------------- Incomplete-answer fallback ---------------- */
+
+function IncompleteAnswer({
+  onRetry,
+  disabled,
+}: {
+  onRetry: () => void;
+  disabled: boolean;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="rounded-2xl border border-border bg-background/60 p-5 backdrop-blur-sm"
+    >
+      <p className="text-sm text-foreground/80">
+        That answer came back incomplete. The model ran out of room mid-thought —
+        try again, or ask a shorter question.
+      </p>
+      <button
+        type="button"
+        onClick={onRetry}
+        disabled={disabled}
+        className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-border bg-background/80 px-3 py-1.5 text-xs text-foreground/80 transition hover:border-foreground/40 hover:text-foreground disabled:opacity-50"
+      >
+        Try again
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
+          <path
+            d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
     </motion.div>
   );
 }

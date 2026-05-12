@@ -1,0 +1,14 @@
+{
+  "models": {
+    "claude": {
+      "define": "claude-haiku-4-5",
+      "build": "claude-sonnet-4-6",
+      "close": "claude-haiku-4-5"
+    },
+    "copilot": {
+      "define": "gpt-4o-mini",
+      "build": "gpt-4o",
+      "close": "gpt-4o-mini"
+    }
+  }
+}
