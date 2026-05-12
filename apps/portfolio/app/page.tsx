@@ -188,11 +188,11 @@ export default function Page() {
         />
       )}
 
-      {/* Always-mounted, draggable chat input. Anchor changes between
-          centered (landing) and bottom-docked (chat) — Framer's `layout`
-          prop animates the move. Drag works on top of that anchor. */}
+      {/* Always-mounted, draggable chat input. Centered via auto margins
+          (no CSS transforms) so Framer's drag transform is the *only*
+          transform on the element — no fight between `layout` + Tailwind
+          translates. Position swaps on hasStarted via className. */}
       <motion.form
-        layout
         drag
         dragListener={false}
         dragControls={dragControls}
@@ -202,11 +202,10 @@ export default function Page() {
         whileDrag={{ scale: 1.015 }}
         onPointerDown={maybeStartDrag}
         onSubmit={onSubmit}
-        transition={{ layout: { type: "spring", stiffness: 260, damping: 32 } }}
         className={
           hasStarted
-            ? "fixed bottom-6 left-1/2 z-30 w-full max-w-2xl -translate-x-1/2 cursor-grab px-6 active:cursor-grabbing"
-            : "fixed left-1/2 top-[58%] z-30 w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 cursor-grab px-6 active:cursor-grabbing"
+            ? "fixed inset-x-0 bottom-6 z-30 mx-auto w-full max-w-2xl cursor-grab px-6 active:cursor-grabbing"
+            : "fixed inset-0 z-30 m-auto h-fit w-full max-w-2xl cursor-grab px-6 active:cursor-grabbing"
         }
       >
         {/* Grip handle — visual cue that the form is draggable */}
@@ -232,20 +231,19 @@ export default function Page() {
         <p className="mt-2 select-none text-center text-[10px] uppercase tracking-widest text-muted-foreground">
           Drag the box · powered by Mistral · @generative-semantic-ui
         </p>
-      </motion.form>
 
-      {/* Suggestion chips — sit just below the centered input on landing. */}
-      <AnimatePresence>
-        {!hasStarted && (
-          <motion.div
-            key="suggestions"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.4, delay: 0.25 }}
-            className="fixed inset-x-0 top-[76%] z-10 mx-auto max-w-2xl px-6"
-          >
-            <div className="flex flex-wrap justify-center gap-2">
+        {/* Suggestion chips — sit directly below the input on landing,
+            scoped inside the form so they auto-center as a group. */}
+        <AnimatePresence>
+          {!hasStarted && (
+            <motion.div
+              key="suggestions"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className="mt-4 flex flex-wrap justify-center gap-2"
+            >
               {SUGGESTIONS.map((s) => (
                 <button
                   key={s}
@@ -257,10 +255,10 @@ export default function Page() {
                   {s}
                 </button>
               ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.form>
     </main>
   );
 }

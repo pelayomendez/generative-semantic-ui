@@ -388,5 +388,6 @@ export const portfolioRegistry: Registry = {
   Button,
   Input,
   Image,
+  Video,
   Divider,
 };
