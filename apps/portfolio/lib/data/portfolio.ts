@@ -9,7 +9,7 @@ export const portfolio = {
     name: "Pelayo Méndez",
     headline: "Creative software developer & lead",
     location: "Barcelona, Spain",
-    avatar: "/avatar.svg",
+    avatar: "/portrait.jpg",
     bio: [
       "I'm a creative coder turned software lead, fascinated by how technology can mirror the poetic essence of written language.",
       "After a decade designing interactive performances, installations and audio-reactive concerts with companies like La Fura dels Baus, I'm now focused on AI-driven interfaces and developer tooling — bringing the same generative sensibility to the way humans and language models share a screen.",
