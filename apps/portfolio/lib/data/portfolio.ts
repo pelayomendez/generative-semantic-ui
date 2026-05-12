@@ -95,7 +95,7 @@ export const portfolio = {
         "Interactive dance room with a large-scale LED grid driven by ProtoPixel, in Barcelona's Nitsa club.",
       collaborators: ["ProtoPixel"],
       video: `${VIMEO}/307521436`,
-      images: [`${PMD}/apolo1.jpg`, `${PMD}/apolo2.jpg`, `${PMD}/apolo3.jpg`],
+      images: [`/projects/apolo.jpg`, `${PMD}/apolo2.jpg`, `${PMD}/apolo3.jpg`],
     },
     {
       id: "absolut",
@@ -108,7 +108,7 @@ export const portfolio = {
         "Volumetric lighting installation for Sonar Festival, in collaboration with art director Joan Guasch.",
       collaborators: ["Joan Guasch"],
       video: `${VIMEO}/223587103`,
-      images: [`${PMD}/absolut1.jpg`, `${PMD}/absolut2.jpg`],
+      images: [`/projects/absolut.jpg`, `${PMD}/absolut2.jpg`],
     },
     {
       id: "alexis",
@@ -121,7 +121,7 @@ export const portfolio = {
         "Light-controlled hair dryer performance for the Wella TrendVision interactive fashion show, with Alexis Ferrer.",
       collaborators: ["Alexis Ferrer", "ProtoPixel"],
       video: `${VIMEO}/311894905`,
-      images: [`${PMD}/alexis1.png`, `${PMD}/alexis2.jpg`, `${PMD}/alexis3.jpg`],
+      images: [`/projects/alexis.png`, `${PMD}/alexis2.jpg`, `${PMD}/alexis3.jpg`],
     },
     {
       id: "mugaritz",
@@ -135,7 +135,7 @@ export const portfolio = {
       collaborators: ["Pep Gatell", "Fritz Gnad"],
       video: `${VIMEO}/139784150`,
       images: [
-        `${PMD}/mugaritz1.jpg`,
+        `/projects/mugaritz.jpg`,
         `${PMD}/mugaritz2.jpg`,
         `${PMD}/mugaritz3.jpg`,
       ],
@@ -151,7 +151,7 @@ export const portfolio = {
         "Pixel-based contemporary dance piece with three dancers in different locations sharing a video-wall narrative. Awarded the Future of Internet Performing Arts Prize.",
       collaborators: ["Hand Made Dance", "Julio Clavijo", "Jaume Grau", "David Torres"],
       video: `${VIMEO}/160608485`,
-      images: [`${PMD}/croma1.jpg`, `${PMD}/croma2.jpg`, `${PMD}/croma3.jpg`],
+      images: [`/projects/croma.jpg`, `${PMD}/croma2.jpg`, `${PMD}/croma3.jpg`],
     },
     {
       id: "cicle",
@@ -164,7 +164,7 @@ export const portfolio = {
         "Theatrical projection mapping on the Casa dels Pastors facade, honouring Richard Strauss' 150th birth anniversary at the 1st Girona International Mapping Festival.",
       collaborators: ["Xavi Bové", "Elizabeth Vilaplana", "Raul Patiño"],
       video: `${VIMEO}/104846862`,
-      images: [`${PMD}/cicle1.jpg`, `${PMD}/cicle2.jpg`],
+      images: [`/projects/cicle.jpg`, `${PMD}/cicle2.jpg`],
     },
     {
       id: "murs",
@@ -184,7 +184,7 @@ export const portfolio = {
         "Inqbarna",
       ],
       video: `${VIMEO}/104492179`,
-      images: [`${PMD}/murs1.jpg`, `${PMD}/murs2.jpg`, `${PMD}/murs3.jpg`],
+      images: [`/projects/murs.jpg`, `${PMD}/murs2.jpg`, `${PMD}/murs3.jpg`],
     },
     {
       id: "esser",
@@ -197,7 +197,7 @@ export const portfolio = {
         "New Year's Eve macro-event by La Fura dels Baus — generative font for the countdown and twelve bell chimes, plus live LED-screen video content.",
       collaborators: ["Carlus Padrissa", "Pep Gatell"],
       video: `${VIMEO}/92852474`,
-      images: [`${PMD}/mileni.jpg`, `${PMD}/mileni2.jpg`],
+      images: [`/projects/esser.jpg`, `${PMD}/mileni2.jpg`],
     },
     {
       id: "parsifal",
@@ -210,7 +210,7 @@ export const portfolio = {
         "Four-hour Wagner opera reinterpretation directed by Carlus Padrissa — realtime interactive video and stage control with openFrameworks and Processing.",
       collaborators: ["Carlus Padrissa", "welovecode", "Fritz Gnad"],
       video: `${VIMEO}/75478807`,
-      images: [`${PMD}/parsifal.jpg`, `${PMD}/parsifal2.jpg`],
+      images: [`/projects/parsifal.jpg`, `${PMD}/parsifal2.jpg`],
     },
     {
       id: "magicmelody",
@@ -224,7 +224,7 @@ export const portfolio = {
       collaborators: ["Tigrelab", "Setlego", "Franck Desert"],
       video: `${VIMEO}/79871647`,
       images: [
-        `${PMD}/singapore.jpg`,
+        `/projects/magicmelody.jpg`,
         `${PMD}/singapore2.jpg`,
         `${PMD}/singapore3.jpg`,
       ],
@@ -240,7 +240,7 @@ export const portfolio = {
         "Kinect-based invisible guitar instrument inside a 360º immersive video environment. Debuted at Sónar+D festival.",
       collaborators: ["Felipe L. Navarro", "Mr. Fogg"],
       video: `${VIMEO}/75498054`,
-      images: [`${PMD}/guitar.jpg`, `${PMD}/guitar2.jpg`],
+      images: [`/projects/airguitar.jpg`, `${PMD}/guitar2.jpg`],
     },
     {
       id: "oresteia",
@@ -253,7 +253,7 @@ export const portfolio = {
         "Iannis Xenakis opera at Tokyo's Suntory Hall directed by Carlus Padrissa — audio-reactive visuals and Twitter-driven Japanese translations on a giant metallic tree.",
       collaborators: ["Carlus Padrissa", "Roland Olbeter", "Chu Uróz"],
       video: `${VIMEO}/76048215`,
-      images: [`${PMD}/orestiada.jpg`, `${PMD}/orestiada2.jpg`],
+      images: [`/projects/oresteia.jpg`, `${PMD}/orestiada2.jpg`],
     },
     {
       id: "orfeo",
@@ -266,7 +266,7 @@ export const portfolio = {
         "Gluck opera by Carlus Padrissa with full orchestra on stage, driven by 'Eco' — a bespoke realtime synchronisation engine. Performed in Peralada, Montevideo and Granada.",
       collaborators: ["Carlus Padrissa", "David Cid", "Sagar Fornies"],
       video: `${VIMEO}/75477912`,
-      images: [`${PMD}/orfeo.jpg`, `${PMD}/orfeo2.jpg`],
+      images: [`/projects/orfeo.jpg`, `${PMD}/orfeo2.jpg`],
     },
     {
       id: "visualsound",
@@ -280,7 +280,7 @@ export const portfolio = {
       collaborators: ["Tigrelab", "Setlego", "Franck Desert"],
       video: `${VIMEO}/75498967`,
       images: [
-        `${PMD}/kernel.jpg`,
+        `/projects/visualsound.jpg`,
         `${PMD}/kernel2.jpg`,
         `${PMD}/kernel3.jpg`,
       ],
@@ -296,7 +296,7 @@ export const portfolio = {
         "Audio-reactive concert with Christian Rey Nagel (Pinkertones), with generative visual scenes responding to live guitar projected on a semi-transparent tulle.",
       collaborators: ["Tigrelab", "Fritz Gnad", "EURO RSCG Barcelona"],
       video: `${VIMEO}/75500650`,
-      images: [`${PMD}/jack.jpg`, `${PMD}/jack2.jpg`],
+      images: [`/projects/jackdaniels.jpg`, `${PMD}/jack2.jpg`],
     },
   ],
 
