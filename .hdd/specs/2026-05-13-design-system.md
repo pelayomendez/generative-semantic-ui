@@ -231,3 +231,4 @@ Key technical choices:
   iteration — wiring).
 - Related spec: `.hdd/specs/2026-05-12-truncated-jsx-resilience.md`
   (also touches the portfolio shell, not the design tokens).
+- Closure commit: `9ec14f9` — `hdd: close design-system`.

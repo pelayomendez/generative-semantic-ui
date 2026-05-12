@@ -182,3 +182,4 @@ Key technical choices:
 - Build log entry: 2026-05-13 (execution).
 - Related spec: `.hdd/specs/2026-05-13-design-system.md` (also
   touches the portfolio's visual identity, different layer).
+- Closure commit: `02ee557` — `hdd: close personal-photo`.
