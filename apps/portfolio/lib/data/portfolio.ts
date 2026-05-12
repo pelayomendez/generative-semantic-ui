@@ -18,7 +18,6 @@ export const portfolio = {
   },
 
   contact: {
-    email: "Pelayo.Mendez@gft.com",
     github: "https://github.com/pelayomendez",
     linkedin: "https://www.linkedin.com/in/pelayomendez/",
     websites: [
