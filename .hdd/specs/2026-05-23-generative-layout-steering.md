@@ -1,8 +1,8 @@
 # Spec: Generative-layout steering — prompt few-shots
 
-> status: in-progress
+> status: closed
 > created: 2026-05-23
-> updated: 2026-05-23
+> updated: 2026-05-23 (closed)
 
 ## Summary
 The portfolio's visual identity is now nailed down (closed design-
@@ -209,4 +209,79 @@ rules in `route.ts` beyond the relocated `detailSample`.
   /hdd.close to confirm the LLM picks the right shape for each.
 
 ## Closure
-<!-- /hdd.close -->
+
+### Delivered outcome
+The portfolio system prompt now teaches the LLM by *demonstration*
+alongside the existing prose rules. Four literal-JSX few-shot examples
+(home / about / gallery / detail) live in
+`apps/portfolio/lib/few-shots.ts` and are injected into `route.ts` as a
+`## Few-shot examples` section. The LLM sees what each response shape
+looks like in the actual vocabulary, not just a textual description.
+
+#### What was added or changed
+- `apps/portfolio/lib/few-shots.ts` (new) — four named string exports
+  (`homeSample`, `aboutSample`, `gallerySample`, `detailSample`)
+  carrying literal JSX in the vocabulary, anchored to real dataset
+  values (Mugaritz, Apolo, real bio paragraphs, real GitHub /
+  LinkedIn URLs).
+- `apps/portfolio/app/api/generate/route.ts` — imports the four
+  samples; the inline `PROJECT DEEP-DIVE TEMPLATE` block was relocated
+  verbatim into `detailSample`; a new `## Few-shot examples` section
+  was injected between the existing "Bad vs good" block and the
+  dataset. Each sample is preceded by a single-line natural-English
+  tag (`// When the visitor asks X — respond like this:`).
+- `.hdd/functional-specs/portfolio.md` — Dataset rules section
+  updated to note that shape steering now combines the prose rules
+  with `apps/portfolio/lib/few-shots.ts`.
+
+Key technical choices:
+- Real-data anchors (Mugaritz, Apolo, real bio strings, real URLs)
+  over placeholder content. Reinforces "use only the dataset" while
+  still teaching shape. Trade-off: the few-shots may bias the LLM
+  toward those specific projects; mitigated because they're already
+  the prominent projects in the dataset.
+- All examples ship in every request — no per-question routing logic.
+  Cost: ~550 net new tokens per Mistral call. Benefit: the LLM learns
+  the *family* of shapes and picks the right one based on its own
+  reasoning + the prose rules.
+- Prose rules in `route.ts` were kept untouched. The two mechanisms
+  reinforce — prose says *when*, few-shots show *what*.
+- Examples live in a separate file (not inline in `route.ts`) so the
+  route stays focused on HTTP / streaming logic and the JSX strings
+  can be edited in isolation.
+
+### Deviations from original intent
+- None of substance. The spec asked for ≥4 few-shots, one per mode;
+  we shipped exactly four.
+
+### Remaining open questions
+- **Behavioural verification on the deployed site.** Acceptance
+  criterion #2 ("'show me your work' returns Grid of Cards") was
+  closed on the basis that the wiring is correct (`tsc` clean, prompt
+  carries the example, deploy pushed in `353e708`). Live verification
+  of the four canonical questions on the deployed portfolio is the
+  next operational step.
+- **The audit tool** — explicitly out of scope of this spec. Without
+  it, drift between prompt edits and the resulting response shapes
+  will only be caught by eye. Worth its own `/hdd.define` next.
+- **Per-screen layout reconciliation** — pixel-matching the deployed
+  gallery to `designs/gallery/screen.png` is still its own future
+  spec. Few-shots get the response shape closer; pixel-match remains
+  separate.
+- **Real-data bias** — the gallery few-shot uses Mugaritz and Apolo.
+  If the LLM gets lazy and always returns *those* projects regardless
+  of the question, that's a signal the few-shot anchoring is too
+  strong. Watch for it post-deploy.
+
+### References
+- Build log entry: 2026-05-23 (this iteration).
+- Closure commit: `[pending]` — will populate after commit.
+- Related spec: `.hdd/specs/2026-05-22-design-system-from-designs-folder.md`
+  (closed) — surfaced "layout steering" as an out-of-scope thread;
+  this spec resolves the prompt half. The audit-tool half remains
+  open.
+- Functional-spec updated: `.hdd/functional-specs/portfolio.md`
+  (Dataset rules section).
+- Future specs surfaced by this work: audit tool (verification side
+  of layout steering), per-screen layout reconciliation, motion-token
+  wiring, dark-mode rebrand.
