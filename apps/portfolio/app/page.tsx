@@ -198,7 +198,7 @@ export default function Page() {
         dragListener={false}
         dragControls={dragControls}
         dragMomentum={false}
-        dragConstraints={constraintsRef}
+        dragConstraints={{ top: -200, bottom: 80, left: -240, right: 240 }}
         dragElastic={0.05}
         whileDrag={{ scale: 1.015 }}
         onPointerDown={maybeStartDrag}
@@ -206,7 +206,7 @@ export default function Page() {
         className={
           hasStarted
             ? "fixed inset-x-0 bottom-6 z-30 mx-auto w-full max-w-2xl cursor-grab px-6 active:cursor-grabbing"
-            : "fixed inset-0 z-30 m-auto h-fit w-full max-w-2xl cursor-grab px-6 active:cursor-grabbing"
+            : "fixed inset-x-0 bottom-24 z-30 mx-auto h-fit w-full max-w-2xl cursor-grab px-6 active:cursor-grabbing"
         }
       >
         {/* Grip handle — visual cue that the form is draggable */}
@@ -284,19 +284,7 @@ function Intro() {
         className="mt-3 font-display text-4xl leading-[1.05] tracking-tight sm:text-6xl"
       >
         Hi, I'm {portfolio.profile.name.split(" ")[0]}.
-        <br />
-        <span className="text-muted-foreground">Ask me anything.</span>
       </motion.h1>
-      <motion.p
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.3 }}
-        className="mt-4 max-w-xl text-sm leading-relaxed text-foreground/70 sm:text-base"
-      >
-        Type a question and the page renders the answer — no fixed pages, no
-        layouts. The UI is generated live from a constrained vocabulary I built
-        for language models.
-      </motion.p>
     </div>
   );
 }
