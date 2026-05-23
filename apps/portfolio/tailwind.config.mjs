@@ -30,6 +30,7 @@ export default {
           DEFAULT: "var(--accent)",
           foreground: "var(--accent-foreground)",
         },
+        hair: "var(--border-hairline)",
       },
       borderRadius: {
         sm: "0.25rem",

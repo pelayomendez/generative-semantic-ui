@@ -3,7 +3,7 @@
 > domain: portfolio
 > location: `apps/portfolio/`
 > deployed: https://pelayomendez-portfolio.vercel.app
-> last updated: 2026-05-23 (few-shots)
+> last updated: 2026-05-23 (visual refresh)
 
 ## Purpose
 A chat-driven portfolio for Pelayo Méndez. The visitor asks a question;
@@ -77,8 +77,23 @@ portfolio doubles as the canonical real-world demo of this package.
 - Radii scale: `sm 0.25rem`, `DEFAULT 0.5rem`, `md 0.75rem`, `lg 1rem`,
   `xl 1.5rem`, `full 9999px`. Soft-Modern: inputs are pill-shaped,
   cards are 1–1.5rem rounded.
+- **Visual language** (per spec
+  `.hdd/specs/2026-05-23-adapter-visual-refresh.md`):
+  - **Glassmorphism** on floating surfaces (Card, Input):
+    `bg-white/70` + `backdrop-blur-[20px]`. No shadows anywhere in the
+    adapter.
+  - **Hairline borders**: a new `--border-hairline` CSS variable
+    (`rgba(0,0,0,0.05)` light / `rgba(255,255,255,0.05)` dark)
+    exposed as the Tailwind colour `hair`. Used by Card, Input,
+    Avatar ring, Badge outline, Button outline, Video frame, Divider.
+  - **Hover**: 1.02× scale only — no y-lift, no shadow change, no
+    accent shimmer.
+  - **Accent (Process Red `#ff3b30`)** is reserved for status /
+    `<Badge variant="accent">`. Link / List markers / Hero eyebrow
+    use foreground tones instead.
 - Generative aesthetic — the canvas backdrop is always animating;
-  entrance variants stagger.
+  entrance variants stagger. (Backdrop itself is unchanged in this
+  spec — reactive-backdrop work is a future spec.)
 - Dark mode is `[deferred]` — placeholder values live in
   `globals.css :root .dark`; a dedicated rebrand spec is the next
   step for the dark palette.
