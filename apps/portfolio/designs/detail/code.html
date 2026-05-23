@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-surface {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .particle-bg {
+            background-image: radial-gradient(circle, #e2e2e2 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed": "#1a1c1c",
+                    "tertiary-fixed-dim": "#cac6c4",
+                    "on-error-container": "#93000a",
+                    "inverse-on-surface": "#f1f0f5",
+                    "error-container": "#ffdad6",
+                    "surface-tint": "#5f5e5e",
+                    "outline-variant": "#c4c7c7",
+                    "on-secondary-fixed-variant": "#454747",
+                    "secondary": "#5d5f5f",
+                    "surface-variant": "#e3e2e7",
+                    "surface-dim": "#dad9df",
+                    "on-primary-fixed-variant": "#474746",
+                    "tertiary-container": "#1c1b1a",
+                    "surface-container-high": "#e9e7ed",
+                    "secondary-fixed": "#e2e2e2",
+                    "primary-fixed": "#e5e2e1",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#c6c6c7",
+                    "on-background": "#1a1b1f",
+                    "tertiary": "#000000",
+                    "surface-container-low": "#f4f3f8",
+                    "surface-container": "#eeedf3",
+                    "primary-fixed-dim": "#c8c6c5",
+                    "primary-container": "#1c1b1b",
+                    "on-error": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "surface-bright": "#faf9fe",
+                    "on-tertiary-fixed-variant": "#484645",
+                    "primary": "#000000",
+                    "on-primary-container": "#858383",
+                    "inverse-surface": "#2f3034",
+                    "on-tertiary-fixed": "#1c1b1a",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#c8c6c5",
+                    "on-secondary-container": "#5f6161",
+                    "outline": "#747878",
+                    "on-surface": "#1a1b1f",
+                    "on-primary": "#ffffff",
+                    "secondary-container": "#dcdddd",
+                    "on-surface-variant": "#444748",
+                    "on-tertiary-container": "#868382",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#e3e2e7",
+                    "on-primary-fixed": "#1c1b1b",
+                    "background": "#faf9fe",
+                    "tertiary-fixed": "#e6e2df",
+                    "surface": "#faf9fe"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "margin-desktop": "64px",
+                    "container-max": "1200px",
+                    "section-gap": "128px",
+                    "unit": "8px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-xl": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-md": ["JetBrains Mono"],
+                    "label-caps": ["JetBrains Mono"],
+                    "body-sm": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "headline-xl": ["4.5rem", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["2.25rem", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-lg": ["3rem", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-md": ["1rem", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-caps": ["0.75rem", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                    "body-sm": ["0.875rem", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary selection:text-on-primary min-h-screen font-body-md overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-surface/70 backdrop-blur-xl">
+<nav class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4">
+<div class="flex items-center gap-4">
+<span class="font-headline-lg-mobile text-headline-lg-mobile tracking-tight text-primary">Pelayo Méndez</span>
+</div>
+<div class="flex items-center gap-gutter">
+<div class="hidden md:flex gap-6 items-center">
+<a class="text-on-surface-variant font-body-sm hover:scale-105 transition-transform duration-200" href="#">work</a>
+<a class="text-on-surface-variant font-body-sm hover:scale-105 transition-transform duration-200" href="#">lab</a>
+<a class="text-on-surface-variant font-body-sm hover:scale-105 transition-transform duration-200" href="#">contact</a>
+</div>
+<div class="flex items-center gap-4 text-primary">
+<span class="material-symbols-outlined hover:scale-105 transition-transform cursor-pointer" data-icon="code">code</span>
+<span class="material-symbols-outlined hover:scale-105 transition-transform cursor-pointer" data-icon="terminal">terminal</span>
+<span class="material-symbols-outlined hover:scale-105 transition-transform cursor-pointer" data-icon="sensors">sensors</span>
+</div>
+</div>
+</nav>
+</header>
+<main class="pt-24 pb-section-gap">
+<!-- Breadcrumb & Status -->
+<section class="px-margin-mobile md:px-margin-desktop mb-12 max-w-container-max mx-auto">
+<div class="flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-2 font-body-sm text-on-surface-variant">
+<span class="opacity-40">&gt;</span>
+<a class="hover:text-primary transition-colors" href="#">work</a>
+<span class="opacity-40">&gt;</span>
+<span class="text-primary font-bold">apolo — nitsa</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-2 h-2 rounded-full bg-error animate-pulse"></div>
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">Archived / 2023</span>
+</div>
+</div>
+</section>
+<!-- Hero Media -->
+<section class="px-margin-mobile md:px-margin-desktop mb-section-gap max-w-container-max mx-auto">
+<div class="relative w-full aspect-[16/9] md:aspect-[21/9] rounded-xl overflow-hidden bg-surface-container-highest">
+<img class="w-full h-full object-cover grayscale" data-alt="A cinematic, high-definition wide shot of a futuristic nightclub installation inside Nitsa, Barcelona. The scene features massive, dark geometric LED panels emitting a cold, sharp white light that cuts through a hazy, smoke-filled atmosphere. The aesthetic is industrial yet highly refined, with high-contrast shadows and a minimalist, laboratory-like precision. This digital architecture creates an immersive, cerebral environment for electronic music performance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCxHZ8fsfKHw0SW61yxnkUs0w6jaisyNfyHrgUHaod4j0qiGcmoF-QI3dCFQk-zKVtq1q6ODQkqXMS-BLf4kAUOXeta3CwH8dFOzfPkt_ZZDoy2RcKgsV0UbAGoBwcwuASA8efwNMB4Zjqqwvjbz0Ltv3jjCf_5RW1Yq05zE12XtqzEezCf4H51-izlncEg89a6I7o16h7mFXpLG-WB6skObJtFd32OObEL9nbYOg4d8N24HiH_Hvtv1OGzdNZXUD4dmgim9wQvt0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+</div>
+</section>
+<!-- Project Info Grid -->
+<section class="px-margin-mobile md:px-margin-desktop mb-section-gap max-w-container-max mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Main Description -->
+<div class="md:col-span-8">
+<h1 class="font-headline-lg text-headline-lg mb-8 text-primary">APOLO — NITSA</h1>
+<div class="space-y-6 text-on-surface-variant leading-relaxed max-w-2xl">
+<p class="font-body-md text-body-md">
+                            A spatial intervention designed for the legendary Nitsa club in Barcelona. The project reimagines the relationship between sound, light, and architectural geometry through a series of synchronized LED installations that respond to live audio frequencies in real-time.
+                        </p>
+<p class="font-body-md text-body-md">
+                            The visual language focuses on the concept of 'digital structuralism'—using light as a physical material to define and distort the perceived dimensions of the dance floor. By stripping away color and focusing on monochromatic intensity, the installation creates a clinical, focused atmosphere.
+                        </p>
+</div>
+</div>
+<!-- Meta Specs -->
+<div class="md:col-span-4 space-y-12">
+<div>
+<span class="font-label-caps text-label-caps text-on-primary-container block mb-4 border-b border-outline-variant/10 pb-2 uppercase">Role</span>
+<ul class="space-y-2 font-body-sm text-on-surface">
+<li>Creative Direction</li>
+<li>Interaction Design</li>
+<li>Project Management</li>
+</ul>
+</div>
+<div>
+<span class="font-label-caps text-label-caps text-on-primary-container block mb-4 border-b border-outline-variant/10 pb-2 uppercase">Technologies</span>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-surface-container-low text-on-surface-variant font-body-sm rounded-lg border border-outline-variant/5">TouchDesigner</span>
+<span class="px-3 py-1 bg-surface-container-low text-on-surface-variant font-body-sm rounded-lg border border-outline-variant/5">LED Mapping</span>
+<span class="px-3 py-1 bg-surface-container-low text-on-surface-variant font-body-sm rounded-lg border border-outline-variant/5">OSC / MIDI</span>
+<span class="px-3 py-1 bg-surface-container-low text-on-surface-variant font-body-sm rounded-lg border border-outline-variant/5">C++</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Supporting Media Bento Grid -->
+<section class="px-margin-mobile md:px-margin-desktop mb-section-gap max-w-container-max mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="md:col-span-2 aspect-square rounded-xl overflow-hidden glass-surface p-1">
+<img class="w-full h-full object-cover rounded-lg grayscale" data-alt="Macro detail shot of custom LED hardware components in a clean, laboratory setting. The lighting is cold and clinical, highlighting the metallic textures and intricate circuit patterns. The style is hyper-minimalist and technical, focusing on the precision of the engineering behind the APOLO installation. Soft white backgrounds emphasize the charcoal and silver tones of the components." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmXF5VsYKlfyKHOINmfF4rF8G3M6Tnou1idA8euUAhx0914SRoyCE-XzRxsBAfGEjBQa3KRo4dm2L-bQsgWuFmAz4g5MnCXJlj5JxvdtrgiuLTWxdvXXCjx6f1kEOiZiDogIQkflhi-a_9AozlZ89inXXlDQdwIl6RZhOAZ2zxHdmODvn-8FcsnE-DRpqzCFIeNjGxz2OYTWbVCfOEL9UpvTaUtGVU2oFrtS3RJ5VTLanoBd9iOSrtynuHVS5mVVzR70bjis_mIgo"/>
+</div>
+<div class="md:col-span-2 aspect-[4/3] rounded-xl overflow-hidden glass-surface p-1">
+<img class="w-full h-full object-cover rounded-lg grayscale" data-alt="Abstract architectural shot of light beams slicing through a dark industrial space. The composition is asymmetrical and sharp, evoking a sense of structured chaos. High-key light rays create geometric shapes against the deep black background, consistent with the monochromatic and minimalist aesthetic of the project's visual identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9q6lY6UBSPl7DH4szbuVhVrgm3JUrtwvy8dE8k6OEUXwro4hpoS5cIUImlN-5rFoXgiet1dRgbglopRp0xa8mfFLcsxEggyfUI7ECBhXYSm7mg7a6jnX3l-cG37NkGKI1mpRWoHuLhJdwW7n-wNymPyuXMm32xQd-GBTlkMg5t2okLRD1QZJZgH4t-z7OQRoiKxFT95D3Swlh5NsUL9mDszwuLh6xP2WAZOVDCUSWjQ8jxWmtan61OqFvf49LtVKVmeRy_1CvdIE"/>
+</div>
+<div class="md:col-span-1 aspect-square rounded-xl overflow-hidden glass-surface p-1">
+<img class="w-full h-full object-cover rounded-lg grayscale" data-alt="Candid portrait of a designer working at a terminal in a dark, tech-focused environment. The screen glow illuminates their face with a soft, neutral light. The surrounding space is minimalist and uncluttered, emphasizing a mood of deep focus and intellectual processing. The overall color palette is restricted to blacks, whites, and subtle greys." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoFYI-wpX0Qjl0MkVo2_MTZ_F3-dBloXaQxgiJZKTAgvV1NEp81WZqYQ1GUOQZzMWUH3QHbOckoI7tnf9KfqkaEzI_7TCSg3VbzCz7A_YoaJetCgCtt8WZ4RuTmWWaGy8GSBsEvyczVBtoU6-kb2wIr61o6HvkTK6W0dOkgszU3Q99SR8Ex8X6Lj9gePB9ZXqXz75LfCJe35U1X7qVLKHDRdtDPPMMqMK5MN6lCmH1lp4mlq8C7cSMia5zJkht33xGx_3bhZ4Tqso"/>
+</div>
+<div class="md:col-span-3 aspect-[16/9] rounded-xl overflow-hidden glass-surface p-1">
+<img class="w-full h-full object-cover rounded-lg grayscale" data-alt="Wide shot of the final installation performance at night. The space is filled with a dense crowd, illuminated only by the strobing white patterns of the LED ceiling installation. The contrast between the organic movement of the crowd and the rigid, mathematical light structures creates a powerful visual tension. The mood is energetic yet controlled and sophisticated." src="https://lh3.googleusercontent.com/aida-public/AB6AXuANg1wgdVUe3ZeTnKUqwDRGQA5i3DAbyxCPCty8LWJtGCw5AAj140V0xPQMQcPRW2MQYFwT_yA0KZ3TyoAED4sogOSid_fEKNqJajKME6anqAa5Lq46iTf6I3OEInyG5QGzznulk-zGMwrxnphM9vItqFp9AC5ekwt9kcifOcYGrXlh2NIWvJT_Uk0NF0MCSiksfn0ohfrYJwkSIs3ERgY7nmpeU_C_AhpdtXUAhbn7hE-J2Q2c-aq2-LouQWEpiryBKLAx46oEmyI"/>
+</div>
+</div>
+</section>
+<!-- Technical Documentation Table -->
+<section class="px-margin-mobile md:px-margin-desktop mb-section-gap max-w-container-max mx-auto">
+<h3 class="font-label-caps text-label-caps mb-8 text-on-surface-variant tracking-[0.2em] uppercase">Technical Log</h3>
+<div class="divide-y divide-outline-variant/10">
+<div class="grid grid-cols-2 md:grid-cols-4 py-6 gap-4">
+<span class="font-body-sm text-on-surface-variant">Module.ID</span>
+<span class="font-body-sm text-primary col-span-1 md:col-span-3">APL_NTS_01.v_final</span>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 py-6 gap-4">
+<span class="font-body-sm text-on-surface-variant">Refresh.Rate</span>
+<span class="font-body-sm text-primary col-span-1 md:col-span-3">120Hz Synchronized</span>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 py-6 gap-4">
+<span class="font-body-sm text-on-surface-variant">Output.Res</span>
+<span class="font-body-sm text-primary col-span-1 md:col-span-3">14,400 x 800 Pixels</span>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 py-6 gap-4">
+<span class="font-body-sm text-on-surface-variant">Latent.Sync</span>
+<span class="font-body-sm text-primary col-span-1 md:col-span-3">&lt; 4ms Jitter</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Interaction Area -->
+<div class="fixed bottom-0 left-0 w-full z-40 bg-surface/80 backdrop-blur-md">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-6">
+<div class="glass-surface rounded-full flex items-center px-6 py-4 gap-4 max-w-3xl mx-auto border-outline-variant/10">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="terminal">terminal</span>
+<input class="bg-transparent border-none focus:ring-0 w-full font-body-sm text-on-surface placeholder:text-on-surface-variant/40" placeholder="Ask another question about this project..." type="text"/>
+<button class="flex items-center gap-2 text-primary font-bold hover:scale-105 transition-all">
+<span class="material-symbols-outlined" data-icon="north_east">north_east</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="w-full px-margin-mobile md:px-margin-desktop py-8 border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-center gap-gutter bg-transparent">
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">PM — LABS</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">© 2024 Pelayo Méndez. Built with intelligence.</div>
+<div class="flex gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-sm" href="#">Legal</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-sm" href="#">Privacy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-body-sm" href="#">Terms</a>
+</div>
+</footer>
+<!-- Background Layer -->
+<div class="fixed inset-0 -z-10 particle-bg opacity-[0.03] pointer-events-none"></div>
+</body></html>

@@ -4,40 +4,40 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;          /* white, like pelayomendez.dev */
-    --foreground: 0 0% 13%;            /* #222 */
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 13%;
-    --primary: 0 0% 13%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 13%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 33%;      /* #555 */
-    --accent: 4 92% 40%;               /* #c40f07 — pelayomendez.dev red */
-    --accent-foreground: 0 0% 100%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 4 92% 40%;
-    --radius: 0.75rem;
+    --background: #faf9fe;
+    --foreground: #1a1b1f;
+    --card: #ffffff;
+    --card-foreground: #1a1b1f;
+    --primary: #000000;
+    --primary-foreground: #ffffff;
+    --secondary: #eeedf3;
+    --secondary-foreground: #1a1b1f;
+    --muted: #f4f3f8;
+    --muted-foreground: #444748;
+    --accent: #ff3b30;
+    --accent-foreground: #ffffff;
+    --border: #c4c7c7;
+    --input: #c4c7c7;
+    --ring: #747878;
   }
 
   .dark {
-    --background: 0 0% 6%;
-    --foreground: 0 0% 96%;
-    --card: 0 0% 9%;
-    --card-foreground: 0 0% 96%;
-    --primary: 0 0% 96%;
-    --primary-foreground: 0 0% 8%;
-    --secondary: 0 0% 14%;
-    --secondary-foreground: 0 0% 96%;
-    --muted: 0 0% 14%;
-    --muted-foreground: 0 0% 60%;
-    --accent: 4 92% 50%;
-    --accent-foreground: 0 0% 100%;
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
-    --ring: 4 92% 50%;
+    /* [deferred] dark-mode rebrand — placeholder values, not yet driven by designs/DESIGN.md */
+    --background: #0f0f10;
+    --foreground: #f4f3f8;
+    --card: #1a1a1c;
+    --card-foreground: #f4f3f8;
+    --primary: #ffffff;
+    --primary-foreground: #000000;
+    --secondary: #2a2a2d;
+    --secondary-foreground: #f4f3f8;
+    --muted: #2a2a2d;
+    --muted-foreground: #a0a0a3;
+    --accent: #ff3b30;
+    --accent-foreground: #ffffff;
+    --border: #2a2a2d;
+    --input: #2a2a2d;
+    --ring: #ff3b30;
   }
 
   * {

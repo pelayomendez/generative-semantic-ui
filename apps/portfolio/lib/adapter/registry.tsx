@@ -176,8 +176,8 @@ export const Heading = ({
   const styles: Record<number, string> = {
     1: "font-display text-5xl leading-[1.05] tracking-tight sm:text-6xl",
     2: "font-display text-3xl tracking-tight sm:text-4xl",
-    3: "font-sans text-xl font-semibold tracking-tight",
-    4: "font-sans text-base font-semibold tracking-tight",
+    3: "font-sans text-xl font-medium tracking-tight",
+    4: "font-sans text-base font-medium tracking-tight",
   };
   const className = styles[level];
   const inner = <span className="block">{children}</span>;

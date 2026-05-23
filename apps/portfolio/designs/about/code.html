@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&amp;family=JetBrains+Mono:wght@400;500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed": "#1a1c1c",
+                    "tertiary-fixed-dim": "#cac6c4",
+                    "on-error-container": "#93000a",
+                    "inverse-on-surface": "#f1f0f5",
+                    "error-container": "#ffdad6",
+                    "surface-tint": "#5f5e5e",
+                    "outline-variant": "#c4c7c7",
+                    "on-secondary-fixed-variant": "#454747",
+                    "secondary": "#F5F5F5",
+                    "surface-variant": "#e3e2e7",
+                    "surface-dim": "#dad9df",
+                    "on-primary-fixed-variant": "#474746",
+                    "tertiary-container": "#1c1b1a",
+                    "surface-container-high": "#e9e7ed",
+                    "secondary-fixed": "#e2e2e2",
+                    "primary-fixed": "#e5e2e1",
+                    "error": "#ba1a1a",
+                    "secondary-fixed-dim": "#c6c6c7",
+                    "on-background": "#1a1b1f",
+                    "tertiary": "#000000",
+                    "surface-container-low": "#f4f3f8",
+                    "surface-container": "#eeedf3",
+                    "primary-fixed-dim": "#c8c6c5",
+                    "primary-container": "#1c1b1b",
+                    "on-error": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "surface-bright": "#faf9fe",
+                    "on-tertiary-fixed-variant": "#484645",
+                    "primary": "#000000",
+                    "on-primary-container": "#858383",
+                    "inverse-surface": "#2f3034",
+                    "on-tertiary-fixed": "#1c1b1a",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#c8c6c5",
+                    "on-secondary-container": "#5f6161",
+                    "outline": "#747878",
+                    "on-surface": "#1a1b1f",
+                    "on-primary": "#ffffff",
+                    "secondary-container": "#dcdddd",
+                    "on-surface-variant": "#444748",
+                    "on-tertiary-container": "#868382",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-highest": "#e3e2e7",
+                    "on-primary-fixed": "#1c1b1b",
+                    "background": "#faf9fe",
+                    "tertiary-fixed": "#e6e2df",
+                    "surface": "#faf9fe"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "margin-desktop": "64px",
+                    "container-max": "1200px",
+                    "section-gap": "128px",
+                    "unit": "8px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-xl": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-md": ["JetBrains Mono"],
+                    "label-caps": ["JetBrains Mono"],
+                    "body-sm": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "headline-xl": ["4.5rem", {"lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["2.25rem", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-lg": ["3rem", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-md": ["1rem", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-caps": ["0.75rem", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                    "body-sm": ["0.875rem", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .particle-bg {
+            background-image: radial-gradient(circle, #e0e0e0 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .pulse-dot {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .4; }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden selection:bg-primary selection:text-white">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 left-0 w-full z-50 bg-surface/70 backdrop-blur-xl flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4">
+<div class="font-headline-lg-mobile text-headline-lg-mobile tracking-tight text-primary font-bold">
+            Pelayo Méndez
+        </div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-primary hover:scale-105 transition-transform cursor-pointer" data-icon="code">code</span>
+<span class="material-symbols-outlined text-primary hover:scale-105 transition-transform cursor-pointer" data-icon="terminal">terminal</span>
+<span class="material-symbols-outlined text-primary hover:scale-105 transition-transform cursor-pointer" data-icon="sensors">sensors</span>
+</div>
+</nav>
+<!-- Background Decoration -->
+<div class="fixed inset-0 pointer-events-none particle-bg -z-10 opacity-40"></div>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop pt-32 pb-48">
+<!-- Hero Section: The Prompt Response Look -->
+<header class="mb-section-gap flex flex-col items-center text-center">
+<div class="flex items-center gap-2 mb-6">
+<div class="w-2 h-2 rounded-full bg-error pulse-dot"></div>
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">System Response: Initializing Overview</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-primary max-w-4xl">
+                Creative Engineering at the Edge of Intelligence.
+            </h1>
+</header>
+<!-- Main Narrative Section -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-gutter mb-section-gap">
+<div class="md:col-start-3 md:col-span-8">
+<h2 class="font-label-caps text-label-caps text-on-surface-variant mb-8 border-b border-outline-variant/10 pb-2">/ PHILOSOPHY</h2>
+<div class="space-y-12 font-body-md text-body-md leading-relaxed text-on-surface">
+<p>
+                        I am Pelayo Méndez, a software developer operating at the intersection of aesthetic precision and generative logic. My work focuses on the transition from static interfaces to dynamic, intelligent environments that anticipate user intent and evolve in real-time.
+                    </p>
+<p>
+                        I believe in <span class="bg-primary text-white px-1">Generative UI</span>: the concept that a user interface should not be a fixed grid, but a fluid response to data. By leveraging LLMs and advanced pattern recognition, we can build tools that feel less like software and more like an extension of human thought.
+                    </p>
+<p>
+                        In my lab, code is more than logic—it is a medium for sculptural expression. Every pixel is an architectural decision, every function a component of a larger, living system.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Technical Stack & Current Focus: Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-section-gap">
+<div class="md:col-span-2 glass-panel p-8 rounded-xl flex flex-col justify-between min-h-[300px]">
+<div>
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-6 uppercase">Current Focus: Autonomous Workflows</h3>
+<p class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary leading-none mb-8">Engineering systems that think for themselves.</p>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-lg font-body-sm text-body-sm">AI Orchestration</span>
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-lg font-body-sm text-body-sm">Visual Synthesis</span>
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-lg font-body-sm text-body-sm">Real-time GPU Rendering</span>
+</div>
+</div>
+<div class="glass-panel p-8 rounded-xl">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-6 uppercase">Tech Stack</h3>
+<ul class="space-y-4 font-body-sm text-body-sm">
+<li class="flex justify-between border-b border-outline-variant/10 pb-2">
+<span class="text-on-surface-variant">Frameworks</span>
+<span class="text-primary font-bold">Next.js / Svelte</span>
+</li>
+<li class="flex justify-between border-b border-outline-variant/10 pb-2">
+<span class="text-on-surface-variant">Intelligence</span>
+<span class="text-primary font-bold">PyTorch / OpenAI</span>
+</li>
+<li class="flex justify-between border-b border-outline-variant/10 pb-2">
+<span class="text-on-surface-variant">Design</span>
+<span class="text-primary font-bold">Tailwind / Figma</span>
+</li>
+<li class="flex justify-between border-b border-outline-variant/10 pb-2">
+<span class="text-on-surface-variant">Creative</span>
+<span class="text-primary font-bold">Three.js / WebGL</span>
+</li>
+</ul>
+</div>
+</section>
+<!-- Selected Clients & Collabs -->
+<section class="mb-section-gap">
+<h2 class="font-label-caps text-label-caps text-on-surface-variant mb-12 text-center uppercase tracking-widest">Selected Clients &amp; Collaborations</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-12 opacity-60 grayscale">
+<div class="flex items-center justify-center h-24 p-6 glass-panel rounded-xl">
+<img alt="Client Logo" class="max-h-8 object-contain" data-alt="A clean, minimalist logo of a modern financial technology company rendered in high-contrast black and white. The aesthetic is sharp and professional, fitting into a sterile, hyper-minimalist lab environment with soft lighting and precision engineering vibes." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQGnRcPTmSi9OiCWbnalQcNjVjzfYGUTYu2RvQvE8if6INU9ZpFaxbm0YQdY_IZORW4FV7wTZaVRppeXUYuOCphqbAiCNDRqnxwzTiQUcWxlL9a0m4TgyTwQO52uA1GVuo2Q5tI9RXF1co4LnXOVDFzkqUuYL2kjze52SjC6Wk2O48J1o-hI-sZ6lDKG8MKk_eU3ZPkrGCjqZ6oC9dXbHm_BwPWfbPDC8irM_GrHjh3FcsNg6Z5ynY9xELtnhfB6bN1SI3S5-KTfY"/>
+</div>
+<div class="flex items-center justify-center h-24 p-6 glass-panel rounded-xl">
+<img alt="Client Logo" class="max-h-8 object-contain" data-alt="The monochrome logo of a global technology giant, presented as a subtle watermark on a frosted glass surface. The setting is a bright, futuristic studio with cold white light and a sophisticated, intellectual atmosphere. The image is clean and highly detailed." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsMn8i9Chfw0wHvzaZ2bukQKigYGVJG052wUalolG6XhXZaY4IJmNlD-DACzY7S3rX5My4DCUzDDqsqTz5YXvyvc7lgwnrV1oWR_42ZCGUnptEl0-UTscvnUhEnCdJM0zyzphxxPKItrjI3GykLZ6JtBzGL04_9EaMA-_Ljf3o6C8_iI0kzbH6tj-CFkKJ-toQIk2uPG81QPpkGoHWaQo7my6gaPS6t1rxwIZjDw7ojU1OrwJkH06VFkVQIUnfzZzvhH7ja3jdLio"/>
+</div>
+<div class="flex items-center justify-center h-24 p-6 glass-panel rounded-xl">
+<img alt="Client Logo" class="max-h-8 object-contain" data-alt="A bold, geometric brand mark of a creative software leader displayed in a minimalist white-room setting. The lighting is high-key and diffused, casting almost no shadows. The overall feel is one of digital purity and avant-garde technological advancement." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDieoNRTm_xRy3X1PCQDi7LXQYGD9F3lcQCLP3GSXrKTusFWYxMRFVWsYpZCrHkdRN2Yi-5tNM3oQqqhk7Yq81poJNOkwrDMyMe8cx73Yl-NYTvtVJ0KMcGa8FA3aU9RzF9VIIuL_lxu1h7fhTnTq2jUV6TeTi5azFC0Sl99ruXjjqSG6T8C-YkXmw1rVyokgv2f0I_xGQz6C2YzsRdIQM4rk8TWsUpntwLS1DSjgCmjvfbWN2Xz0cXL2ftcjmRHpIkCBJOxdbHtGg"/>
+</div>
+<div class="flex items-center justify-center h-24 p-6 glass-panel rounded-xl">
+<div class="font-headline-lg text-primary tracking-tighter opacity-80">LAB_01</div>
+</div>
+</div>
+</section>
+<!-- Visual Anchor: Project Card Preview -->
+<section class="relative h-[600px] rounded-2xl overflow-hidden glass-panel flex items-end p-margin-desktop mb-section-gap">
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10"></div>
+<img alt="Creative Project" class="absolute inset-0 w-full h-full object-cover" data-alt="A sprawling digital canvas showing complex, generative patterns that resemble fluid silk in monochromatic greys and deep blacks. The artwork is presented as part of a high-tech laboratory display, with glowing edges and a sense of depth and movement. The atmosphere is calm, sophisticated, and deeply rooted in modern AI aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9Ex2XKZkuDnyMVXpK_teNdykYG0lzx4j3uY66uOKIs8kt0qzaT1z77FI32S5KeEriAasMQX3AN54gXNFIlK5jRRqOiCkb7URIpBZjYu_KJzknh3sd2pykZmzOU_W_0MjxDRPgb6KKKUjsp6yZ1dvgJw2jjQxjUKrOdON7w7adAesbrNWOQ1TtSoGut96HcE6lHSieZNcfnHxFsMN_YgDZ1YzID8m9IMwBhD9S1cvlXSbP3N3jHEzbRlvHXJ4K8TTXtMh90s6gX7M"/>
+<div class="relative z-20 max-w-xl">
+<h3 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-4">Neural Canvas</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6">An experimental interface exploring latent space navigation through physical movement and eye tracking.</p>
+<button class="px-6 py-3 bg-primary text-white rounded-full font-label-caps text-label-caps hover:scale-105 transition-transform">Explore Archive</button>
+</div>
+</section>
+</main>
+<!-- Bottom Input: Interaction Layer -->
+<div class="fixed bottom-0 left-0 w-full p-margin-mobile md:p-margin-desktop pointer-events-none z-50">
+<div class="max-w-container-max mx-auto pointer-events-auto">
+<div class="glass-panel rounded-full flex items-center px-8 py-4 shadow-xl border border-outline-variant/20 hover:scale-[1.01] transition-transform">
+<span class="material-symbols-outlined text-on-surface-variant mr-4" data-icon="terminal">terminal</span>
+<input class="bg-transparent border-none focus:ring-0 w-full font-body-md text-primary placeholder:text-on-surface-variant/50" placeholder="Ask another question about Pelayo..." type="text"/>
+<div class="flex items-center gap-2">
+<kbd class="hidden md:inline-block font-label-caps text-[10px] bg-outline-variant/20 px-2 py-1 rounded">⌘K</kbd>
+<span class="material-symbols-outlined text-primary ml-4 cursor-pointer" data-icon="send">send</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="w-full px-margin-mobile md:px-margin-desktop py-8 border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-center gap-gutter text-on-surface-variant font-body-sm text-body-sm">
+<div class="font-label-caps text-label-caps uppercase tracking-widest text-primary">PELAYO MÉNDEZ © 2024</div>
+<div class="flex gap-8">
+<a class="hover:text-primary transition-colors" href="#">Legal</a>
+<a class="hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="hover:text-primary transition-colors" href="#">Terms</a>
+</div>
+<div class="text-right">Built with intelligence.</div>
+</footer>
+</body></html>

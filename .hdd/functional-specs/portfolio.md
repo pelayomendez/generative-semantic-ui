@@ -3,7 +3,7 @@
 > domain: portfolio
 > location: `apps/portfolio/`
 > deployed: https://pelayomendez-portfolio.vercel.app
-> last updated: 2026-05-12
+> last updated: 2026-05-23
 
 ## Purpose
 A chat-driven portfolio for Pelayo Méndez. The visitor asks a question;
@@ -54,10 +54,27 @@ portfolio doubles as the canonical real-world demo of this package.
   `Card`s — NO videos in the grid cells.
 
 ## Brand identity
-- White background, dark-red accent `#c40f07` (from pelayomendez.dev).
-- Display: Instrument Serif (`font-display`). Body: Inter (`font-sans`).
-- Generative aesthetic — the canvas backdrop is always animating; entrance
-  variants stagger.
+- Source of truth: `apps/portfolio/designs/DESIGN.md` ("Semantic Lab"
+  / "Hyper-Minimalist Lab" — see spec
+  `.hdd/specs/2026-05-22-design-system-from-designs-folder.md`).
+- Surface `#faf9fe` background, foreground `#1a1b1f`, accent `#ff3b30`
+  "Process Red" (reserved for status indicators + micro-interactions —
+  never large surfaces).
+- Display family: **Inter** (weight 600) on `font-display`. Body / data
+  family: **JetBrains Mono** (weights 400/500) on `font-sans` and
+  `font-mono` — the monospaced body is intentional, reinforcing the
+  "Lab" aesthetic.
+- Active palette is the ~12-token subset of the full M3 set documented
+  in `designs/DESIGN.md`. Add a token to globals only when a usage
+  demands it.
+- Radii scale: `sm 0.25rem`, `DEFAULT 0.5rem`, `md 0.75rem`, `lg 1rem`,
+  `xl 1.5rem`, `full 9999px`. Soft-Modern: inputs are pill-shaped,
+  cards are 1–1.5rem rounded.
+- Generative aesthetic — the canvas backdrop is always animating;
+  entrance variants stagger.
+- Dark mode is `[deferred]` — placeholder values live in
+  `globals.css :root .dark`; a dedicated rebrand spec is the next
+  step for the dark palette.
 
 ## Rate limiting
 - 12 requests per hour per IP. Implemented in
