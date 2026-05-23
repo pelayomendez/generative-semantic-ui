@@ -79,9 +79,17 @@ portfolio doubles as the canonical real-world demo of this package.
   cards are 1–1.5rem rounded.
 - **Visual language** (per spec
   `.hdd/specs/2026-05-23-adapter-visual-refresh.md`):
-  - **Glassmorphism** on floating surfaces (Card, Input):
-    `bg-white/70` + `backdrop-blur-[20px]`. No shadows anywhere in the
+  - **Cards are opaque** (`bg-card`) with hairline borders and a
+    `-4px y-lift` on hover; the cover image inside a Card zooms
+    `scale-105` over 700ms on group hover. Glassmorphism is **not**
+    applied to Cards — it's reserved for the floating chat input in
+    the shell (separate future spec). `<Input>` in the adapter
+    matches Card (opaque + hairline). No shadows anywhere in the
     adapter.
+    (Corrected 2026-05-23 — the previous adapter-visual-refresh
+    closure documented Cards as glass; that was wrong against
+    `designs/gallery/code.html` and was reverted in spec
+    `2026-05-23-card-and-badge-design-alignment.md`.)
   - **Hairline borders**: a new `--border-hairline` CSS variable
     (`rgba(0,0,0,0.05)` light / `rgba(255,255,255,0.05)` dark)
     exposed as the Tailwind colour `hair`. Used by Card, Input,

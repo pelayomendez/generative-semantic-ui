@@ -1,8 +1,8 @@
 # Spec: Card + badge design alignment
 
-> status: in-progress
+> status: closed
 > created: 2026-05-23
-> updated: 2026-05-23
+> updated: 2026-05-23 (closed)
 
 ## Summary
 The just-closed `adapter-visual-refresh` spec applied DESIGN.md *prose*
@@ -218,4 +218,87 @@ reactive backdrop; new tokens or vocabulary.
   with letter-spacing.
 
 ## Closure
-<!-- /hdd.close -->
+
+### Delivered outcome
+Card, Badge, Grid, and Input in the portfolio adapter now match the
+visual contract in `designs/gallery/code.html` — opaque white surfaces,
+hairline borders, y-lift hover, image-cover zoom on group hover,
+small-caps tracked badges, and adapter defaults bumped to match the
+design's generous rhythm. The source-of-truth rule
+("`code.html` wins over prose") is recorded at the top of
+`designs/DESIGN.md`.
+
+#### What was added or changed
+- `apps/portfolio/designs/DESIGN.md` — source-of-truth blockquote
+  prepended after the frontmatter.
+- `apps/portfolio/lib/adapter/registry.tsx`:
+  - `Card`: opaque `bg-card` (was glass `bg-white/70 +
+    backdrop-blur-[20px]`); hover `y: -4` over 0.3s (was `scale: 1.02`
+    over 0.2s); image cover wrapper now applies
+    `transition-transform duration-700 group-hover:scale-105`.
+    Default `padding` 6 → 8.
+  - `Badge`: `rounded-full text-xs` → `rounded text-[0.7rem]
+    uppercase tracking-wider`; all three variants inherit the shape;
+    colour treatments unchanged.
+  - `Grid`: default `gap` 4 → 8.
+  - `Input`: opaque `bg-card` (was glass), hairline + focus ring
+    preserved.
+- `apps/portfolio/lib/few-shots.ts`: `gallerySample` Grid
+  `gap={6}` → `gap={8}` to line up with the new adapter default.
+- `.hdd/functional-specs/portfolio.md`: Visual language sub-section
+  reconciled — "glass on Card" is corrected to "opaque + lift +
+  cover zoom"; the previous spec's mistake is flagged inline.
+
+Key technical choices:
+- Adopted the `code.html`-wins rule explicitly in `designs/DESIGN.md`
+  rather than leaving it implicit. Future visual specs read the
+  visual artefact first.
+- Card hover uses Framer Motion (`whileHover: y: -4`) for the lift
+  and CSS `group-hover:scale-105` for the image zoom. Two motion
+  layers, two timings (300ms lift / 700ms zoom); they don't conflict
+  because they target different elements.
+- Badge shape became `rounded` (Tailwind DEFAULT = 0.5rem) to match
+  DESIGN.md frontmatter's "Small Components (Chips/Tags): 0.5rem
+  radius" — same visual outcome as the design HTML's `rounded-lg`
+  under default-Tailwind, just expressed in our renamed scale.
+
+### Deviations from original intent
+- None of substance. The acceptance criteria were each met by the
+  edits above.
+
+### Remaining open questions
+- **The overall visual feeling still doesn't match the designs.**
+  Card + Badge + Grid + Input are now aligned, but the user reports
+  the deployed site still looks "nothing like the designs". The
+  remaining gap is in the **shell** (page.tsx, Backdrop, header,
+  floating chat input, page-level container spacing) — outside this
+  spec's adapter-only scope. Captured as the trigger for a follow-up
+  investigation (see the conversation that closed this spec).
+- **Cards without images render a broken image.** Reported by the
+  user post-deploy. Likely cause: the LLM emits `<Card>` with an
+  `<Image>` whose `src` is a bad path (hallucinated, or a real
+  project's path that doesn't exist in `public/projects/`).
+  Mitigation candidates: stricter prompt rule, image-path
+  validation server-side, or a graceful fallback in the adapter
+  `<Image>` component when the asset fails to load. Investigation
+  needed.
+- **"Incomplete" errors on project queries.** The truncated-response
+  flag (`finish_reason === "length"` in `route.ts`) is firing for
+  gallery / detail responses. `max_tokens` is currently 4096 with
+  ~5-8k of input prompt; the model may be running out of headroom
+  when emitting a multi-Card Grid. Likely fix: bump `max_tokens` or
+  trim the prompt/dataset. Investigation needed.
+
+### References
+- Build log entry: 2026-05-23 (this iteration).
+- Closure commit: `[pending]` — will populate after commit.
+- Related closed specs:
+  `.hdd/specs/2026-05-22-design-system-from-designs-folder.md` (token
+  wiring), `.hdd/specs/2026-05-23-generative-layout-steering.md`
+  (few-shots), `.hdd/specs/2026-05-23-adapter-visual-refresh.md`
+  (adapter visual rules — partially superseded by this spec on Card
+  and Input surface).
+- Functional-spec updated: `.hdd/functional-specs/portfolio.md`
+  (Visual language sub-section corrected).
+- Investigation triggered: the three "Remaining open questions"
+  bullets above feed into the next round of /hdd.define decisions.
