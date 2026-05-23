@@ -50,6 +50,29 @@ export const gallerySample = `<Section title="Selected work">
   </Grid>
 </Section>`;
 
+export const reposSample = `<Section title="Open source">
+  <Grid cols={2} gap={8}>
+    <Card>
+      <Image src="/icons/github.svg" alt="GitHub" />
+      <Heading level={3}>Honest Driven Development</Heading>
+      <Paragraph>Intent-driven development with integrated specs — npm package, zero runtime.</Paragraph>
+      <Row gap={2}>
+        <Badge>DX</Badge>
+        <Badge>AI tooling</Badge>
+      </Row>
+    </Card>
+    <Card>
+      <Image src="/icons/github.svg" alt="GitHub" />
+      <Heading level={3}>Generative Semantic UI</Heading>
+      <Paragraph>Constrained JSX vocabulary letting LLMs render real UI — like HTML for AI agents.</Paragraph>
+      <Row gap={2}>
+        <Badge>TypeScript</Badge>
+        <Badge>LLMs</Badge>
+      </Row>
+    </Card>
+  </Grid>
+</Section>`;
+
 export const detailSample = `<Section title="Mugaritz: OFF-ROAD (2015)">
   <Stack gap={4}>
     <Video src="https://player.vimeo.com/video/139784150" title="Mugaritz: OFF-ROAD" />
