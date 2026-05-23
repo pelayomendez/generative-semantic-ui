@@ -19,6 +19,7 @@
     --border: #c4c7c7;
     --input: #c4c7c7;
     --ring: #747878;
+    --border-hairline: rgba(0, 0, 0, 0.05);
   }
 
   .dark {
@@ -38,6 +39,7 @@
     --border: #2a2a2d;
     --input: #2a2a2d;
     --ring: #ff3b30;
+    --border-hairline: rgba(255, 255, 255, 0.05);
   }
 
   * {

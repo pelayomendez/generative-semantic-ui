@@ -134,12 +134,9 @@ export const Card = ({ padding = 6, children }: { padding?: number } & Children)
   return (
     <motion.div
       variants={fadeUp}
-      whileHover={{ y: -2, transition: { duration: 0.2 } }}
-      className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card/60 shadow-sm backdrop-blur-sm transition-colors hover:border-border"
+      whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
+      className="group relative overflow-hidden rounded-2xl border border-hair bg-white/70 backdrop-blur-[20px]"
     >
-      <div className="pointer-events-none absolute inset-0 z-10 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-        <div className="absolute -inset-px rounded-2xl bg-gradient-to-br from-accent/10 via-transparent to-transparent" />
-      </div>
       {cover && (
         <div className="aspect-video w-full overflow-hidden [&>img]:h-full [&>img]:w-full [&>img]:rounded-none [&>img]:object-cover">
           {cover}
@@ -160,7 +157,7 @@ export const Hero = ({ eyebrow, children }: { eyebrow?: string } & Children) => 
     {eyebrow && (
       <motion.p
         variants={fadeUp}
-        className="text-[11px] font-medium uppercase tracking-[0.2em] text-accent"
+        className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground"
       >
         {eyebrow}
       </motion.p>
@@ -238,7 +235,7 @@ export const Avatar = ({
       variants={fadeUp}
       src={src}
       alt={alt}
-      className={`${sizes[size]} rounded-full object-cover ring-1 ring-border shadow-lg`}
+      className={`${sizes[size]} rounded-full object-cover ring-1 ring-hair`}
     />
   );
 };
@@ -249,7 +246,7 @@ export const Badge = ({
 }: { variant?: "default" | "outline" | "accent" } & Children) => {
   const variants = {
     default: "bg-secondary text-secondary-foreground",
-    outline: "border border-border text-foreground",
+    outline: "border border-hair text-foreground",
     accent: "bg-accent/10 text-accent",
   };
   return (
@@ -270,7 +267,7 @@ export const Link = ({
   <a
     href={href}
     {...(external ? { target: "_blank", rel: "noreferrer noopener" } : {})}
-    className="group inline-flex items-center gap-1 text-sm font-medium text-foreground underline-offset-4 transition-colors hover:text-accent hover:underline"
+    className="group inline-flex items-center gap-1 text-sm font-medium text-foreground underline-offset-4 hover:underline"
   >
     {children}
     <span aria-hidden className="transition-transform group-hover:translate-x-0.5">
@@ -285,7 +282,7 @@ export const List = ({
 }: { variant?: "bullet" | "none" } & Children) => {
   const className =
     variant === "bullet"
-      ? "list-disc pl-5 space-y-1.5 marker:text-accent"
+      ? "list-disc pl-5 space-y-1.5 marker:text-foreground/40"
       : "space-y-1.5";
   return (
     <motion.ul variants={stagger} className={className}>
@@ -310,7 +307,7 @@ export const Button = ({
 } & Children) => {
   const variants = {
     default: "bg-primary text-primary-foreground hover:bg-primary/90",
-    outline: "border border-border bg-transparent hover:bg-secondary",
+    outline: "border border-hair bg-transparent hover:bg-secondary",
     ghost: "bg-transparent hover:bg-secondary",
   };
   return (
@@ -341,7 +338,7 @@ export const Input = ({
     name={name}
     type={type}
     placeholder={placeholder}
-    className="h-10 w-full rounded-full border border-border bg-background/60 px-4 text-sm shadow-sm backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-ring"
+    className="h-10 w-full rounded-full border border-hair bg-white/70 px-4 text-sm backdrop-blur-[20px] focus:outline-none focus:ring-2 focus:ring-ring"
   />
 );
 
@@ -359,7 +356,7 @@ export const Video = ({ src, title }: { src: string; title?: string }) => (
     <motion.div
       whileHover={{ scale: 1.005 }}
       transition={{ duration: 0.3 }}
-      className="relative aspect-video overflow-hidden rounded-2xl border border-border/60 bg-black shadow-lg"
+      className="relative aspect-video overflow-hidden rounded-2xl border border-hair bg-black"
     >
       <iframe
         src={src}
@@ -379,7 +376,7 @@ export const Video = ({ src, title }: { src: string; title?: string }) => (
 export const Divider = () => (
   <motion.hr
     variants={fadeUp}
-    className="my-4 border-t border-border/60"
+    className="my-4 border-t border-hair"
   />
 );
 
