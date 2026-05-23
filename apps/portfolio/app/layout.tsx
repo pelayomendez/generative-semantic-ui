@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
-import { Inter, Geist } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const sans = Inter({
+const display = Inter({
+  weight: ["600"],
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-display",
   display: "swap",
 });
 
-const display = Geist({
-  weight: "400",
+const sans = JetBrains_Mono({
+  weight: ["400", "500"],
   subsets: ["latin"],
-  variable: "--font-display",
+  variable: "--font-sans",
   display: "swap",
 });
 

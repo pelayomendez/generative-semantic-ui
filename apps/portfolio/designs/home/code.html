@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Semantic - Generative Portfolio</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#5f5e5e",
+                    "secondary-fixed": "#e2e2e2",
+                    "on-tertiary-fixed-variant": "#484645",
+                    "on-tertiary-fixed": "#1c1b1a",
+                    "secondary-fixed-dim": "#c6c6c7",
+                    "on-primary": "#ffffff",
+                    "tertiary-container": "#1c1b1a",
+                    "tertiary-fixed": "#e6e2df",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed": "#e5e2e1",
+                    "on-secondary-fixed-variant": "#454747",
+                    "background": "#faf9fe",
+                    "on-background": "#1a1b1f",
+                    "surface-bright": "#faf9fe",
+                    "secondary-container": "#dcdddd",
+                    "on-tertiary-container": "#868382",
+                    "outline": "#747878",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-container": "#5f6161",
+                    "on-error": "#ffffff",
+                    "on-secondary-fixed": "#1a1c1c",
+                    "inverse-on-surface": "#f1f0f5",
+                    "on-primary-container": "#858383",
+                    "inverse-primary": "#c8c6c5",
+                    "error": "#ba1a1a",
+                    "error-container": "#ffdad6",
+                    "surface-dim": "#dad9df",
+                    "on-primary-fixed-variant": "#474746",
+                    "surface": "#faf9fe",
+                    "on-error-container": "#93000a",
+                    "surface-container": "#eeedf3",
+                    "primary": "#000000",
+                    "surface-container-high": "#e9e7ed",
+                    "tertiary-fixed-dim": "#cac6c4",
+                    "tertiary": "#000000",
+                    "primary-fixed-dim": "#c8c6c5",
+                    "secondary": "#5d5f5f",
+                    "on-surface": "#1a1b1f",
+                    "surface-container-low": "#f4f3f8",
+                    "on-surface-variant": "#444748",
+                    "surface-variant": "#e3e2e7",
+                    "inverse-surface": "#2f3034",
+                    "surface-container-highest": "#e3e2e7"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1200px",
+                    "unit": "8px",
+                    "margin-mobile": "20px",
+                    "gutter": "24px",
+                    "margin-desktop": "64px",
+                    "section-gap": "128px"
+            },
+            "fontFamily": {
+                    "headline-xl": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-md": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Inter"],
+                    "label-caps": ["JetBrains Mono"],
+                    "body-sm": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "headline-xl": ["4.5rem", { "lineHeight": "1.1", "letterSpacing": "-0.04em", "fontWeight": "600" }],
+                    "headline-lg": ["3rem", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                    "body-md": ["1rem", { "lineHeight": "1.6", "fontWeight": "400" }],
+                    "headline-lg-mobile": ["2.25rem", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                    "label-caps": ["0.75rem", { "lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "500" }],
+                    "body-sm": ["0.875rem", { "lineHeight": "1.5", "fontWeight": "400" }]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+
+        /* Lab-style Particle Background Simulation */
+        .particle-bg {
+            background-color: #faf9fe;
+            background-image: radial-gradient(#d1d1d1 1px, transparent 1px);
+            background-size: 40px 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: #a3a3a3;
+            border-radius: 50%;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .glass-effect {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #ba1a1a;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden">
+<!-- Particle Background -->
+<div class="particle-bg">
+<!-- Floating dots simulated via absolute positioning -->
+<div class="particle w-2 h-2 top-[15%] left-[10%]"></div>
+<div class="particle w-1 h-1 top-[40%] left-[5%]"></div>
+<div class="particle w-3 h-3 top-[70%] left-[15%]"></div>
+<div class="particle w-1.5 h-1.5 top-[25%] left-[85%]"></div>
+<div class="particle w-2.5 h-2.5 top-[60%] left-[90%]"></div>
+<div class="particle w-1 h-1 top-[10%] left-[50%]"></div>
+<div class="particle w-4 h-4 top-[85%] left-[45%] opacity-10"></div>
+<div class="particle w-1.5 h-1.5 top-[50%] left-[25%]"></div>
+<div class="particle w-2 h-2 top-[30%] left-[70%]"></div>
+</div>
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/70 dark:bg-black/70 backdrop-blur-xl flex justify-between items-center w-full px-margin-desktop py-unit max-w-container-max mx-auto flat no shadows">
+<div class="flex items-center gap-4">
+<span class="pulse-dot"></span>
+<span class="font-headline-lg text-headline-lg font-bold tracking-tighter text-primary dark:text-on-primary">Pelayo Méndez</span>
+<span class="hidden md:inline font-body-md text-body-md opacity-40 ml-2">Creative software developer &amp; lead</span>
+</div>
+<div class="flex items-center gap-gutter">
+<div class="hidden md:flex items-center gap-gutter">
+<a class="text-secondary dark:text-secondary-fixed opacity-60 hover:opacity-100 hover:scale-105 transition-all font-body-md text-body-md" href="#">GitHub</a>
+<a class="text-secondary dark:text-secondary-fixed opacity-60 hover:opacity-100 hover:scale-105 transition-all font-body-md text-body-md" href="#">LinkedIn</a>
+</div>
+<button class="hover:opacity-100 hover:scale-105 transition-all text-primary dark:text-on-primary">
+<span class="material-symbols-outlined" data-icon="sensors">sensors</span>
+</button>
+</div>
+</nav>
+<main class="relative min-h-screen flex flex-col items-center justify-center pt-section-gap px-margin-mobile md:px-margin-desktop">
+<!-- Hero Section -->
+<section class="max-w-3xl w-full text-center space-y-unit flex flex-col items-center">
+<header class="mb-gutter">
+<span class="font-label-caps text-label-caps tracking-[0.2em] text-error uppercase mb-4 block">A Portfolio That Builds Itself</span>
+<h1 class="font-headline-lg-mobile md:font-headline-xl text-headline-lg-mobile md:text-headline-xl text-primary mb-6">
+                    Hi, I'm Pelayo.<br/>
+<span class="text-secondary opacity-80">Ask me anything.</span>
+</h1>
+<p class="font-body-md text-body-md text-secondary max-w-2xl mx-auto leading-relaxed opacity-70">
+                    Type a question and the page renders the answer — no fixed pages, no layouts. The UI is generated live from a constrained vocabulary I built for language models.
+                </p>
+</header>
+<!-- Conversational Input -->
+<div class="w-full max-w-2xl mt-section-gap relative">
+<!-- Visual Anchor Element (Circle in Background) -->
+<div class="absolute -top-32 left-1/2 -translate-x-1/2 w-64 h-64 bg-surface-container-low rounded-full blur-3xl opacity-50 -z-10"></div>
+<div class="glass-effect rounded-full p-2 pl-8 flex items-center shadow-sm">
+<input class="w-full bg-transparent border-none focus:ring-0 font-body-md text-body-md text-primary placeholder:text-outline-variant/60" placeholder="Ask me anything..." type="text"/>
+<button class="w-12 h-12 rounded-full bg-surface-tint flex items-center justify-center text-white hover:scale-105 transition-transform">
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="mt-4 flex flex-col items-center gap-2">
+<span class="font-label-caps text-[10px] text-outline-variant uppercase tracking-widest">Drag the box • Powered by Mistral • @generative-semantic-ui</span>
+</div>
+</div>
+<!-- Suggested Prompts -->
+<div class="flex flex-wrap justify-center gap-3 mt-12 max-w-4xl">
+<button class="px-6 py-2 rounded-full border border-outline-variant/30 text-secondary font-body-sm text-body-sm hover:bg-surface-container-low hover:border-outline-variant transition-all Active: scale-95 transition-transform">
+                    Introduce yourself
+                </button>
+<button class="px-6 py-2 rounded-full border border-outline-variant/30 text-secondary font-body-sm text-body-sm hover:bg-surface-container-low hover:border-outline-variant transition-all Active: scale-95 transition-transform">
+                    Show me your selected work
+                </button>
+<button class="px-6 py-2 rounded-full border border-outline-variant/30 text-secondary font-body-sm text-body-sm hover:bg-surface-container-low hover:border-outline-variant transition-all Active: scale-95 transition-transform">
+                    Tell me about Mugaritz: OFF-ROAD
+                </button>
+<button class="px-6 py-2 rounded-full border border-outline-variant/30 text-secondary font-body-sm text-body-sm hover:bg-surface-container-low hover:border-outline-variant transition-all Active: scale-95 transition-transform">
+                    What are you working on now?
+                </button>
+<button class="px-6 py-2 rounded-full border border-outline-variant/30 text-secondary font-body-sm text-body-sm hover:bg-surface-container-low hover:border-outline-variant transition-all Active: scale-95 transition-transform">
+                    How do I get in touch?
+                </button>
+</div>
+</section>
+<!-- Dynamic Lab Image Section -->
+<section class="mt-section-gap w-full max-w-container-max grid grid-cols-1 md:grid-cols-2 gap-gutter items-center">
+<div class="relative rounded-xl overflow-hidden glass-effect aspect-video">
+<img class="w-full h-full object-cover grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-700" data-alt="A futuristic laboratory interface showing complex data nodes and AI neural pathways. The aesthetic is clean and minimal, with a soft white glow and high-key lighting. The color palette is strictly charcoal black and pristine white with subtle red pulsing accents, matching the Semantic UI brand identity perfectly." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAD0TIPMk2W57gm9xHaDB92hOrcCfPHKR31gJp0Q6qRZXURsM3r674-c-0p-z7ChSZK1vTu-xIhZyOJx96FcV7nerEMeik0z6DeklkTU9cdAUc2fDCTH6cG14LFFJzOQohawZeTzRKUdmNmJTFraSxKR-So5omfaTtX3x0Ci1Rf6dxlS3jVzNKrEfmUdN2XROH0apA_1l8OeWgVQLfuB802gduWeTW85hwLqOKPFZdsLn8FKnwtVBS5G07nKcKtwkt7KBp-jQQL_e0"/>
+</div>
+<div class="p-margin-desktop">
+<span class="font-label-caps text-label-caps text-outline-variant mb-4 block">The Mechanism</span>
+<h3 class="font-headline-lg text-headline-lg text-primary mb-6">Generated Context</h3>
+<p class="font-body-md text-body-md text-secondary leading-relaxed mb-8 opacity-70">
+                    Unlike traditional CMS architectures, Semantic treats every user interaction as a prompt for a layout engine. Components are fetched from a semantic library and assembled in real-time based on the intent of your query.
+                </p>
+<ul class="space-y-4 border-l border-outline-variant/20 pl-6">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="token">token</span>
+<span class="font-body-sm text-body-sm text-secondary">Token-based UI Assembly</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="schema">schema</span>
+<span class="font-body-sm text-body-sm text-secondary">Dynamic Layout Branching</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="terminal">terminal</span>
+<span class="font-body-sm text-body-sm text-secondary">LLM-first design system</span>
+</li>
+</ul>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="flex flex-col items-center justify-center w-full gap-unit border-t border-outline-variant/10 full-width py-section-gap bg-transparent fade-in on scroll">
+<div class="flex items-center gap-gutter mb-4">
+<span class="font-label-caps text-label-caps text-primary dark:text-on-primary">Semantic</span>
+<div class="w-1 h-1 bg-outline-variant rounded-full"></div>
+<span class="font-label-caps text-label-caps text-secondary dark:text-secondary-fixed">Powered by Semantic UI • 2024</span>
+</div>
+<div class="flex gap-gutter">
+<a class="font-label-caps text-label-caps text-secondary hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="font-label-caps text-label-caps text-secondary hover:text-primary transition-colors" href="#">Terms</a>
+</div>
+</footer>
+</body></html>
