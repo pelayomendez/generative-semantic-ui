@@ -3,6 +3,12 @@ import { Mistral } from "@mistralai/mistralai";
 import { DEFAULT_PROMPT_RULES } from "@generative-semantic-ui/core";
 import { portfolio } from "@/lib/data/portfolio";
 import { rateLimit } from "@/lib/rate-limit";
+import {
+  homeSample,
+  aboutSample,
+  gallerySample,
+  detailSample,
+} from "@/lib/few-shots";
 
 export const runtime = "nodejs";
 
@@ -52,20 +58,21 @@ GOOD (text inlined verbatim from the dataset):
 <Link href="https://github.com/pelayomendez" external={true}>GitHub</Link>
 \`\`\`
 
-PROJECT DEEP-DIVE TEMPLATE (use exactly this shape when asked about one project):
-\`\`\`
-<Section title="Mugaritz: OFF-ROAD (2015)">
-  <Stack gap={4}>
-    <Video src="https://player.vimeo.com/video/139784150" title="Mugaritz: OFF-ROAD" />
-    <Paragraph>Documentary on the Michelin-starred restaurant by Pep Gatell — a visual interpretation of 18 years of restaurant data. Selected at San Sebastián and Berlin film festivals.</Paragraph>
-    <Row gap={2}>
-      <Badge>Data viz</Badge>
-      <Badge>Film</Badge>
-    </Row>
-    <Paragraph>Role: Visual data scripting & infographic design — Barcelona, 2015.</Paragraph>
-  </Stack>
-</Section>
-\`\`\`
+## Few-shot examples
+
+Concrete, vocabulary-only examples of the JSX shape to emit per question type. Don't copy them literally — adapt the *shape*, fill it with the actual facts from the dataset below.
+
+// When the visitor lands or asks a generic "what is this?" — respond like this:
+${homeSample}
+
+// When the visitor asks "tell me about you", "who are you?", "introduce yourself" — respond like this:
+${aboutSample}
+
+// When the visitor asks "show your work", "your projects", "selected work" — respond like this:
+${gallerySample}
+
+// When the visitor asks about a SPECIFIC project (e.g. "tell me about Mugaritz") — respond like this:
+${detailSample}
 
 ## Dataset (verbatim — do not invent beyond this)
 
