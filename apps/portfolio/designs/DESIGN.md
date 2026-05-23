@@ -99,6 +99,12 @@ spacing:
   section-gap: 128px
 ---
 
+> **Source of truth.** When this prose contradicts a
+> `designs/{mode}/code.html` reference, the `code.html` wins. The
+> prose below is commentary on intent; the visual artefacts in each
+> mode folder are canonical. Future visual specs should read
+> `code.html` first, this prose second.
+
 ## Brand & Style
 
 The design system embodies a "Hyper-Minimalist Lab" aesthetic, positioning the product as an intelligent, generative environment rather than a static portfolio. The personality is cerebral, precise, and forward-leaning, evoking the feeling of a clean-room laboratory where data and creativity intersect.

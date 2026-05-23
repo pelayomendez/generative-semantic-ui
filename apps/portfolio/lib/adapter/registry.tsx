@@ -102,7 +102,7 @@ export const Section = ({
 
 export const Grid = ({
   cols = 2,
-  gap = 4,
+  gap = 8,
   children,
 }: { cols?: 1 | 2 | 3 | 4; gap?: number } & Children) => {
   const colsClass: Record<number, string> = {
@@ -123,7 +123,7 @@ export const Grid = ({
   );
 };
 
-export const Card = ({ padding = 6, children }: { padding?: number } & Children) => {
+export const Card = ({ padding = 8, children }: { padding?: number } & Children) => {
   const childArr = Children.toArray(children);
   const hasCover =
     childArr.length > 0 &&
@@ -134,11 +134,11 @@ export const Card = ({ padding = 6, children }: { padding?: number } & Children)
   return (
     <motion.div
       variants={fadeUp}
-      whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-      className="group relative overflow-hidden rounded-2xl border border-hair bg-white/70 backdrop-blur-[20px]"
+      whileHover={{ y: -4, transition: { duration: 0.3 } }}
+      className="group relative overflow-hidden rounded-2xl border border-hair bg-card"
     >
       {cover && (
-        <div className="aspect-video w-full overflow-hidden [&>img]:h-full [&>img]:w-full [&>img]:rounded-none [&>img]:object-cover">
+        <div className="aspect-video w-full overflow-hidden [&>img]:h-full [&>img]:w-full [&>img]:rounded-none [&>img]:object-cover [&>img]:transition-transform [&>img]:duration-700 [&>img]:group-hover:scale-105">
           {cover}
         </div>
       )}
@@ -252,7 +252,7 @@ export const Badge = ({
   return (
     <motion.span
       variants={fadeUp}
-      className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${variants[variant]}`}
+      className={`inline-flex items-center rounded px-3 py-1 text-[0.7rem] font-medium uppercase tracking-wider ${variants[variant]}`}
     >
       {children}
     </motion.span>
@@ -338,7 +338,7 @@ export const Input = ({
     name={name}
     type={type}
     placeholder={placeholder}
-    className="h-10 w-full rounded-full border border-hair bg-white/70 px-4 text-sm backdrop-blur-[20px] focus:outline-none focus:ring-2 focus:ring-ring"
+    className="h-10 w-full rounded-full border border-hair bg-card px-4 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
   />
 );
 

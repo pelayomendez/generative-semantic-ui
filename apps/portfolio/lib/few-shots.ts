@@ -28,7 +28,7 @@ export const aboutSample = `<Stack gap={4}>
 </Stack>`;
 
 export const gallerySample = `<Section title="Selected work">
-  <Grid cols={2} gap={6}>
+  <Grid cols={2} gap={8}>
     <Card>
       <Image src="/projects/mugaritz.jpg" alt="Mugaritz: OFF-ROAD — 2015" />
       <Heading level={3}>Mugaritz: OFF-ROAD</Heading>
