@@ -3,7 +3,7 @@
 > domain: portfolio
 > location: `apps/portfolio/`
 > deployed: https://pelayomendez-portfolio.vercel.app
-> last updated: 2026-05-23
+> last updated: 2026-05-23 (few-shots)
 
 ## Purpose
 A chat-driven portfolio for Pelayo Méndez. The visitor asks a question;
@@ -52,6 +52,13 @@ portfolio doubles as the canonical real-world demo of this package.
   line.
 - "Selected work" / project listings render a `<Grid cols={2}>` of plain
   `Card`s — NO videos in the grid cells.
+- Shape steering combines those prose rules with **literal-JSX
+  few-shot examples** at `apps/portfolio/lib/few-shots.ts` (one per
+  mode: `homeSample` / `aboutSample` / `gallerySample` /
+  `detailSample`). The prose says *when* to use each shape; the
+  few-shots show *what* the shape looks like. Both ship in every
+  request; the few-shots add ~550 tokens to the prompt. See spec
+  `.hdd/specs/2026-05-23-generative-layout-steering.md`.
 
 ## Brand identity
 - Source of truth: `apps/portfolio/designs/DESIGN.md` ("Semantic Lab"
