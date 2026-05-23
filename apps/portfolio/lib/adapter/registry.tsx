@@ -125,10 +125,16 @@ export const Grid = ({
 
 export const Card = ({ padding = 8, children }: { padding?: number } & Children) => {
   const childArr = Children.toArray(children);
-  const hasCover =
+  const firstIsImage =
     childArr.length > 0 &&
     isValidElement(childArr[0]) &&
     childArr[0].type === Image;
+  // SVG icons (e.g. /icons/github.svg) are inline content — only photographic
+  // Images claim the full-bleed 16:9 cover slot.
+  const firstSrc = firstIsImage
+    ? (childArr[0] as React.ReactElement<{ src?: string }>).props.src ?? ""
+    : "";
+  const hasCover = firstIsImage && !firstSrc.endsWith(".svg");
   const cover = hasCover ? childArr[0] : null;
   const rest = hasCover ? childArr.slice(1) : childArr;
   return (
@@ -342,14 +348,15 @@ export const Input = ({
   />
 );
 
-export const Image = ({ src, alt = "" }: { src: string; alt?: string }) => (
-  <motion.img
-    variants={fadeUp}
-    src={src}
-    alt={alt}
-    className="rounded-xl object-cover"
-  />
-);
+export const Image = ({ src, alt = "" }: { src: string; alt?: string }) => {
+  // SVG icons render small + contained (e.g. /icons/github.svg).
+  // Photographic assets stay full-bleed, rounded, cover-cropped.
+  const isIcon = src.endsWith(".svg");
+  const className = isIcon
+    ? "h-8 w-8 object-contain"
+    : "rounded-xl object-cover";
+  return <motion.img variants={fadeUp} src={src} alt={alt} className={className} />;
+};
 
 export const Video = ({ src, title }: { src: string; title?: string }) => (
   <motion.figure variants={fadeUp} className="space-y-2">
