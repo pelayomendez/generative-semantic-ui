@@ -300,7 +300,7 @@ Key technical choices:
 
 ### References
 - Build log entry: 2026-05-23 (this iteration).
-- Closure commit: `[pending]` — will populate after commit.
+- Closure commit: `185cfed` — `hdd: close adapter-visual-refresh`.
 - Related closed specs:
   `.hdd/specs/2026-05-22-design-system-from-designs-folder.md`
   (token wiring) and

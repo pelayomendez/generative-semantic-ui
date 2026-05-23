@@ -328,7 +328,7 @@ Key technical choices:
 
 ### References
 - Build log entries: 2026-05-22 (scope + token wiring).
-- Closure commit: `[pending]` — will populate after commit.
+- Closure commit: `87e059e` — `hdd: close design-system-from-designs-folder`.
 - Superseded by this spec: `.hdd/specs/2026-05-13-design-system.md`
   (font-only predecessor — Geist + Inter; now replaced by Inter +
   JetBrains Mono).
