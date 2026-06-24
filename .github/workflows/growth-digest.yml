@@ -1,0 +1,72 @@
+name: Growth digest
+
+# Weekly DevRel digest: the agent team researches peer portfolios and drafts
+# social posts promoting the library, Honest-DD, and Pelayo's career, into
+# growth/. Opens a PR for review. DRAFT ONLY — nothing is ever posted; merging
+# the PR just saves the drafts (it changes no app code, so no deploy).
+
+on:
+  schedule:
+    - cron: "23 6 * * 1" # Mondays ~06:23 UTC (~08:23 Europe/Madrid). Off-minute.
+  workflow_dispatch: {} # manual run from the Actions tab
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: growth-digest
+  cancel-in-progress: false
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Run the agent team (growth digest)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          claude -p "$(cat .github/agent-objectives/growth-digest.md)" \
+            --model sonnet \
+            --dangerously-skip-permissions \
+            --verbose
+
+      - name: Open PR if drafts were produced
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --quiet -- growth && [ -z "$(git ls-files --others --exclude-standard growth)" ]; then
+            echo "No new growth drafts — nothing to propose."
+            exit 0
+          fi
+          DATE="$(date +%Y-%m-%d)"
+          BRANCH="growth-digest/$DATE"
+          git config user.name "growth-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add growth
+          git commit -m "chore(growth): weekly digest ($DATE)"
+          git push origin "$BRANCH"
+          gh pr create --base main --head "$BRANCH" \
+            --title "Growth digest — $DATE" \
+            --body "Weekly DevRel drafts (peer-portfolio ideas + social post drafts for the library / HDD / career) from the \`/team\` growth agent.
+
+          DRAFT ONLY — nothing was posted. Review, edit, and post manually whatever you like.
+
+          🤖 Generated with [Claude Code](https://claude.com/claude-code)"

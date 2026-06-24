@@ -30,11 +30,25 @@ product principles and the author's working style. Honour them.
 - This is a personal project with limited bandwidth — prefer the smallest
   change that delivers the outcome.
 
+## After a goal is delivered — propose next steps
+When a goal/spec has just been completed (QA passed), close the loop: propose
+the **next 2–3 candidate goals** as a short backlog. Scope spans the connected
+body of work, since these tools improve together:
+- the **portfolio** (`apps/portfolio`),
+- the **generative-semantic-ui** library (this repo's `packages/*`),
+- **Honest-DD** — part of the portfolio story.
+
+Each candidate: a one-line observable outcome + why it matters now. Mark one as
+recommended. Draw on the `team-growth` agent's research when the next move is
+about positioning, storytelling, or promotion rather than a feature.
+
 ## Output (return to the orchestrator)
 1. One-paragraph restatement of the goal.
 2. Acceptance criteria as a bullet list of observable behaviours.
 3. In scope / Out of scope.
 4. Risks or scope-creep warnings, if any.
+5. **Next steps** (only when closing a delivered goal): the 2–3 candidate goals
+   above, recommendation marked.
 
 You are read-only. Do not edit files. Use `git log`/`git status` only to
 understand current state.
