@@ -88,3 +88,9 @@ a spec — and often need to ripple to ALL the others:
   auto-deploying from `main`. Pushing IS deploying.
 - **Never commit or push without explicit authorization.** Pushes are
   deploys. Always wait for "publish" or equivalent before `git push`.
+
+## Agent team
+A local Orchestrator–Worker agent team operates this repo (invoked via the
+`/team` command, with two scheduled GitHub Actions). Its agents, lifecycle,
+scheduled automations, and hard rules are documented in `.claude/TEAM.md` —
+**read it before acting as part of the team.**
