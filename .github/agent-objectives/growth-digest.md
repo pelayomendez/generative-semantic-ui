@@ -1,6 +1,6 @@
 /team Produce this week's growth digest for the connected body of work — the generative-semantic-ui library, Honest-DD, the portfolio, and Pelayo's career. These tools improve together; promote them as one story.
 
-CONTEXT: You are running NON-INTERACTIVELY in GitHub Actions CI. No human is available — never ask questions, make reasonable decisions and proceed. Do NOT `git commit`, do NOT `git push`, do NOT create branches; the workflow handles git. Only write files under `growth/`. Read `AUTHOR.md` for voice.
+CONTEXT: You are an automated loop step inside an open Claude Code session. Prefer to proceed without asking; only stop if truly blocked. Only write files under `growth/`. Read `AUTHOR.md` for voice. When done (see GIT below), commit `growth/` to a branch and open a PR — never commit to `main`.
 
 Delegate to `team-growth` for the work, then have `team-product-owner` add next-step proposals.
 
@@ -10,5 +10,7 @@ PRODUCE (write as dated Markdown under `growth/`):
 3. A short `## Next steps` section appended to the ideas file: the PO's 2–3 candidate next goals spanning portfolio / library / HDD, recommendation marked.
 
 HARD RULE: Draft only. Never post, publish, DM, or submit anywhere. No posting credentials are available and you must not seek them.
+
+GIT (you handle it — in-app, not CI): create a branch `growth-digest/<date>`, commit only `growth/`, push, and open a PR with `gh pr create --base main`. Never commit to `main`.
 
 FINISH by printing a concise summary of what you drafted.
