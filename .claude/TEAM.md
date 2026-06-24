@@ -30,16 +30,18 @@ The **portfolio**, the **generative-semantic-ui** library, and **Honest-DD** are
 one story and improve together. PO next-step proposals and Growth drafts span all
 three.
 
-## Scheduled automations (GitHub Actions, branch-and-commit)
-Both run `claude -p` headless on `main`, open a **PR for review**, and **never
-push to `main` / never deploy** (merging is the human step; Vercel deploys on
-merge to `main`).
+## Scheduled automations (LOCAL — macOS launchd, branch-and-commit)
+Runs **on Pelayo's machine** via the logged-in Claude CLI — no
+`ANTHROPIC_API_KEY`. `scripts/automation/run-team.sh <job>` runs the objective
+headless, verifies, and opens a **PR for review**; it never pushes `main` /
+never deploys (merging is the human step; Vercel deploys on merge to `main`).
+launchd schedules it — see `scripts/automation/README.md`.
 
-| Workflow | Cadence | Objective | Output |
+| Job (`run-team.sh`) | Cadence (local) | Objective | Output |
 |---|---|---|---|
-| `.github/workflows/team-goal-loop.yml` | daily ~04:41 UTC | `.github/agent-objectives/team-goal-loop.md` | delivers top `.hdd/BACKLOG.md` goal → PR |
-| `.github/workflows/portfolio-data-enrichment.yml` | daily ~05:17 UTC | `.github/agent-objectives/portfolio-data-enrichment.md` | edits `apps/portfolio/lib/data/` → PR |
-| `.github/workflows/growth-digest.yml` | weekly Mon ~06:23 UTC | `.github/agent-objectives/growth-digest.md` | drafts under `growth/` → PR |
+| `goal-loop` | daily 06:41 | `.github/agent-objectives/team-goal-loop.md` | top `.hdd/BACKLOG.md` goal → PR |
+| `data-enrichment` | daily 07:17 | `.github/agent-objectives/portfolio-data-enrichment.md` | edits `apps/portfolio/lib/data/` → PR |
+| `growth-digest` | weekly Mon 08:23 | `.github/agent-objectives/growth-digest.md` | drafts under `growth/` → PR |
 
 ### The goal loop
 `team-goal-loop` is the continuous, goal-driven engine. Each run works the **top
@@ -60,7 +62,9 @@ holds while any `team-loop/*` PR is open — merging/closing it releases the nex
 - **Mock/closed data only** for the portfolio; invent nothing beyond the dataset.
 
 ## Activation state
-As of **2026-06-24**: files committed on a branch, **NOT yet activated**. To turn on:
-1. `gh secret set ANTHROPIC_API_KEY` (both workflows need it).
-2. Land these commits on `main` (scheduled crons only fire from the default branch).
-3. Smoke-test by hand: `gh workflow run "Portfolio data enrichment"` / `"Growth digest"`.
+As of **2026-06-24**: runs **locally via launchd** (no API key — uses the
+logged-in Claude CLI). Install/refresh schedules:
+`scripts/automation/install-launchd.sh`. Test a job by hand:
+`bash scripts/automation/run-team.sh goal-loop`. Remove: `uninstall-launchd.sh`.
+The GitHub Actions variants were removed (they required an `ANTHROPIC_API_KEY`).
+The Mac must be awake at the scheduled time.
