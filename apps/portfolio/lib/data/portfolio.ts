@@ -365,6 +365,22 @@ export const portfolio = {
         "Constrained JSX vocabulary and compiler that lets language models render real UI — like HTML for AI agents. (This portfolio runs on it.)",
       href: "https://github.com/pelayomendez/generative-semantic-ui",
     },
+    {
+      name: "FPL Breaks Detector",
+      year: "2026",
+      tags: ["TypeScript", "Data viz", "Football"],
+      summary:
+        "Fantasy Premier League mini-league dashboard surfacing fixture breaks and banter-grade insights.",
+      href: "https://github.com/pelayomendez/fpl-breaks-detector",
+    },
+    {
+      name: "Pràctica Mates",
+      year: "2026",
+      tags: ["TypeScript", "Education", "Català"],
+      summary:
+        "Educational web app to practise a primary-school maths exam, in Catalan.",
+      href: "https://github.com/pelayomendez/practica-mates",
+    },
   ],
 
   github: {
