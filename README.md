@@ -78,6 +78,19 @@ npm run dev:demo           # http://localhost:3000
 
 [**ARTICLE.md**](ARTICLE.md) — the problem, the insight, token economics, comparisons with v0 / Thesys C1 / Vercel AI SDK, and when to use (or not use) this pattern.
 
+## Agent team & automation
+
+This repo is maintained with help from a small local **agent team** (an
+Orchestrator–Worker setup of Claude Code subagents: Product Owner, Designer,
+App Developer, DSL Specialist, QA Guard, and Growth). You drive it with the
+`/team` command, and a self-feeding goal loop pulls the next item from
+[`.hdd/BACKLOG.md`](.hdd/BACKLOG.md), delivers it through a full
+plan → build → verify lifecycle, and opens a PR for review — one goal in flight
+at a time. Scheduled day and night turns keep it moving while curating the
+portfolio dataset and drafting DevRel content in the background.
+
+Full operating manual: [**.claude/TEAM.md**](.claude/TEAM.md).
+
 ## License
 
 MIT © [Pelayo Méndez](https://github.com/pelayomendez)
