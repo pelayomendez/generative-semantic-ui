@@ -30,18 +30,20 @@ The **portfolio**, the **generative-semantic-ui** library, and **Honest-DD** are
 one story and improve together. PO next-step proposals and Growth drafts span all
 three.
 
-## Scheduled automations (LOCAL — macOS launchd, branch-and-commit)
-Runs **on Pelayo's machine** via the logged-in Claude CLI — no
-`ANTHROPIC_API_KEY`. `scripts/automation/run-team.sh <job>` runs the objective
-headless, verifies, and opens a **PR for review**; it never pushes `main` /
-never deploys (merging is the human step; Vercel deploys on merge to `main`).
-launchd schedules it — see `scripts/automation/README.md`.
+## Automation — in-app loop (no API key, no unattended instances)
+There is no `ANTHROPIC_API_KEY` and no way to run authenticated Claude
+unattended, so the team runs **inside an open Claude Code session**. Use Claude
+Code's `/loop` to fire `/team` against the backlog on an interval — it advances
+goals on its own **while the app is open**, then holds for review. It never
+pushes `main` / never deploys (merging is the human step).
 
-| Job (`run-team.sh`) | Cadence (local) | Objective | Output |
-|---|---|---|---|
-| `goal-loop` | daily 06:41 | `.github/agent-objectives/team-goal-loop.md` | top `.hdd/BACKLOG.md` goal → PR |
-| `data-enrichment` | daily 07:17 | `.github/agent-objectives/portfolio-data-enrichment.md` | edits `apps/portfolio/lib/data/` → PR |
-| `growth-digest` | weekly Mon 08:23 | `.github/agent-objectives/growth-digest.md` | drafts under `growth/` → PR |
+Start it (e.g. every 30 min):
+```
+/loop 30m /team advance the top goal in .hdd/BACKLOG.md
+```
+Stop with `/loop stop`, or just close the session. Objective templates for each
+kind of work live in `.github/agent-objectives/` (`team-goal-loop.md`,
+`portfolio-data-enrichment.md`, `growth-digest.md`) — feed any to `/team`.
 
 ### The goal loop
 `team-goal-loop` is the continuous, goal-driven engine. Each run works the **top
@@ -62,9 +64,7 @@ holds while any `team-loop/*` PR is open — merging/closing it releases the nex
 - **Mock/closed data only** for the portfolio; invent nothing beyond the dataset.
 
 ## Activation state
-As of **2026-06-24**: runs **locally via launchd** (no API key — uses the
-logged-in Claude CLI). Install/refresh schedules:
-`scripts/automation/install-launchd.sh`. Test a job by hand:
-`bash scripts/automation/run-team.sh goal-loop`. Remove: `uninstall-launchd.sh`.
-The GitHub Actions variants were removed (they required an `ANTHROPIC_API_KEY`).
-The Mac must be awake at the scheduled time.
+As of **2026-06-24**: runs **in-app via `/loop`** while Claude Code is open — no
+API key, no spawned instances. Earlier GitHub Actions and macOS launchd variants
+were removed (they needed an API key / unattended auth, neither available).
+Steer the loop by editing `.hdd/BACKLOG.md`.

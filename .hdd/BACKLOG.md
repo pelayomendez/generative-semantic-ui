@@ -1,10 +1,11 @@
 # Team backlog
 
-The goal queue for the scheduled **team goal-loop**
-(`.github/workflows/team-goal-loop.yml`). Each run works the **top unchecked
-item**, delivers it on a branch, and opens a PR. The Product Owner appends new
-candidate goals here after each delivery. **You steer the loop by editing this
-file** — reorder, add, or remove items; check `[x]` to retire one.
+The goal queue for the **team goal-loop**, run in-app via
+`/loop 30m /team advance the top goal in .hdd/BACKLOG.md` (see `.claude/TEAM.md`).
+Each round works the **top unchecked item**, delivers it on a branch, and opens
+a PR. The Product Owner appends new candidate goals here after each delivery.
+**You steer the loop by editing this file** — reorder, add, or remove items;
+check `[x]` to retire one.
 
 Only one goal is in flight at a time: while a `team-loop/*` PR is open and
 awaiting your review, the loop holds. Merging (or closing) it releases the next.
