@@ -21,7 +21,7 @@ $ARGUMENTS
 
 ```text
 🚀 Local Agent Team Assembled.
-[PO]: Active | [Designer]: Active | [App Dev]: Active | [DSL Spec]: Active | [QA]: Active
+[PO]: Active | [Designer]: Active | [App Dev]: Active | [DSL Spec]: Active | [QA]: Active | [Growth]: Active
 ```
 
 If `$ARGUMENTS` is empty, follow the banner with:
@@ -43,6 +43,12 @@ If `$ARGUMENTS` is empty, follow the banner with:
 4. **Verification** — spawn `team-qa-guard` to run the typecheck/build gate.
    **Zero regressions allowed.** If BLOCKED, route the failure back to the
    responsible agent and re-verify.
+5. **Close & next steps** — once verified, have `team-product-owner` propose the
+   next 2–3 candidate goals (a backlog spanning the portfolio, the library, and
+   Honest-DD — they improve together). When the objective is about positioning
+   or promotion, also spawn `team-growth` to research peer portfolios and/or
+   draft social posts (library / HDD / career) into `growth/`. Growth output is
+   **draft-only — never posted.**
 
 ### Rules
 - Honour `AGENTS.md` and `AUTHOR.md` — small semantic vocabulary, library-
