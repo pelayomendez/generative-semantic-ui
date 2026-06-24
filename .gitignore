@@ -29,3 +29,9 @@ dist/
 
 # npm auth (never commit)
 .npmrc
+
+# Raw LinkedIn / personal data exports — manual feed for the enrichment job.
+# Only the curated facts in portfolio.ts get committed; keep the folder itself.
+apps/portfolio/lib/data/sources/linkedin/*
+!apps/portfolio/lib/data/sources/linkedin/README.md
+!apps/portfolio/lib/data/sources/linkedin/.gitkeep
