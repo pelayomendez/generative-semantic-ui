@@ -13,6 +13,6 @@ RULES:
 - Preserve the hand-written voice in `bio`/`summary` prose. Prefer enriching factual fields (repos, tags, years, recognition, skills) over rewriting prose.
 - Run the QA gate before finishing: `npm run typecheck --workspace=portfolio`.
 
-GIT (you handle it — in-app, not CI): if there are changes, create a branch `data-enrichment/<date>`, commit only `apps/portfolio/lib/data/`, push, and open a PR with `gh pr create --base main`. Never commit to `main`.
+GIT (you handle it — in-app, not CI): if there are changes, create a branch `data-enrichment/<date>`, commit only `apps/portfolio/lib/data/`, push, and open a PR with `gh pr create --base main --assignee @me`. Never commit to `main`.
 
 FINISH by printing a concise report: what changed, grouped by source, and what was skipped (e.g. "LinkedIn: no export found, skipped").

@@ -11,6 +11,6 @@ PRODUCE (write as dated Markdown under `growth/`):
 
 HARD RULE: Draft only. Never post, publish, DM, or submit anywhere. No posting credentials are available and you must not seek them.
 
-GIT (you handle it — in-app, not CI): create a branch `growth-digest/<date>`, commit only `growth/`, push, and open a PR with `gh pr create --base main`. Never commit to `main`.
+GIT (you handle it — in-app, not CI): create a branch `growth-digest/<date>`, commit only `growth/`, push, and open a PR with `gh pr create --base main --assignee @me`. Never commit to `main`.
 
 FINISH by printing a concise summary of what you drafted.
