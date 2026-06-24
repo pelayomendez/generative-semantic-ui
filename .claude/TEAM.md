@@ -37,8 +37,16 @@ merge to `main`).
 
 | Workflow | Cadence | Objective | Output |
 |---|---|---|---|
+| `.github/workflows/team-goal-loop.yml` | daily ~04:41 UTC | `.github/agent-objectives/team-goal-loop.md` | delivers top `.hdd/BACKLOG.md` goal → PR |
 | `.github/workflows/portfolio-data-enrichment.yml` | daily ~05:17 UTC | `.github/agent-objectives/portfolio-data-enrichment.md` | edits `apps/portfolio/lib/data/` → PR |
 | `.github/workflows/growth-digest.yml` | weekly Mon ~06:23 UTC | `.github/agent-objectives/growth-digest.md` | drafts under `growth/` → PR |
+
+### The goal loop
+`team-goal-loop` is the continuous, goal-driven engine. Each run works the **top
+unchecked item** in `.hdd/BACKLOG.md`, delivers it via the full lifecycle, and
+the PO appends the next candidates. **One goal in flight at a time:** the loop
+holds while any `team-loop/*` PR is open — merging/closing it releases the next.
+`.hdd/BACKLOG.md` is the steering wheel; edit it to redirect the team.
 
 ## Hard rules
 - **Never push to `main`.** Pushing `main` deploys. Feature/automation branches + PRs only.

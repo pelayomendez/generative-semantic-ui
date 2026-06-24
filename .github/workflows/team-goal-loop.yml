@@ -1,0 +1,99 @@
+name: Team goal loop
+
+# Self-feeding goal loop: the agent team pulls the top goal from .hdd/BACKLOG.md,
+# delivers it on a branch, opens a PR, and the PO queues the next goals. Only ONE
+# goal is in flight at a time — the loop holds while a team-loop/* PR is open and
+# awaiting review. Branch-and-commit: never pushes main, never deploys. Merging a
+# PR is the human gate that releases the next goal.
+
+on:
+  schedule:
+    - cron: "41 4 * * *" # daily ~04:41 UTC (~06:41 Europe/Madrid). Off-minute.
+  workflow_dispatch: {} # manual run from the Actions tab
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: team-goal-loop
+  cancel-in-progress: false
+
+jobs:
+  loop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Hold if a goal PR is already in flight
+        id: gate
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          INFLIGHT=$(gh pr list --state open --json headRefName \
+            --jq '[.[] | select(.headRefName | startswith("team-loop/"))] | length')
+          echo "In-flight goal PRs: $INFLIGHT"
+          if [ "$INFLIGHT" -gt 0 ]; then
+            echo "A goal PR is open and awaiting review — the loop holds until you merge or close it."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-node@v4
+        if: steps.gate.outputs.skip == 'false'
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        if: steps.gate.outputs.skip == 'false'
+        run: npm ci
+
+      - name: Install Claude Code
+        if: steps.gate.outputs.skip == 'false'
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Run the agent team (one goal)
+        if: steps.gate.outputs.skip == 'false'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          claude -p "$(cat .github/agent-objectives/team-goal-loop.md)" \
+            --model sonnet \
+            --dangerously-skip-permissions \
+            --verbose
+
+      - name: Backstop build gate
+        if: steps.gate.outputs.skip == 'false'
+        run: npm run build:packages
+
+      - name: Open PR if the loop produced changes
+        if: steps.gate.outputs.skip == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Drop regenerated, ignored-but-tracked build artifacts so they don't dirty the PR.
+          git checkout -- '*.tsbuildinfo' 2>/dev/null || true
+          if git diff --quiet && [ -z "$(git ls-files --others --exclude-standard)" ]; then
+            echo "No changes this run (backlog empty or goal stopped) — nothing to propose."
+            exit 0
+          fi
+          DATE="$(date +%Y-%m-%d)"
+          BRANCH="team-loop/$DATE"
+          git config user.name "team-loop-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add -A
+          git commit -m "chore(team): goal-loop run ($DATE)"
+          git push origin "$BRANCH"
+          gh pr create --base main --head "$BRANCH" \
+            --title "Team goal loop — $DATE" \
+            --body "One goal delivered (or new goals proposed) by the \`/team\` goal loop, per \`.hdd/BACKLOG.md\`.
+
+          Review the diff and the backlog changes, then merge to release the next goal (merging \`main\` is what deploys). The loop holds until this PR is merged or closed.
+
+          🤖 Generated with [Claude Code](https://claude.com/claude-code)"
