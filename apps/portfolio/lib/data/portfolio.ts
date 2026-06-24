@@ -366,14 +366,6 @@ export const portfolio = {
       href: "https://github.com/pelayomendez/generative-semantic-ui",
     },
     {
-      name: "FPL Breaks Detector",
-      year: "2026",
-      tags: ["TypeScript", "Data viz", "Football"],
-      summary:
-        "Fantasy Premier League mini-league dashboard surfacing fixture breaks and banter-grade insights.",
-      href: "https://github.com/pelayomendez/fpl-breaks-detector",
-    },
-    {
       name: "Pràctica Mates",
       year: "2026",
       tags: ["TypeScript", "Education", "Català"],
