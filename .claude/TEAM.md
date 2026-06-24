@@ -30,20 +30,28 @@ The **portfolio**, the **generative-semantic-ui** library, and **Honest-DD** are
 one story and improve together. PO next-step proposals and Growth drafts span all
 three.
 
-## Automation — in-app loop (no API key, no unattended instances)
-There is no `ANTHROPIC_API_KEY` and no way to run authenticated Claude
-unattended, so the team runs **inside an open Claude Code session**. Use Claude
-Code's `/loop` to fire `/team` against the backlog on an interval — it advances
-goals on its own **while the app is open**, then holds for review. It never
-pushes `main` / never deploys (merging is the human step).
+## Automation — Claude Desktop scheduled tasks (no API key)
+There is no `ANTHROPIC_API_KEY`, so automation runs as **Claude Desktop
+scheduled tasks** using the logged-in session — they fire while the app is open
+(or on next launch if it was closed). Each run is a fresh session that follows a
+template in `.github/agent-objectives/`, opens a **branch + PR assigned to the
+maintainer**, and never pushes `main` / never deploys. Completion pings to chat
+are off — the PR list (and each task's run history in the Scheduled sidebar) is
+the feedback channel.
 
-Start it (e.g. every 30 min):
-```
-/loop 30m /team advance the top goal in .hdd/BACKLOG.md
-```
-Stop with `/loop stop`, or just close the session. Objective templates for each
-kind of work live in `.github/agent-objectives/` (`team-goal-loop.md`,
-`portfolio-data-enrichment.md`, `growth-digest.md`) — feed any to `/team`.
+| Task | When (local) | Turn | Objective | Output |
+|---|---|---|---|---|
+| `team-goal-loop` | daily 09:11 | 🌞 day | `team-goal-loop.md` | next `.hdd/BACKLOG.md` goal → PR |
+| `team-goal-loop-night` | daily 23:50 | 🌙 night | `team-goal-loop.md` | next backlog goal → PR |
+| `portfolio-data-enrichment` | daily 02:34 | 🌙 night | `portfolio-data-enrichment.md` | dataset → PR |
+| `growth-digest` | Mon 03:30 | 🌙 night | `growth-digest.md` | drafts in `growth/` → PR |
+| `pr-responder` | 08:28 / 13 / 18 | — | `pr-responder.md` | applies `@team` PR feedback → pushes + replies |
+
+**Talking back:** comment on any team PR starting with `@team …`; the
+`pr-responder` task (3×/day) applies the change to that PR's branch and replies.
+It keys off the `@team` trigger + a `<!-- pr-responder -->` marker (not author —
+every comment here is the same GitHub account). Tasks share one working tree, so
+times are staggered; they can't run concurrently.
 
 ### The goal loop
 `team-goal-loop` is the continuous, goal-driven engine. Each run works the **top
@@ -64,7 +72,9 @@ holds while any `team-loop/*` PR is open — merging/closing it releases the nex
 - **Mock/closed data only** for the portfolio; invent nothing beyond the dataset.
 
 ## Activation state
-As of **2026-06-24**: runs **in-app via `/loop`** while Claude Code is open — no
-API key, no spawned instances. Earlier GitHub Actions and macOS launchd variants
+As of **2026-06-24**: **active** as Claude Desktop scheduled tasks (5 tasks; see
+the table above) using the logged-in session — no API key. They fire while the
+app is open, or on next launch. Earlier GitHub Actions and macOS launchd variants
 were removed (they needed an API key / unattended auth, neither available).
-Steer the loop by editing `.hdd/BACKLOG.md`.
+Manage tasks in the **Scheduled** sidebar; steer the work by editing
+`.hdd/BACKLOG.md`.
