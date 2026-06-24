@@ -20,6 +20,6 @@ CLOSE THE LOOP:
 - In `.hdd/BACKLOG.md`: move the delivered goal to the Done section, and append the PO's 2–3 next-goal candidates to the Queue.
 - If you created/updated a spec, set its status to reflect what was delivered.
 
-GIT (you handle it — this is in-app, not CI): create a branch `team-loop/<today's date>`, commit your changes (NEVER commit to `main`), push, and open a PR with `gh pr create --base main`. The next loop round holds until this PR is merged or closed.
+GIT (you handle it — this is in-app, not CI): create a branch `team-loop/<today's date>`, commit your changes (NEVER commit to `main`), push, and open a PR with `gh pr create --base main --assignee @me`. The next loop round holds until this PR is merged or closed.
 
 FINISH by printing a concise report: which goal you worked, files changed, QA result, the PR link, and the next goals you queued.
