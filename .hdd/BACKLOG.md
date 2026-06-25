@@ -15,9 +15,11 @@ generative-semantic-ui library, and Honest-DD.
 
 ## Queue
 <!-- top item = next goal. Keep each line a one-sentence observable outcome. -->
-- [ ] Add a short "Agent team & automation" section to README.md, summarizing `.claude/TEAM.md` for repo visitors.
 - [ ] Ensure `playground/lib/examples.ts` exercises every vocabulary primitive at least once; add examples for any that are missing.
 - [ ] Portfolio polish: the Designer picks one small storytelling/layout improvement and the team ships it.
+- [ ] On the deployed playground, a visitor sees a compile-error example that surfaces a clear rejection message (e.g. a fragment or a non-literal expression), demonstrating the compiler's strict-by-default safety as a selling point.
+- [ ] Commit the ready-made `.hdd/specs/2026-05-26-card-glass-variant.md` and ship it: asking "tell me about yourself" on the deployed portfolio renders at least one visibly glass `<Card variant="glass">`, with no regression on opaque project cards.
+- [ ] On the deployed portfolio, asking for a contact/links view renders Pelayo's real GitHub and LinkedIn as `<Link external>` actions sourced only from the closed dataset, closing the "how do I reach them" loop for a hiring manager.
 
 <!-- A ready-made spec also exists locally but untracked:
      .hdd/specs/2026-05-26-card-glass-variant.md — commit it and add a line here
@@ -25,3 +27,4 @@ generative-semantic-ui library, and Honest-DD.
 
 ## Done
 <!-- delivered goals move here with their PR link -->
+- [x] Add a short "Agent team & automation" section to README.md, summarizing `.claude/TEAM.md` for repo visitors. — PR: _pending_ (team-loop/2026-06-25)
