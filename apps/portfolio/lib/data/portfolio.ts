@@ -365,6 +365,14 @@ export const portfolio = {
         "Constrained JSX vocabulary and compiler that lets language models render real UI — like HTML for AI agents. (This portfolio runs on it.)",
       href: "https://github.com/pelayomendez/generative-semantic-ui",
     },
+    {
+      name: "Pràctica Mates",
+      year: "2026",
+      tags: ["TypeScript", "Education", "Català"],
+      summary:
+        "Educational web app to practise a primary-school maths exam, in Catalan.",
+      href: "https://github.com/pelayomendez/practica-mates",
+    },
   ],
 
   github: {
