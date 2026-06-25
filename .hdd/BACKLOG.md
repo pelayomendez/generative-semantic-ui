@@ -27,4 +27,4 @@ generative-semantic-ui library, and Honest-DD.
 
 ## Done
 <!-- delivered goals move here with their PR link -->
-- [x] Add a short "Agent team & automation" section to README.md, summarizing `.claude/TEAM.md` for repo visitors. — PR: _pending_ (team-loop/2026-06-25)
+- [x] Add a short "Agent team & automation" section to README.md, summarizing `.claude/TEAM.md` for repo visitors. — [PR #4](https://github.com/pelayomendez/generative-semantic-ui/pull/4)
