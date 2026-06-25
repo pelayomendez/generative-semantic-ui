@@ -19,6 +19,7 @@ generative-semantic-ui library, and Honest-DD.
 - [ ] Portfolio polish: the Designer picks one small storytelling/layout improvement and the team ships it.
 - [ ] Library: add a "write your own adapter in ~50 LOC" example to `packages/core`'s README.
 - [ ] Honest-DD: add a short section to README linking `honest-dd` as the spec workflow behind `.hdd/`.
+- [ ] On the deployed portfolio, asking about a specific project/repository renders an editorial detail view — hero media, title with year/location, a split of summary prose and structured metadata (role, collaborators, tags), and supporting media — echoing `apps/portfolio/designs/detail/`. <!-- Designer + App Developer. NO core ripple: do it via the portfolio system prompt few-shots (detailSample/reposSample in apps/portfolio/lib/few-shots.ts + the specific-project/repos rules in app/api/generate/route.ts) + portfolio adapter styling (Card/Image/Section/Grid/Badge in lib/adapter/registry.tsx). Surface collaborators + secondary images[] + repo href/published — all already in the dataset, invent nothing. Reference: apps/portfolio/designs/detail/{code.html,screen.png} + designs/DESIGN.md. Defer true asymmetric bento / spec-table primitive (that WOULD be a vocabulary change → escalate to DSL Specialist separately). -->
 
 <!-- A ready-made spec also exists locally but untracked:
      .hdd/specs/2026-05-26-card-glass-variant.md — commit it and add a line here
