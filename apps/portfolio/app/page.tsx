@@ -40,6 +40,7 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const reqIdRef = useRef(0);
   const constraintsRef = useRef<HTMLElement>(null);
   const dragControls = useDragControls();
 
@@ -56,6 +57,7 @@ export default function Page() {
   async function ask(prompt: string) {
     const text = prompt.trim();
     if (!text || loading) return;
+    const id = ++reqIdRef.current;
     setError(null);
     setDraft("");
     setCurrent({ question: text, answer: null });
@@ -67,6 +69,7 @@ export default function Page() {
         body: JSON.stringify({ prompt: text }),
       });
       const data = await res.json();
+      if (reqIdRef.current !== id) return; // a reset or newer question superseded this
       if (!res.ok) {
         setError(data.error ?? `HTTP ${res.status}`);
         return;
@@ -89,11 +92,24 @@ export default function Page() {
         answer: { jsx, element, error: compileError, truncated },
       });
     } catch (e) {
+      if (reqIdRef.current !== id) return;
       setError(e instanceof Error ? e.message : String(e));
     } finally {
-      setLoading(false);
-      setTimeout(() => inputRef.current?.focus(), 50);
+      if (reqIdRef.current === id) {
+        setLoading(false);
+        setTimeout(() => inputRef.current?.focus(), 50);
+      }
     }
+  }
+
+  // Reset the portfolio to its initial landing state (clicking the name/title).
+  function reset() {
+    reqIdRef.current++; // invalidate any in-flight request so it can't repopulate
+    setCurrent(null);
+    setDraft("");
+    setError(null);
+    setLoading(false);
+    setTimeout(() => inputRef.current?.focus(), 50);
   }
 
   function onSubmit(e: FormEvent) {
@@ -109,7 +125,14 @@ export default function Page() {
       <header className="relative z-20 mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
         <div className="flex items-center gap-2 text-sm">
           <span className="inline-block h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_hsl(var(--accent))]" />
-          <span className="font-medium tracking-tight">{portfolio.profile.name}</span>
+          <button
+            type="button"
+            onClick={reset}
+            className="font-medium tracking-tight transition hover:text-accent"
+            aria-label="Back to start"
+          >
+            {portfolio.profile.name}
+          </button>
           <span className="hidden text-muted-foreground sm:inline">
             · {portfolio.profile.headline}
           </span>
