@@ -374,6 +374,14 @@ export const portfolio = {
         "Educational web app for practising a Catalan primary-school maths exam, generating automatic variants that keep the problem type but swap the numbers. Runs entirely in the browser, no backend.",
       href: "https://github.com/pelayomendez/practica-mates",
     },
+    {
+      name: "FPL Breaks Detector",
+      year: "2026",
+      tags: ["Next.js", "TypeScript", "Recharts"],
+      summary:
+        "A banter-grade Fantasy Premier League mini-league dashboard: punch in a classic league ID and get standings, season trends and verdicts — the luckiest manager, the biggest bottle job, the most consistent fraud. FPL calls are proxied through Next.js routes so the browser never touches the FPL API directly.",
+      href: "https://github.com/pelayomendez/fpl-breaks-detector",
+    },
   ],
 
   github: {
