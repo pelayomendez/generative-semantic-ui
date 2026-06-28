@@ -16,6 +16,12 @@ WORKTREE ISOLATION (so the two turns never collide in the shared checkout):
 
 DELIVER via the full `/team` lifecycle (PO + Designer → Technical Planning, with DSL Specialist if core/vocabulary is involved → Implementation → QA Guard). Respect every domain boundary and the vocabulary RIPPLE rule (a vocabulary change updates prompt + all adapters + playground examples together). Write a proper `.hdd/specs/*` spec first if it's a vocabulary change. Keep the change SMALL and focused — one goal, no scope creep.
 
+SCOPE GUARD (hard caps — stop rather than sprawl; there is no token ceiling, so YOU are the ceiling):
+- Deliver exactly ONE backlog goal per run.
+- If implementing it would touch more than ~8 files, it's too big to build safely in one run — STOP implementing, write/refine its `.hdd/specs/*` spec instead, and open a PR with ONLY that spec for human review.
+- Do not retry a failing build/step more than 3 times — STOP and report what's blocking instead of looping.
+- If you can't finish in a focused effort, revert the worktree and report the blocker; never push a half-done branch.
+
 QA GATE (hard): `npm run build:packages` and, if `apps/portfolio` changed, `npm run typecheck --workspace=portfolio`. If it cannot pass cleanly, revert and STOP — never leave a broken branch.
 
 CLOSE + GIT: in `.hdd/BACKLOG.md` move the delivered goal to Done and append the PO's 2–3 next candidates. Commit (NEVER to `main`), push the branch, open a PR `gh pr create --base main --assignee @me`. Verify `gh pr view <n> --json mergeable,mergeStateStatus`; if CONFLICTING (e.g. backlog overlaps the other open PR), merge `origin/main` and resolve only the trivial conflict, else close the PR with a note.
