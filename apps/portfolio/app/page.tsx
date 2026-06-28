@@ -2,6 +2,7 @@
 
 import {
   forwardRef,
+  useEffect,
   useRef,
   useState,
   type FormEvent,
@@ -9,7 +10,11 @@ import {
   type ReactNode,
 } from "react";
 import { AnimatePresence, motion, useDragControls } from "framer-motion";
-import { compile } from "@generative-semantic-ui/core";
+import {
+  compile,
+  registerAction,
+  unregisterAction,
+} from "@generative-semantic-ui/core";
 import { portfolioRegistry } from "@/lib/adapter/registry";
 import { portfolio } from "@/lib/data/portfolio";
 import { Backdrop } from "@/lib/Backdrop";
@@ -116,6 +121,19 @@ export default function Page() {
     e.preventDefault();
     ask(draft);
   }
+
+  // Generated cards/buttons emit `onClick="ask"` with a literal `prompt`
+  // payload. Register one `ask` action that funnels that prompt back into
+  // the chat, so clicking a card navigates to its follow-up answer. A ref
+  // keeps the handler pointing at the latest `ask` without re-registering.
+  const askRef = useRef(ask);
+  askRef.current = ask;
+  useEffect(() => {
+    registerAction("ask", (payload) => {
+      if (typeof payload === "string") askRef.current(payload);
+    });
+    return () => unregisterAction("ask");
+  }, []);
 
   return (
     <main ref={constraintsRef} className="relative min-h-dvh">
