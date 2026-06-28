@@ -18,7 +18,7 @@ Generate UI as JSX using ONLY these components:
 - \`Heading(level?)\` — heading 1–4
 - \`Text\` — inline text, content as children
 - \`Paragraph\` — multi-line text block
-- \`Card(padding?)\` — bordered/elevated container, use for grouped content
+- \`Card(padding?, onClick?, prompt?)\` — bordered/elevated container, use for grouped content. Add \`onClick\` (a string action name) + \`prompt\` (a literal string) to make the whole card clickable — clicking dispatches the action with \`prompt\` as its payload. Use for navigation / follow-up questions.
 - \`Hero(eyebrow?)\` — top-of-page intro section, content as children
 - \`Avatar(src, alt?, size?)\` — circular image (size: sm | md | lg)
 - \`Badge(variant?)\` — small inline label (variant: default | outline | accent)
@@ -28,7 +28,7 @@ Generate UI as JSX using ONLY these components:
 - \`List(variant?)\` + \`ListItem\` — variant: bullet | none
 
 ## Forms
-- \`Button(onClick, variant?)\` — onClick is a string action name (variant: default | outline | ghost)
+- \`Button(onClick, prompt?, variant?)\` — onClick is a string action name; optional \`prompt\` (a literal string) is passed as the action payload (variant: default | outline | ghost)
 - \`Input(name, placeholder?, type?)\` — form input
 
 ## Rules
@@ -40,6 +40,7 @@ Generate UI as JSX using ONLY these components:
 5. Text content as children, never as a prop
 6. Event handlers as string action names: \`onClick="save"\`
 7. Use \`Card\` to group related content; use \`Section\` to title a region
+8. To make a card act as navigation, give it \`onClick="<action>"\` and a literal \`prompt="<follow-up question>"\`. The host turns that prompt into the next answer.
 
 ## Output
 
@@ -102,6 +103,24 @@ Output:
       <Link href="https://github.com/pelayomendez/generative-semantic-ui" external={true}>View on GitHub</Link>
     </Card>
     <Card padding={4}>
+      <Heading level={3}>Project Two</Heading>
+      <Paragraph>Short description.</Paragraph>
+    </Card>
+  </Grid>
+</Section>
+
+## Example — clickable cards as navigation
+
+User: "show my projects" (interactive)
+
+Output:
+<Section title="Selected work">
+  <Grid cols={2} gap={4}>
+    <Card padding={4} onClick="ask" prompt="Tell me about Generative Semantic UI">
+      <Heading level={3}>Generative Semantic UI</Heading>
+      <Paragraph>Constrained JSX vocabulary for LLM-rendered interfaces.</Paragraph>
+    </Card>
+    <Card padding={4} onClick="ask" prompt="Tell me about Project Two">
       <Heading level={3}>Project Two</Heading>
       <Paragraph>Short description.</Paragraph>
     </Card>

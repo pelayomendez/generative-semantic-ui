@@ -100,20 +100,41 @@ export const Grid = ({
   </div>
 );
 
-export const Card = ({ padding = 4, children }: { padding?: number } & Children) => (
-  <div
-    style={{
-      ...base,
-      padding: scale(padding),
-      borderRadius: 8,
-      border: "1px solid #e4e4e7",
-      background: "#fff",
-      boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
-    }}
-  >
-    {children}
-  </div>
-);
+export const Card = ({
+  padding = 4,
+  onClick,
+  prompt,
+  children,
+}: { padding?: number; onClick?: string; prompt?: string } & Children) => {
+  const style: CSSProperties = {
+    ...base,
+    padding: scale(padding),
+    borderRadius: 8,
+    border: "1px solid #e4e4e7",
+    background: "#fff",
+    boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
+  };
+  if (!onClick) {
+    return <div style={style}>{children}</div>;
+  }
+  const fire = () => dispatchAction(onClick, prompt);
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={fire}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          fire();
+        }
+      }}
+      style={{ ...style, cursor: "pointer" }}
+    >
+      {children}
+    </div>
+  );
+};
 
 export const Hero = ({
   eyebrow,
@@ -226,9 +247,14 @@ export const ListItem = ({ children }: Children) => <li>{children}</li>;
 
 export const Button = ({
   onClick,
+  prompt,
   variant = "default",
   children,
-}: { onClick: string; variant?: "default" | "outline" | "ghost" } & Children) => {
+}: {
+  onClick: string;
+  prompt?: string;
+  variant?: "default" | "outline" | "ghost";
+} & Children) => {
   const variants: Record<string, CSSProperties> = {
     default: { background: "#111", color: "#fff", border: "1px solid #111" },
     outline: { background: "transparent", color: "#111", border: "1px solid #d4d4d8" },
@@ -237,7 +263,7 @@ export const Button = ({
   return (
     <button
       type="button"
-      onClick={() => dispatchAction(onClick)}
+      onClick={() => dispatchAction(onClick, prompt)}
       style={{
         ...base,
         height: 36,

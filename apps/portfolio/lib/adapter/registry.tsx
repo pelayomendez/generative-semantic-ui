@@ -123,7 +123,12 @@ export const Grid = ({
   );
 };
 
-export const Card = ({ padding = 8, children }: { padding?: number } & Children) => {
+export const Card = ({
+  padding = 8,
+  onClick,
+  prompt,
+  children,
+}: { padding?: number; onClick?: string; prompt?: string } & Children) => {
   const childArr = Children.toArray(children);
   const firstIsImage =
     childArr.length > 0 &&
@@ -137,11 +142,30 @@ export const Card = ({ padding = 8, children }: { padding?: number } & Children)
   const hasCover = firstIsImage && !firstSrc.endsWith(".svg");
   const cover = hasCover ? childArr[0] : null;
   const rest = hasCover ? childArr.slice(1) : childArr;
+  const interactive = Boolean(onClick);
+  const fire = onClick ? () => dispatchAction(onClick, prompt) : undefined;
   return (
     <motion.div
       variants={fadeUp}
       whileHover={{ y: -4, transition: { duration: 0.3 } }}
-      className="group relative overflow-hidden rounded-2xl border border-hair bg-card"
+      {...(interactive
+        ? {
+            role: "button",
+            tabIndex: 0,
+            onClick: fire,
+            onKeyDown: (e: React.KeyboardEvent) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                fire?.();
+              }
+            },
+          }
+        : {})}
+      className={`group relative overflow-hidden rounded-2xl border border-hair bg-card${
+        interactive
+          ? " cursor-pointer transition-colors hover:border-accent/60"
+          : ""
+      }`}
     >
       {cover && (
         <div className="aspect-video w-full overflow-hidden [&>img]:h-full [&>img]:w-full [&>img]:rounded-none [&>img]:object-cover [&>img]:transition-transform [&>img]:duration-700 [&>img]:group-hover:scale-105">
@@ -305,10 +329,12 @@ export const ListItem = ({ children }: Children) => (
 
 export const Button = ({
   onClick,
+  prompt,
   variant = "default",
   children,
 }: {
   onClick: string;
+  prompt?: string;
   variant?: "default" | "outline" | "ghost";
 } & Children) => {
   const variants = {
@@ -322,7 +348,7 @@ export const Button = ({
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       type="button"
-      onClick={() => dispatchAction(onClick)}
+      onClick={() => dispatchAction(onClick, prompt)}
       className={`inline-flex h-10 items-center justify-center rounded-full px-5 text-sm font-medium transition-colors ${variants[variant]}`}
     >
       {children}

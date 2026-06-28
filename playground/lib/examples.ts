@@ -117,6 +117,29 @@ export const EXAMPLES: Example[] = [
 </Section>`,
   },
   {
+    prompt: "clickable project cards that ask a follow-up when tapped",
+    jsx: `<Section title="Selected work" subtitle="Tap a card to dive in.">
+  <Grid cols={2} gap={4}>
+    <Card padding={5} onClick="ask" prompt="Tell me about Generative Semantic UI">
+      <Heading level={3}>Generative Semantic UI</Heading>
+      <Paragraph>A constrained JSX vocabulary that lets language models render real UI.</Paragraph>
+      <Row gap={2}>
+        <Badge>TypeScript</Badge>
+        <Badge>LLMs</Badge>
+      </Row>
+    </Card>
+    <Card padding={5} onClick="ask" prompt="Tell me about Honest DD">
+      <Heading level={3}>Honest DD</Heading>
+      <Paragraph>Intent-driven development with integrated specs.</Paragraph>
+      <Row gap={2}>
+        <Badge>DX</Badge>
+        <Badge>npm</Badge>
+      </Row>
+    </Card>
+  </Grid>
+</Section>`,
+  },
+  {
     prompt: "a project deep-dive with a video",
     jsx: `<Section title="Mugaritz: OFF-ROAD (2015)">
   <Stack gap={4}>

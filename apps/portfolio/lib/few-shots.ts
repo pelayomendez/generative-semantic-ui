@@ -29,7 +29,7 @@ export const aboutSample = `<Stack gap={4}>
 
 export const gallerySample = `<Section title="Selected work">
   <Grid cols={2} gap={8}>
-    <Card>
+    <Card onClick="ask" prompt="Tell me about Mugaritz: OFF-ROAD">
       <Image src="/projects/mugaritz.jpg" alt="Mugaritz: OFF-ROAD — 2015" />
       <Heading level={3}>Mugaritz: OFF-ROAD</Heading>
       <Paragraph>Documentary visualising 18 years of Michelin-starred restaurant data.</Paragraph>
@@ -38,7 +38,7 @@ export const gallerySample = `<Section title="Selected work">
         <Badge>Film</Badge>
       </Row>
     </Card>
-    <Card>
+    <Card onClick="ask" prompt="Tell me about APOLO — Nitsa">
       <Image src="/projects/apolo.jpg" alt="APOLO — Nitsa — 2018" />
       <Heading level={3}>APOLO — Nitsa</Heading>
       <Paragraph>Interactive dance room with a large-scale LED grid in Barcelona's Nitsa club.</Paragraph>
@@ -52,7 +52,7 @@ export const gallerySample = `<Section title="Selected work">
 
 export const reposSample = `<Section title="Open source">
   <Grid cols={2} gap={8}>
-    <Card>
+    <Card onClick="ask" prompt="Tell me about Honest Driven Development">
       <Image src="/icons/github.svg" alt="GitHub" />
       <Heading level={3}>Honest Driven Development</Heading>
       <Paragraph>Intent-driven development with integrated specs — npm package, zero runtime.</Paragraph>
@@ -61,7 +61,7 @@ export const reposSample = `<Section title="Open source">
         <Badge>AI tooling</Badge>
       </Row>
     </Card>
-    <Card>
+    <Card onClick="ask" prompt="Tell me about Generative Semantic UI">
       <Image src="/icons/github.svg" alt="GitHub" />
       <Heading level={3}>Generative Semantic UI</Heading>
       <Paragraph>Constrained JSX vocabulary letting LLMs render real UI — like HTML for AI agents.</Paragraph>
