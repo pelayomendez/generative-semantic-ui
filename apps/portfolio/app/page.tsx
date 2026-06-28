@@ -41,7 +41,10 @@ type Current = {
 
 export default function Page() {
   const [draft, setDraft] = useState("");
-  const [current, setCurrent] = useState<Current | null>(null);
+  // The chain of question/answer steps taken since landing. Card-driven
+  // `ask` follow-ups and typed questions both append here, so the trail
+  // is the path the visitor navigated. The deepest entry is on screen.
+  const [history, setHistory] = useState<Current[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -49,7 +52,8 @@ export default function Page() {
   const constraintsRef = useRef<HTMLElement>(null);
   const dragControls = useDragControls();
 
-  const hasStarted = current !== null;
+  const hasStarted = history.length > 0;
+  const current = history.length > 0 ? history[history.length - 1] : null;
 
   // Drag is started manually only when the user grabs an empty area / the grip
   // (NOT when they click into the textarea or the send button).
@@ -65,7 +69,7 @@ export default function Page() {
     const id = ++reqIdRef.current;
     setError(null);
     setDraft("");
-    setCurrent({ question: text, answer: null });
+    setHistory((h) => [...h, { question: text, answer: null }]);
     setLoading(true);
     try {
       const res = await fetch("/api/generate", {
@@ -92,9 +96,13 @@ export default function Page() {
       if (truncated) {
         console.warn("[portfolio] response truncated", { reason: data.reason, jsx });
       }
-      setCurrent({
-        question: text,
-        answer: { jsx, element, error: compileError, truncated },
+      setHistory((h) => {
+        const next = [...h];
+        next[next.length - 1] = {
+          question: text,
+          answer: { jsx, element, error: compileError, truncated },
+        };
+        return next;
       });
     } catch (e) {
       if (reqIdRef.current !== id) return;
@@ -110,16 +118,36 @@ export default function Page() {
   // Reset the portfolio to its initial landing state (clicking the name/title).
   function reset() {
     reqIdRef.current++; // invalidate any in-flight request so it can't repopulate
-    setCurrent(null);
+    setHistory([]);
     setDraft("");
     setError(null);
     setLoading(false);
     setTimeout(() => inputRef.current?.focus(), 50);
   }
 
+  // Jump back to a prior step in the trail: truncate the history to that
+  // entry (dropping everything navigated after it) and put it back on
+  // screen. Asking again from there extends the trail anew.
+  function goTo(index: number) {
+    reqIdRef.current++; // invalidate any in-flight request
+    setError(null);
+    setLoading(false);
+    setHistory((h) => h.slice(0, index + 1));
+    setTimeout(() => inputRef.current?.focus(), 50);
+  }
+
   function onSubmit(e: FormEvent) {
     e.preventDefault();
     ask(draft);
+  }
+
+  // Re-ask the current (failed/truncated) step in place: drop the stale
+  // entry first so the retry replaces it instead of extending the trail.
+  function retry() {
+    const q = current?.question;
+    if (!q) return;
+    setHistory((h) => h.slice(0, -1));
+    ask(q);
   }
 
   // Generated cards/buttons emit `onClick="ask"` with a literal `prompt`
@@ -194,9 +222,18 @@ export default function Page() {
             exit={{ opacity: 0 }}
             className="relative z-10 mx-auto max-w-3xl px-6 pb-64 pt-4"
           >
+            {/* Breadcrumb trail — only once the visitor has drilled past the
+                first answer. `Home` resets; any prior step returns to it. */}
+            {history.length > 1 && (
+              <Breadcrumbs
+                steps={history.map((h) => h.question)}
+                onHome={reset}
+                onSelect={goTo}
+              />
+            )}
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
-                key={current!.question}
+                key={history.length}
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
@@ -209,10 +246,7 @@ export default function Page() {
                 {!current!.answer ? (
                   <Thinking />
                 ) : current!.answer.error || current!.answer.truncated ? (
-                  <IncompleteAnswer
-                    onRetry={() => ask(current!.question)}
-                    disabled={loading}
-                  />
+                  <IncompleteAnswer onRetry={retry} disabled={loading} />
                 ) : (
                   current!.answer.element
                 )}
@@ -302,6 +336,65 @@ export default function Page() {
         </AnimatePresence>
       </motion.form>
     </main>
+  );
+}
+
+/* ---------------- Breadcrumb trail ---------------- */
+
+function Breadcrumbs({
+  steps,
+  onHome,
+  onSelect,
+}: {
+  steps: string[];
+  onHome: () => void;
+  onSelect: (index: number) => void;
+}) {
+  const lastIndex = steps.length - 1;
+  return (
+    <motion.nav
+      initial={{ opacity: 0, y: -4 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35 }}
+      aria-label="Trail"
+      className="mb-5 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs text-muted-foreground"
+    >
+      <button
+        type="button"
+        onClick={onHome}
+        className="shrink-0 transition hover:text-accent"
+      >
+        Home
+      </button>
+      {steps.map((step, i) => {
+        const isCurrent = i === lastIndex;
+        return (
+          <span key={i} className="flex min-w-0 items-center gap-x-1.5">
+            <span aria-hidden className="text-muted-foreground/50">
+              ›
+            </span>
+            {isCurrent ? (
+              <span
+                aria-current="step"
+                title={step}
+                className="max-w-[16rem] truncate text-foreground/80"
+              >
+                {step}
+              </span>
+            ) : (
+              <button
+                type="button"
+                onClick={() => onSelect(i)}
+                title={step}
+                className="max-w-[12rem] truncate transition hover:text-foreground"
+              >
+                {step}
+              </button>
+            )}
+          </span>
+        );
+      })}
+    </motion.nav>
   );
 }
 
