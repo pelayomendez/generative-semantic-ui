@@ -15,12 +15,15 @@ generative-semantic-ui library, and Honest-DD.
 
 ## Queue
 <!-- top item = next goal. Keep each line a one-sentence observable outcome. -->
-- [ ] On the deployed portfolio, clicking an interactive Card sends a follow-up prompt to the chat and renders the generated answer (generated cards become navigation). <!-- DSL Specialist (lead) + App Developer. VOCABULARY RIPPLE — give it its OWN SPEC first, not a drive-by. PO approach A: allow `onClick` on Card + a literal prompt-carrying prop, dispatched via the existing actions payload (dispatchAction already takes one); portfolio registers an `ask` action wired to Page's ask(). Ripple together: prompt.ts + shadcn + html + portfolio adapters + a playground example. Lock the prompt-prop name in the spec; keep it semantic; apply uniformly to Button too. -->
 - [ ] Ensure `playground/lib/examples.ts` exercises every vocabulary primitive at least once; add examples for any that are missing.
 - [ ] Portfolio polish: the Designer picks one small storytelling/layout improvement and the team ships it.
 - [ ] Library: add a "write your own adapter in ~50 LOC" example to `packages/core`'s README.
 - [ ] Honest-DD: add a short section to README linking `honest-dd` as the spec workflow behind `.hdd/`.
 - [ ] On the deployed portfolio, asking about a specific project/repository renders an editorial detail view — hero media, title with year/location, a split of summary prose and structured metadata (role, collaborators, tags), and supporting media — echoing `apps/portfolio/designs/detail/`. <!-- Designer + App Developer. NO core ripple: do it via the portfolio system prompt few-shots (detailSample/reposSample in apps/portfolio/lib/few-shots.ts + the specific-project/repos rules in app/api/generate/route.ts) + portfolio adapter styling (Card/Image/Section/Grid/Badge in lib/adapter/registry.tsx). Surface collaborators + secondary images[] + repo href/published — all already in the dataset, invent nothing. Reference: apps/portfolio/designs/detail/{code.html,screen.png} + designs/DESIGN.md. Defer true asymmetric bento / spec-table primitive (that WOULD be a vocabulary change → escalate to DSL Specialist separately). -->
+- [ ] On the deployed portfolio, an interactive Card shows a subtle affordance cue (e.g. a small "Ask ↗" hint that reveals on hover) so visitors discover cards are clickable — today only the cursor/hover signals it. <!-- App Developer only. NO core ripple — portfolio adapter Card in apps/portfolio/lib/adapter/registry.tsx (the new `interactive` branch). Keep the cue inside the existing motion.div; no new prop, infer from `onClick` presence. -->
+- [ ] On the deployed portfolio, when card-navigation has drilled into a detail answer, the chat offers a visible "back" affordance to return to the previous answer (the new card→ask navigation creates depth but no way back). <!-- App Developer. portfolio-shell: apps/portfolio/app/page.tsx. Keep a small history stack of asked prompts; `reset` already exists for full reset — this is one step back. No core ripple. -->
+- [ ] Library: document the `onClick`+`prompt` navigation contract (Card/Button dispatch an action with a literal prompt payload) in `packages/core`'s README, with a tiny "host registers an `ask` action" snippet. <!-- DSL Specialist. Docs only; mirror the wiring in apps/portfolio/app/page.tsx. -->
+<!-- delivered 2026-06-28: clicking an interactive Card sends a follow-up prompt → spec .hdd/specs/2026-06-28-interactive-card-prompt.md -->
 
 <!-- A ready-made spec also exists locally but untracked:
      .hdd/specs/2026-05-26-card-glass-variant.md — commit it and add a line here
@@ -30,3 +33,4 @@ generative-semantic-ui library, and Honest-DD.
 <!-- delivered goals move here with their PR link -->
 - [x] Add a short "Agent team & automation" section to README.md (2026-06-24, branch `team-loop/2026-06-24`).
 - [x] Title click resets the portfolio to its initial landing state (2026-06-26, branch `team-loop/2026-06-26`).
+- [x] Clicking an interactive Card sends a follow-up prompt to the chat and renders the answer — generated cards become navigation (2026-06-28, branch `team-loop/2026-06-28`; spec `.hdd/specs/2026-06-28-interactive-card-prompt.md`).
