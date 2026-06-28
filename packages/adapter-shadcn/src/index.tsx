@@ -73,11 +73,34 @@ export const Grid = ({
   return <div className={`grid ${colsClass[cols]} gap-${gap}`}>{children}</div>;
 };
 
-export const Card = ({ padding = 4, children }: { padding?: number } & Children) => (
-  <div className={`rounded-lg border bg-card text-card-foreground shadow-sm p-${padding}`}>
-    {children}
-  </div>
-);
+export const Card = ({
+  padding = 4,
+  onClick,
+  prompt,
+  children,
+}: { padding?: number; onClick?: string; prompt?: string } & Children) => {
+  const base = `rounded-lg border bg-card text-card-foreground shadow-sm p-${padding}`;
+  if (!onClick) {
+    return <div className={base}>{children}</div>;
+  }
+  const fire = () => dispatchAction(onClick, prompt);
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={fire}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          fire();
+        }
+      }}
+      className={`${base} cursor-pointer transition-shadow hover:shadow-md`}
+    >
+      {children}
+    </div>
+  );
+};
 
 export const Hero = ({
   eyebrow,
@@ -156,10 +179,15 @@ export const ListItem = ({ children }: Children) => <li>{children}</li>;
 
 export const Button = ({
   onClick,
+  prompt,
   variant = "default",
   children,
-}: { onClick: string; variant?: "default" | "outline" | "ghost" } & Children) => (
-  <ButtonPrimitive variant={variant} onClick={() => dispatchAction(onClick)}>
+}: {
+  onClick: string;
+  prompt?: string;
+  variant?: "default" | "outline" | "ghost";
+} & Children) => (
+  <ButtonPrimitive variant={variant} onClick={() => dispatchAction(onClick, prompt)}>
     {children}
   </ButtonPrimitive>
 );
