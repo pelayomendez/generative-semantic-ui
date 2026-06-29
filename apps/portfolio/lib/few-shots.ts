@@ -74,7 +74,7 @@ export const reposSample = `<Section title="Open source">
 </Section>`;
 
 export const detailSample = `<Section title="Mugaritz: OFF-ROAD (2015)">
-  <Stack gap={4}>
+  <Stack gap={6}>
     <Video src="https://player.vimeo.com/video/139784150" title="Mugaritz: OFF-ROAD" />
     <Paragraph>Documentary on the Michelin-starred restaurant by Pep Gatell — a visual interpretation of 18 years of restaurant data. Selected at San Sebastián and Berlin film festivals.</Paragraph>
     <Row gap={2}>
@@ -82,5 +82,9 @@ export const detailSample = `<Section title="Mugaritz: OFF-ROAD (2015)">
       <Badge>Film</Badge>
     </Row>
     <Paragraph>Role: Visual data scripting & infographic design — Barcelona, 2015.</Paragraph>
+    <Grid cols={2} gap={4}>
+      <Image src="https://www.pelayomendez.dev/img/mugaritz2.jpg" alt="Mugaritz: OFF-ROAD" />
+      <Image src="https://www.pelayomendez.dev/img/mugaritz3.jpg" alt="Mugaritz: OFF-ROAD" />
+    </Grid>
   </Stack>
 </Section>`;

@@ -376,11 +376,14 @@ export const Input = ({
 
 export const Image = ({ src, alt = "" }: { src: string; alt?: string }) => {
   // SVG icons render small + contained (e.g. /icons/github.svg).
-  // Photographic assets stay full-bleed, rounded, cover-cropped.
+  // Photographic assets fill their cell as a uniform 4:3 cover tile, so a
+  // supporting-media <Grid> of secondary images aligns cleanly (echoing
+  // designs/detail/). The Card cover slot overrides this via [&>img] utilities,
+  // so full-bleed 16:9 covers are unaffected.
   const isIcon = src.endsWith(".svg");
   const className = isIcon
     ? "h-8 w-8 object-contain"
-    : "rounded-xl object-cover";
+    : "aspect-[4/3] w-full rounded-xl object-cover";
   return <motion.img variants={fadeUp} src={src} alt={alt} className={className} />;
 };
 
