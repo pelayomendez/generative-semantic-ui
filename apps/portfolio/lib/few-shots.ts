@@ -84,3 +84,20 @@ export const detailSample = `<Section title="Mugaritz: OFF-ROAD (2015)">
     <Paragraph>Role: Visual data scripting & infographic design — Barcelona, 2015.</Paragraph>
   </Stack>
 </Section>`;
+
+// A single open-source REPO drilled into. Repos carry NO video and NO
+// project image in the dataset — so this shape has neither. It is a clean
+// text + tags + GitHub link card. NEVER borrow a `<Video>`/`<Image>` from
+// a project here.
+export const repoDetailSample = `<Section title="Honest Driven Development (2026)">
+  <Stack gap={4}>
+    <Paragraph>A lightweight take on intent-driven development with integrated specs. Pitched as a counter to AI coding tools that ship before you've thought.</Paragraph>
+    <Row gap={2}>
+      <Badge>DX</Badge>
+      <Badge>AI tooling</Badge>
+      <Badge>npm</Badge>
+    </Row>
+    <Paragraph>Published: npm: honestdd</Paragraph>
+    <Link href="https://github.com/pelayomendez/honest-dd" external={true}>View on GitHub</Link>
+  </Stack>
+</Section>`;
