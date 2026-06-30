@@ -335,6 +335,14 @@ export const portfolio = {
       published: "npm: honestdd",
     },
     {
+      name: "Loop Engineering Auditor",
+      year: "2026",
+      tags: ["Claude Skill", "Agent tooling", "DX"],
+      summary:
+        "A Claude skill that audits a self-running coding-agent loop or automation pipeline against the Loop Engineering framework — reading real CI workflows, agent configs and cron jobs to produce a scored safety report with a file-and-line citation behind every finding.",
+      href: "https://github.com/pelayomendez/loop-engineering-auditor",
+    },
+    {
       name: "Realtime Classroom (agent-wars-server)",
       year: "2026",
       tags: ["Socket.IO", "Teaching"],
