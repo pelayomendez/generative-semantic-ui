@@ -73,15 +73,43 @@ export const reposSample = `<Section title="Open source">
   </Grid>
 </Section>`;
 
-export const detailSample = `<Section title="Mugaritz: OFF-ROAD (2015)">
-  <Stack gap={4}>
+// A single PROJECT drilled into. The shape echoes designs/detail/: a hero
+// media block (the project's OWN video, or images[0] if it has no video),
+// a title carrying year + location, a prose↔meta split, and a grid of the
+// project's OWN supporting images[1..]. Collaborators come from the entry's
+// `collaborators` array. Never borrow another entry's media.
+export const detailSample = `<Section title="Mugaritz: OFF-ROAD (2015 · Barcelona)">
+  <Stack gap={8}>
     <Video src="https://player.vimeo.com/video/139784150" title="Mugaritz: OFF-ROAD" />
-    <Paragraph>Documentary on the Michelin-starred restaurant by Pep Gatell — a visual interpretation of 18 years of restaurant data. Selected at San Sebastián and Berlin film festivals.</Paragraph>
-    <Row gap={2}>
-      <Badge>Data viz</Badge>
-      <Badge>Film</Badge>
-    </Row>
-    <Paragraph>Role: Visual data scripting & infographic design — Barcelona, 2015.</Paragraph>
+    <Grid cols={2} gap={8}>
+      <Stack gap={4}>
+        <Paragraph>Documentary on the Michelin-starred restaurant by Pep Gatell (La Fura dels Baus) — a visual interpretation of 18 years of restaurant data. Selected at San Sebastián and Berlin film festivals.</Paragraph>
+      </Stack>
+      <Stack gap={6}>
+        <Stack gap={2}>
+          <Heading level={4}>Role</Heading>
+          <Paragraph>Visual data scripting & infographic design</Paragraph>
+        </Stack>
+        <Stack gap={2}>
+          <Heading level={4}>Collaborators</Heading>
+          <Row gap={2}>
+            <Badge variant="outline">Pep Gatell</Badge>
+            <Badge variant="outline">Fritz Gnad</Badge>
+          </Row>
+        </Stack>
+        <Stack gap={2}>
+          <Heading level={4}>Tags</Heading>
+          <Row gap={2}>
+            <Badge>Data viz</Badge>
+            <Badge>Film</Badge>
+          </Row>
+        </Stack>
+      </Stack>
+    </Grid>
+    <Grid cols={2} gap={6}>
+      <Image src="https://www.pelayomendez.dev/img/mugaritz2.jpg" alt="Mugaritz: OFF-ROAD — detail" />
+      <Image src="https://www.pelayomendez.dev/img/mugaritz3.jpg" alt="Mugaritz: OFF-ROAD — detail" />
+    </Grid>
   </Stack>
 </Section>`;
 
