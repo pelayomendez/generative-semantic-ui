@@ -323,7 +323,7 @@ export const portfolio = {
       tags: ["Astro", "Monaco", "Mistral"],
       summary:
         "Browser-based authoring environment for ArticleLang's CSL — Monaco editor with syntax highlighting, live validation, pipeline inspector and Mistral provider integration.",
-      href: "https://github.com/pelayomendez/articlelang-studio",
+      private: true, // repo not public — no outward link (was a visitor 404)
     },
     {
       name: "Honest Driven Development",
@@ -356,7 +356,7 @@ export const portfolio = {
       tags: ["React", "TypeScript", "Myth"],
       summary:
         "A poetic duel inspired by the myth of Thamyris, the Thracian musician who dared to challenge the Muses.",
-      href: "https://github.com/pelayomendez/thamyris-judgment",
+      private: true, // repo not public — no outward link (was a visitor 404)
     },
     {
       name: "FableChat",
@@ -364,7 +364,7 @@ export const portfolio = {
       tags: ["Gemini", "Storytelling"],
       summary:
         "Google AI Studio app — once-upon-a-time storytelling chat experience, powered by Gemini.",
-      href: "https://github.com/pelayomendez/fablechat",
+      private: true, // repo not public — no outward link (was a visitor 404)
     },
     {
       name: "Generative Semantic UI",
