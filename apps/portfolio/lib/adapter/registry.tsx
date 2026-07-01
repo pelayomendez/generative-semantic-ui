@@ -136,11 +136,11 @@ export const Card = ({
     childArr[0].type === Image;
   // SVG icons (e.g. /icons/github.svg) are inline content — only photographic
   // Images claim the full-bleed 16:9 cover slot.
-  const firstSrc = firstIsImage
-    ? (childArr[0] as React.ReactElement<{ src?: string }>).props.src ?? ""
-    : "";
+  const firstProps = firstIsImage
+    ? (childArr[0] as React.ReactElement<{ src?: string; alt?: string }>).props
+    : {};
+  const firstSrc = firstProps.src ?? "";
   const hasCover = firstIsImage && !firstSrc.endsWith(".svg");
-  const cover = hasCover ? childArr[0] : null;
   const rest = hasCover ? childArr.slice(1) : childArr;
   const interactive = Boolean(onClick);
   const fire = onClick ? () => dispatchAction(onClick, prompt) : undefined;
@@ -167,9 +167,16 @@ export const Card = ({
           : ""
       }`}
     >
-      {cover && (
-        <div className="aspect-video w-full overflow-hidden [&>img]:h-full [&>img]:w-full [&>img]:rounded-none [&>img]:object-cover [&>img]:transition-transform [&>img]:duration-700 [&>img]:group-hover:scale-105">
-          {cover}
+      {hasCover && (
+        // Cover is rendered straight from the first <Image>'s props — full-bleed
+        // and frameless — so the standalone <Image> glass frame never leaks into
+        // a card cover.
+        <div className="aspect-video w-full overflow-hidden">
+          <img
+            src={firstSrc}
+            alt={firstProps.alt ?? ""}
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
         </div>
       )}
       <div className={`relative space-y-3 p-${padding}`}>{rest}</div>
@@ -204,7 +211,9 @@ export const Heading = ({
     1: "font-display text-5xl leading-[1.05] tracking-tight sm:text-6xl",
     2: "font-display text-3xl tracking-tight sm:text-4xl",
     3: "font-sans text-xl font-medium tracking-tight",
-    4: "font-sans text-base font-medium tracking-tight",
+    // Level 4 doubles as the "label-caps" used for metadata block labels in
+    // the project detail view (designs/detail/).
+    4: "font-sans text-[0.7rem] font-medium uppercase tracking-[0.2em] text-muted-foreground",
   };
   const className = styles[level];
   const inner = <span className="block">{children}</span>;
@@ -376,12 +385,29 @@ export const Input = ({
 
 export const Image = ({ src, alt = "" }: { src: string; alt?: string }) => {
   // SVG icons render small + contained (e.g. /icons/github.svg).
-  // Photographic assets stay full-bleed, rounded, cover-cropped.
   const isIcon = src.endsWith(".svg");
-  const className = isIcon
-    ? "h-8 w-8 object-contain"
-    : "rounded-xl object-cover";
-  return <motion.img variants={fadeUp} src={src} alt={alt} className={className} />;
+  if (isIcon) {
+    return (
+      <motion.img
+        variants={fadeUp}
+        src={src}
+        alt={alt}
+        className="h-8 w-8 object-contain"
+      />
+    );
+  }
+  // Photographic assets sit in a glassmorphic frame — a translucent, blurred,
+  // hairline-bordered panel with a 1px inset — echoing the `.glass-surface p-1`
+  // tiles in designs/detail/. (Card covers are rendered separately and stay
+  // frameless, so the gallery grid is unaffected.)
+  return (
+    <motion.figure
+      variants={fadeUp}
+      className="overflow-hidden rounded-xl border border-hair bg-card/60 p-1 backdrop-blur-sm"
+    >
+      <img src={src} alt={alt} className="w-full rounded-lg object-cover" />
+    </motion.figure>
+  );
 };
 
 export const Video = ({ src, title }: { src: string; title?: string }) => (
