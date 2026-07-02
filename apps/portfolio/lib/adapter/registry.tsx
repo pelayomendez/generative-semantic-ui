@@ -400,12 +400,18 @@ export const Image = ({ src, alt = "" }: { src: string; alt?: string }) => {
   // hairline-bordered panel with a 1px inset — echoing the `.glass-surface p-1`
   // tiles in designs/detail/. (Card covers are rendered separately and stay
   // frameless, so the gallery grid is unaffected.)
+  // The image rests in a subtle monochrome and restores full colour on hover —
+  // the "clean-room lab" treatment from designs/detail/ + designs/home/.
   return (
     <motion.figure
       variants={fadeUp}
       className="overflow-hidden rounded-xl border border-hair bg-card/60 p-1 backdrop-blur-sm"
     >
-      <img src={src} alt={alt} className="w-full rounded-lg object-cover" />
+      <img
+        src={src}
+        alt={alt}
+        className="w-full rounded-lg object-cover grayscale opacity-90 transition-all duration-700 hover:grayscale-0 hover:opacity-100"
+      />
     </motion.figure>
   );
 };
@@ -415,7 +421,7 @@ export const Video = ({ src, title }: { src: string; title?: string }) => (
     <motion.div
       whileHover={{ scale: 1.005 }}
       transition={{ duration: 0.3 }}
-      className="relative aspect-video overflow-hidden rounded-2xl border border-hair bg-black"
+      className="group relative aspect-video overflow-hidden rounded-2xl border border-hair bg-black"
     >
       <iframe
         src={src}
@@ -423,7 +429,7 @@ export const Video = ({ src, title }: { src: string; title?: string }) => (
         loading="lazy"
         allow="autoplay; fullscreen; picture-in-picture"
         allowFullScreen
-        className="absolute inset-0 h-full w-full border-0"
+        className="absolute inset-0 h-full w-full border-0 grayscale transition-all duration-700 group-hover:grayscale-0"
       />
     </motion.div>
     {title && (
