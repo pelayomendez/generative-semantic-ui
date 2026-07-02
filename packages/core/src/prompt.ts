@@ -11,7 +11,7 @@ Generate UI as JSX using ONLY these components:
 - \`Row(gap?)\` — horizontal flex container, wraps on small screens
 - \`Box(padding?)\` — generic container
 - \`Section(title?, subtitle?)\` — semantic region with optional heading
-- \`Grid(cols, gap?)\` — responsive grid (cols 1–4)
+- \`Grid(cols, gap?)\` — responsive grid (cols 1–4). A direct child may set \`span={n}\` (1–cols) to occupy n columns — e.g. \`cols={3}\` with children \`span={2}\` and \`span={1}\` gives an asymmetric ~2:1 (8/4) split
 - \`Divider\` — horizontal rule
 
 ## Content
@@ -126,4 +126,20 @@ Output:
     </Card>
   </Grid>
 </Section>
+
+## Example — asymmetric prose/meta split
+
+User: "describe the project in detail"
+
+Output:
+<Grid cols={3} gap={6}>
+  <Stack gap={3} span={2}>
+    <Heading level={3}>Overview</Heading>
+    <Paragraph>The wide column carries the prose while the narrow column holds metadata.</Paragraph>
+  </Stack>
+  <Stack gap={2}>
+    <Heading level={4}>Role</Heading>
+    <Paragraph>Lead developer</Paragraph>
+  </Stack>
+</Grid>
 `;

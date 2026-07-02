@@ -45,6 +45,33 @@ function staggerChildren(children: ReactNode): ReactNode {
   return Children.map(children, (child, i) => wrapForStagger(child, i));
 }
 
+// A Grid child may set `span={n}` (1–cols) to occupy n columns. The child
+// component ignores the prop; the Grid wraps a spanned child in a motion
+// grid item that both participates in the stagger and carries a responsive
+// col-span (collapses to one column on mobile, mirroring `colsClass`).
+const spanClass: Record<number, string> = {
+  1: "col-span-1",
+  2: "col-span-1 sm:col-span-2",
+  3: "col-span-1 sm:col-span-2 lg:col-span-3",
+  4: "col-span-1 sm:col-span-2 lg:col-span-4",
+};
+
+function gridChildren(children: ReactNode): ReactNode {
+  return Children.map(children, (child, i) => {
+    const span = isValidElement(child)
+      ? (child.props as { span?: number }).span
+      : undefined;
+    if (span && span > 1) {
+      return (
+        <motion.div key={i} variants={fadeUp} className={spanClass[span] ?? "col-span-1"}>
+          {child}
+        </motion.div>
+      );
+    }
+    return wrapForStagger(child, i);
+  });
+}
+
 export const Stack = ({ gap = 4, children }: { gap?: number } & Children) => (
   <motion.div
     variants={stagger}
@@ -118,7 +145,7 @@ export const Grid = ({
       animate="show"
       className={`grid ${colsClass[cols]} gap-${gap}`}
     >
-      {staggerChildren(children)}
+      {gridChildren(children)}
     </motion.div>
   );
 };

@@ -70,8 +70,36 @@ export const Grid = ({
     3: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
     4: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4",
   };
-  return <div className={`grid ${colsClass[cols]} gap-${gap}`}>{children}</div>;
+  return (
+    <div className={`grid ${colsClass[cols]} gap-${gap}`}>
+      {withColSpan(children)}
+    </div>
+  );
 };
+
+// A grid child may set `span={n}` (1–cols) to occupy n columns. The child
+// component itself ignores the prop; the Grid wraps it in a grid item that
+// carries a responsive col-span (collapses to one column on mobile).
+const spanClass: Record<number, string> = {
+  1: "col-span-1",
+  2: "col-span-1 sm:col-span-2",
+  3: "col-span-1 sm:col-span-2 lg:col-span-3",
+  4: "col-span-1 sm:col-span-2 lg:col-span-4",
+};
+
+function withColSpan(children: React.ReactNode): React.ReactNode {
+  return React.Children.map(children, (child) => {
+    const span = React.isValidElement(child)
+      ? (child.props as { span?: number }).span
+      : undefined;
+    if (span && span > 1) {
+      return (
+        <div className={spanClass[span] ?? "col-span-1"}>{child}</div>
+      );
+    }
+    return child;
+  });
+}
 
 export const Card = ({
   padding = 4,
