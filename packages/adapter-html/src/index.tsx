@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from "react";
+import { Children as ReactChildren, isValidElement, type CSSProperties, type ReactNode } from "react";
 import { dispatchAction, type Registry } from "@generative-semantic-ui/core";
 
 // Plain-HTML adapter. Zero CSS framework required. Inline styles only.
@@ -96,9 +96,27 @@ export const Grid = ({
       gap: scale(gap),
     }}
   >
-    {children}
+    {withColSpan(children)}
   </div>
 );
+
+// A grid child may set `span={n}` (1–cols) to occupy n columns. The child
+// ignores the prop; the Grid wraps it in a grid item carrying `grid-column`.
+function withColSpan(children: ReactNode): ReactNode {
+  return ReactChildren.map(children, (child) => {
+    const span = isValidElement(child)
+      ? (child.props as { span?: number }).span
+      : undefined;
+    if (span && span > 1) {
+      return (
+        <div style={{ ...base, gridColumn: `span ${span} / span ${span}` }}>
+          {child}
+        </div>
+      );
+    }
+    return child;
+  });
+}
 
 export const Card = ({
   padding = 4,

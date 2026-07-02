@@ -81,8 +81,8 @@ export const reposSample = `<Section title="Open source">
 export const detailSample = `<Section title="Mugaritz: OFF-ROAD (2015 · Barcelona)">
   <Stack gap={8}>
     <Video src="https://player.vimeo.com/video/139784150" title="Mugaritz: OFF-ROAD" />
-    <Grid cols={2} gap={8}>
-      <Stack gap={4}>
+    <Grid cols={3} gap={8}>
+      <Stack gap={4} span={2}>
         <Paragraph>Documentary on the Michelin-starred restaurant by Pep Gatell (La Fura dels Baus) — a visual interpretation of 18 years of restaurant data. Selected at San Sebastián and Berlin film festivals.</Paragraph>
       </Stack>
       <Stack gap={6}>

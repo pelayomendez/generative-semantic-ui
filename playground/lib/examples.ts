@@ -117,6 +117,30 @@ export const EXAMPLES: Example[] = [
 </Section>`,
   },
   {
+    prompt: "an asymmetric project detail — wide prose, narrow meta",
+    jsx: `<Section title="Generative Semantic UI">
+  <Grid cols={3} gap={6}>
+    <Stack gap={3} span={2}>
+      <Heading level={3}>Overview</Heading>
+      <Paragraph>A constrained JSX vocabulary and a compiler that turns LLM output into real React elements — safely, and portable across UI libraries via adapters.</Paragraph>
+    </Stack>
+    <Stack gap={4}>
+      <Stack gap={2}>
+        <Heading level={4}>Role</Heading>
+        <Paragraph>Author & maintainer</Paragraph>
+      </Stack>
+      <Stack gap={2}>
+        <Heading level={4}>Stack</Heading>
+        <Row gap={2}>
+          <Badge>TypeScript</Badge>
+          <Badge>React</Badge>
+        </Row>
+      </Stack>
+    </Stack>
+  </Grid>
+</Section>`,
+  },
+  {
     prompt: "clickable project cards that ask a follow-up when tapped",
     jsx: `<Section title="Selected work" subtitle="Tap a card to dive in.">
   <Grid cols={2} gap={4}>
