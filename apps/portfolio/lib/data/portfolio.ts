@@ -373,7 +373,7 @@ export const portfolio = {
       summary:
         "Constrained JSX vocabulary and compiler that lets language models render real UI — like HTML for AI agents. (This portfolio runs on it.)",
       href: "https://github.com/pelayomendez/generative-semantic-ui",
-      published: "npm: @generative-semantic-ui/core",
+      published: "npm: @generative-semantic-ui/core, /html, /shadcn",
     },
     {
       name: "Pràctica Mates",
