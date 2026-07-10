@@ -343,6 +343,15 @@ export const portfolio = {
       href: "https://github.com/pelayomendez/loop-engineering-auditor",
     },
     {
+      name: "mortal (mortal-ai)",
+      year: "2026",
+      tags: ["Agent tooling", "CLI", "DX"],
+      summary:
+        "A dead-simple mortality layer for AI agents: gives a session a fixed lifespan enforced out of band by a Claude Code PreToolUse hook — when the clock hits zero, further tool calls are denied. Mechanism, not manners. Ships as one CLI plus one hook, distributed via Homebrew.",
+      href: "https://github.com/pelayomendez/mortal-ai",
+      published: "brew: pelayomendez/tap/mortal-ai",
+    },
+    {
       name: "Realtime Classroom (agent-wars-server)",
       year: "2026",
       tags: ["Socket.IO", "Teaching"],
