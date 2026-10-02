@@ -25,6 +25,7 @@ const SUGGESTIONS = [
   "Tell me about Generative Semantic UI",
   "Introduce yourself",
   "Show me your creative work",
+  "How do I get in touch?",
 ];
 
 type Answer = {
