@@ -7,10 +7,11 @@
 // like; the prose rules above the dataset describe *when* to use each.
 // The two reinforce each other; don't drop the prose rules.
 
-export const homeSample = `<Hero eyebrow="Generative portfolio">
+export const homeSample = `<Hero eyebrow="Architect · AI-forward engineer · Creative coder">
   <Heading level={1}>Pelayo Méndez</Heading>
-  <Paragraph>Creative software developer & lead based in Barcelona. Ask anything — the page renders the answer.</Paragraph>
+  <Paragraph>I build tools that make AI agents honest, legible and yours. Built in the open.</Paragraph>
   <Row gap={2}>
+    <Badge variant="outline">Tools</Badge>
     <Badge variant="outline">Selected work</Badge>
     <Badge variant="outline">About me</Badge>
   </Row>
@@ -50,7 +51,8 @@ export const gallerySample = `<Section title="Selected work">
   </Grid>
 </Section>`;
 
-export const reposSample = `<Section title="Open source">
+export const reposSample = `<Stack gap={8}>
+<Section title="Tools">
   <Grid cols={2} gap={8}>
     <Card onClick="ask" prompt="Tell me about Honest Driven Development">
       <Image src="/icons/github.svg" alt="GitHub" />
@@ -71,7 +73,21 @@ export const reposSample = `<Section title="Open source">
       </Row>
     </Card>
   </Grid>
-</Section>`;
+</Section>
+<Section title="Lab">
+  <Grid cols={2} gap={8}>
+    <Card onClick="ask" prompt="Tell me about Thamyris' Judgment">
+      <Image src="/icons/github.svg" alt="GitHub" />
+      <Heading level={3}>Thamyris' Judgment</Heading>
+      <Paragraph>A poetic duel inspired by the Thracian musician who challenged the Muses.</Paragraph>
+      <Row gap={2}>
+        <Badge>Art piece</Badge>
+        <Badge>Myth</Badge>
+      </Row>
+    </Card>
+  </Grid>
+</Section>
+</Stack>`;
 
 // A single PROJECT drilled into. The shape echoes designs/detail/: a hero
 // media block (the project's OWN video, or images[0] if it has no video),
@@ -113,7 +129,7 @@ export const detailSample = `<Section title="Mugaritz: OFF-ROAD (2015 · Barcelo
   </Stack>
 </Section>`;
 
-// A single open-source REPO drilled into. Repos carry NO video and NO
+// A single tool or lab entry drilled into. Repos carry NO video and NO
 // project image in the dataset — so this shape has neither. It is a clean
 // text + tags + GitHub link card. NEVER borrow a `<Video>`/`<Image>` from
 // a project here.
@@ -125,7 +141,9 @@ export const repoDetailSample = `<Section title="Honest Driven Development (2026
       <Badge>AI tooling</Badge>
       <Badge>npm</Badge>
     </Row>
-    <Paragraph>Published: npm: honestdd</Paragraph>
-    <Link href="https://github.com/pelayomendez/honest-dd" external={true}>View on GitHub</Link>
+    <Paragraph>Get it: npm: honestdd</Paragraph>
+    <Row gap={3}>
+      <Link href="https://github.com/pelayomendez/honest-dd" external={true}>View on GitHub</Link>
+    </Row>
   </Stack>
 </Section>`;
