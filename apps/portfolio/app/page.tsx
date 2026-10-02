@@ -20,11 +20,11 @@ import { portfolio } from "@/lib/data/portfolio";
 import { Backdrop } from "@/lib/Backdrop";
 
 const SUGGESTIONS = [
+  "What AI tools have you built?",
+  "How do you make AI agents safe to run?",
+  "Tell me about Generative Semantic UI",
   "Introduce yourself",
-  "Show me your selected work",
-  "What tools have you built?",
-  "Tell me about Mugaritz: OFF-ROAD",
-  "How do I get in touch?",
+  "Show me your creative work",
 ];
 
 type Answer = {
