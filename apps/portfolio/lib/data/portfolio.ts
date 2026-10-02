@@ -7,7 +7,9 @@ const VIMEO = "https://player.vimeo.com/video";
 export const portfolio = {
   profile: {
     name: "Pelayo Méndez",
-    headline: "Creative software developer & lead",
+    headline: "Architect · AI-forward engineer · Creative coder",
+    tagline:
+      "I build tools that make AI agents honest, legible and yours. Built in the open.",
     location: "Barcelona, Spain",
     avatar: "/portrait.jpg",
     bio: [
@@ -307,23 +309,19 @@ export const portfolio = {
     "Featured on One Page Mania",
   ],
 
-  openSource: [
+  // Tiered like a studio page, not a CV: `tools` are shipped, installable
+  // products; `lab` is work in progress worth following. Anything that is
+  // neither (class material, jokes, one-off articles) stays off the site.
+  tools: [
     {
-      name: "ArticleLang",
+      name: "Generative Semantic UI",
       year: "2026",
-      tags: ["DSL", "TypeScript", "LLMs"],
+      tags: ["TypeScript", "LLMs", "React"],
       summary:
-        "A domain-specific language for writing article and story specifications. Narrative structures compile through Lexer → Parser → AST → Narrative IR → Prompt Compiler into generated prose.",
-      href: "https://github.com/pelayomendez/articlelang",
-      published: "npm: articlelang",
-    },
-    {
-      name: "ArticleLang Studio",
-      year: "2026",
-      tags: ["Astro", "Monaco", "Mistral"],
-      summary:
-        "Browser-based authoring environment for ArticleLang's CSL — Monaco editor with syntax highlighting, live validation, pipeline inspector and Mistral provider integration.",
-      href: "https://github.com/pelayomendez/articlelang-studio",
+        "Constrained JSX vocabulary and compiler that lets language models render real UI — like HTML for AI agents. (This portfolio runs on it.)",
+      href: "https://github.com/pelayomendez/generative-semantic-ui",
+      site: "https://generative-semantic-ui.vercel.app",
+      published: "npm: @generative-semantic-ui/core",
     },
     {
       name: "Honest Driven Development",
@@ -335,6 +333,34 @@ export const portfolio = {
       published: "npm: honestdd",
     },
     {
+      name: "in-my-own-words",
+      year: "2026",
+      tags: ["Agent skill", "Writing", "AI tooling"],
+      summary:
+        "AI that writes like you, because it's read you. An agent skill that learns your voice from what you've already published, then writes, rewrites and checks drafts against it — measuring paragraph length and sentence openings, not guessing.",
+      href: "https://github.com/pelayomendez/in-my-own-words",
+      site: "https://pelayomendez.github.io/in-my-own-words",
+      published: "npx skills add pelayomendez/in-my-own-words",
+    },
+    {
+      name: "ArticleLang",
+      year: "2026",
+      tags: ["DSL", "TypeScript", "LLMs"],
+      summary:
+        "A domain-specific language for writing article and story specifications. Narrative structures compile through Lexer → Parser → AST → Narrative IR → Prompt Compiler into generated prose, with a browser-based Studio for authoring.",
+      href: "https://github.com/pelayomendez/articlelang",
+      published: "npm: articlelang",
+    },
+    {
+      name: "mortal",
+      year: "2026",
+      tags: ["Agent safety", "CLI", "Claude Code"],
+      summary:
+        "A dead-simple mortality layer for AI agents: give a session a fixed lifespan and a real death. The deadline is enforced out of band by a hook in the tool-call path, not by instructions the model can ignore.",
+      href: "https://github.com/pelayomendez/mortal-ai",
+      published: "brew install pelayomendez/tap/mortal-ai",
+    },
+    {
       name: "Loop Engineering Auditor",
       year: "2026",
       tags: ["Claude Skill", "Agent tooling", "DX"],
@@ -342,53 +368,31 @@ export const portfolio = {
         "A Claude skill that audits a self-running coding-agent loop or automation pipeline against the Loop Engineering framework — reading real CI workflows, agent configs and cron jobs to produce a scored safety report with a file-and-line citation behind every finding.",
       href: "https://github.com/pelayomendez/loop-engineering-auditor",
     },
-    {
-      name: "Realtime Classroom (agent-wars-server)",
-      year: "2026",
-      tags: ["Socket.IO", "Teaching"],
-      summary:
-        "Shared 2D board for many students connected in realtime — a three-phase classroom exercise that culminates in students programming autonomous agents to repair red zones on the board.",
-      href: "https://github.com/pelayomendez/agent-wars-server",
-    },
+  ],
+
+  lab: [
     {
       name: "Thamyris' Judgment",
       year: "2025",
-      tags: ["React", "TypeScript", "Myth"],
+      tags: ["Art piece", "Myth", "AI"],
       summary:
         "A poetic duel inspired by the myth of Thamyris, the Thracian musician who dared to challenge the Muses.",
       href: "https://github.com/pelayomendez/thamyris-judgment",
     },
     {
-      name: "FableChat",
-      year: "2025",
-      tags: ["Gemini", "Storytelling"],
-      summary:
-        "Google AI Studio app — once-upon-a-time storytelling chat experience, powered by Gemini.",
-      href: "https://github.com/pelayomendez/fablechat",
-    },
-    {
-      name: "Generative Semantic UI",
+      name: "Pelayo's Skills",
       year: "2026",
-      tags: ["TypeScript", "LLMs", "React"],
+      tags: ["Agent skills", "Practice"],
       summary:
-        "Constrained JSX vocabulary and compiler that lets language models render real UI — like HTML for AI agents. (This portfolio runs on it.)",
-      href: "https://github.com/pelayomendez/generative-semantic-ui",
-      published: "npm: @generative-semantic-ui/core",
-    },
-    {
-      name: "Pràctica Mates",
-      year: "2026",
-      tags: ["TypeScript", "Education", "Vite"],
-      summary:
-        "Educational web app for practising a Catalan primary-school maths exam, generating automatic variants that keep the problem type but swap the numbers. Runs entirely in the browser, no backend.",
-      href: "https://github.com/pelayomendez/practica-mates",
+        "The agent instructions and skills I use for real engineering work — small, composable, model-agnostic. Always-on instructions versus on-demand skills is the main design decision.",
+      href: "https://github.com/pelayomendez/pelayo-skills",
     },
   ],
 
   github: {
     profile: "https://github.com/pelayomendez",
     note:
-      "Most active threads on GitHub right now: AI-generated UI (this site), narrative DSLs (ArticleLang), and intent-driven dev tooling (Honest DD).",
+      "Everything above is built in the open. Most active threads right now: agent tooling (mortal, Loop Engineering Auditor), writing with AI (in-my-own-words, ArticleLang) and AI-generated UI (this site).",
   },
 } as const;
 

@@ -20,10 +20,11 @@ import { portfolio } from "@/lib/data/portfolio";
 import { Backdrop } from "@/lib/Backdrop";
 
 const SUGGESTIONS = [
+  "What AI tools have you built?",
+  "How do you make AI agents safe to run?",
+  "Tell me about Generative Semantic UI",
   "Introduce yourself",
-  "Show me your selected work",
-  "Tell me about Mugaritz: OFF-ROAD",
-  "What are you working on now?",
+  "Show me your creative work",
   "How do I get in touch?",
 ];
 
@@ -419,6 +420,14 @@ function Intro() {
       >
         Hi, I'm {portfolio.profile.name.split(" ")[0]}.
       </motion.h1>
+      <motion.p
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 0.25 }}
+        className="mt-4 max-w-xl text-base text-muted-foreground sm:text-lg"
+      >
+        {portfolio.profile.tagline}
+      </motion.p>
     </div>
   );
 }
