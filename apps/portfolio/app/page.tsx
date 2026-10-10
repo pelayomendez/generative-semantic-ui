@@ -18,6 +18,8 @@ import {
 import { portfolioRegistry } from "@/lib/adapter/registry";
 import { portfolio } from "@/lib/data/portfolio";
 import { Backdrop } from "@/lib/Backdrop";
+import { WorldBackdrop } from "@/lib/world";
+import { THEMES, useTheme, type Theme } from "@/lib/themes";
 
 const SUGGESTIONS = [
   "What AI tools have you built?",
@@ -52,6 +54,7 @@ export default function Page() {
   const reqIdRef = useRef(0);
   const constraintsRef = useRef<HTMLElement>(null);
   const dragControls = useDragControls();
+  const [theme, setTheme] = useTheme();
 
   const hasStarted = history.length > 0;
   const current = history.length > 0 ? history[history.length - 1] : null;
@@ -166,7 +169,16 @@ export default function Page() {
 
   return (
     <main ref={constraintsRef} className="relative min-h-dvh">
-      <Backdrop />
+      {/* Each step grows a new region of the world; the camera flies the
+          trail. The classic 2D backdrop stays as the no-WebGL fallback. */}
+      <WorldBackdrop
+        path={history.map((h) => h.question)}
+        pending={loading}
+        palette={theme.world}
+        fallback={<Backdrop />}
+      />
+
+      <ThemeSwitcher current={theme} onSelect={setTheme} />
 
       {/* Brand bar */}
       <header className="relative z-20 mx-auto flex max-w-5xl items-center justify-between px-6 py-5">
@@ -337,6 +349,39 @@ export default function Page() {
         </AnimatePresence>
       </motion.form>
     </main>
+  );
+}
+
+/* ---------------- Theme switcher ---------------- */
+
+function ThemeSwitcher({
+  current,
+  onSelect,
+}: {
+  current: Theme;
+  onSelect: (theme: Theme) => void;
+}) {
+  return (
+    <div className="fixed bottom-6 right-6 z-40 hidden gap-1 rounded-full border border-border bg-card p-1.5 md:flex">
+      {THEMES.map((t) => (
+        <button
+          key={t.id}
+          type="button"
+          onClick={() => onSelect(t)}
+          aria-label={`${t.label} theme`}
+          aria-pressed={t.id === current.id}
+          className={`flex h-6 w-6 items-center justify-center rounded-full transition ${
+            t.id === current.id ? "bg-secondary" : "opacity-50 hover:opacity-100"
+          }`}
+        >
+          <span
+            aria-hidden
+            className="block h-2 w-2 rounded-full"
+            style={{ background: t.world.accent, boxShadow: `0 0 8px ${t.world.accent}` }}
+          />
+        </button>
+      ))}
+    </div>
   );
 }
 
