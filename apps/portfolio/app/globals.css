@@ -22,24 +22,53 @@
     --border-hairline: rgba(0, 0, 0, 0.05);
   }
 
+  /* "World" theme — tuned to the 3D backdrop (lib/world/palette.ts):
+     near-black space, cool greys, one signal red. Surfaces are glass so
+     the world stays visible behind the generated UI. */
   .dark {
-    /* [deferred] dark-mode rebrand — placeholder values, not yet driven by designs/DESIGN.md */
-    --background: #0f0f10;
-    --foreground: #f4f3f8;
-    --card: #1a1a1c;
-    --card-foreground: #f4f3f8;
-    --primary: #ffffff;
-    --primary-foreground: #000000;
-    --secondary: #2a2a2d;
-    --secondary-foreground: #f4f3f8;
-    --muted: #2a2a2d;
-    --muted-foreground: #a0a0a3;
+    --background: #06070a;
+    --foreground: #eceef3;
+    --card: rgba(14, 16, 22, 0.62);
+    --card-foreground: #eceef3;
+    --primary: #eceef3;
+    --primary-foreground: #06070a;
+    --secondary: rgba(125, 132, 150, 0.16);
+    --secondary-foreground: #eceef3;
+    --muted: rgba(125, 132, 150, 0.12);
+    --muted-foreground: #9aa0b0;
     --accent: #ff3b30;
     --accent-foreground: #ffffff;
-    --border: #2a2a2d;
-    --input: #2a2a2d;
+    --border: rgba(125, 132, 150, 0.28);
+    --input: rgba(125, 132, 150, 0.28);
     --ring: #ff3b30;
-    --border-hairline: rgba(255, 255, 255, 0.05);
+    --border-hairline: rgba(200, 210, 235, 0.1);
+  }
+
+  /* Colour themes (lib/themes.ts): one highlight colour per theme over
+     the same near-black space. Signal is the default tokens above. */
+  [data-theme="ion"] {
+    --background: #04070b;
+    --accent: #38d9ff;
+    --accent-foreground: #04070b;
+    --ring: #38d9ff;
+  }
+  [data-theme="aurum"] {
+    --background: #080706;
+    --accent: #ffb547;
+    --accent-foreground: #080706;
+    --ring: #ffb547;
+  }
+  [data-theme="ultraviolet"] {
+    --background: #06050b;
+    --accent: #a78bfa;
+    --accent-foreground: #06050b;
+    --ring: #a78bfa;
+  }
+
+  .dark .bg-card,
+  .dark [class*="bg-card/"] {
+    backdrop-filter: blur(14px) saturate(1.2);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
   }
 
   * {
