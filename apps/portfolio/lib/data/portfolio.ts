@@ -1,7 +1,7 @@
 // Static portfolio dataset. The LLM gets this verbatim in its system prompt
 // and is instructed to ONLY surface facts that appear here.
 
-const PMD = "https://www.pelayomendez.dev/img"; // base for project image assets
+const PMD = "/projects"; // self-hosted project image assets (public/projects)
 const VIMEO = "https://player.vimeo.com/video";
 
 export const portfolio = {
