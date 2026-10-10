@@ -4,7 +4,7 @@ CONTEXT: You are an automated loop step inside an open Claude Code session. Pref
 
 SOURCES (in priority order):
 1. GitHub — run `gh repo list pelayomendez --limit 100 --json name,description,primaryLanguage,repositoryTopics,stargazerCount,pushedAt,url,isFork,isArchived` and use `gh repo view <name> --json ...` / `gh api` for README excerpts. Refresh the `openSource` and `projects` entries: descriptions, tags/topics, years, and add genuinely new repos. Skip forks and archived repos unless they are already featured in the dataset.
-2. pelayomendez.dev — WebFetch the site and reconcile `profile`, `recognition`, and the project list against it.
+2. (retired) pelayomendez.dev now serves THIS portfolio, so it is not an independent source — never WebFetch it to reconcile the dataset against itself.
 3. LinkedIn — read any files under `apps/portfolio/lib/data/sources/linkedin/`. If none exist (only the README/.gitkeep), SKIP LinkedIn entirely. Do NOT scrape linkedin.com.
 
 RULES:
