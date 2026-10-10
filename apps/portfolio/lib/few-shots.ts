@@ -123,8 +123,8 @@ export const detailSample = `<Section title="Mugaritz: OFF-ROAD (2015 · Barcelo
       </Stack>
     </Grid>
     <Grid cols={2} gap={6}>
-      <Image src="https://www.pelayomendez.dev/img/mugaritz2.jpg" alt="Mugaritz: OFF-ROAD — detail" />
-      <Image src="https://www.pelayomendez.dev/img/mugaritz3.jpg" alt="Mugaritz: OFF-ROAD — detail" />
+      <Image src="/projects/mugaritz2.jpg" alt="Mugaritz: OFF-ROAD — detail" />
+      <Image src="/projects/mugaritz3.jpg" alt="Mugaritz: OFF-ROAD — detail" />
     </Grid>
   </Stack>
 </Section>`;
