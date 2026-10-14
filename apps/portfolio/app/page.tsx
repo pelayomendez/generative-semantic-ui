@@ -20,21 +20,23 @@ import { portfolio } from "@/lib/data/portfolio";
 import { Backdrop } from "@/lib/Backdrop";
 import { WorldBackdrop } from "@/lib/world";
 import { THEMES, useTheme, type Theme } from "@/lib/themes";
+import { SUGGESTIONS } from "@/lib/suggestions";
+import { getCanned } from "@/lib/canned";
 
-const SUGGESTIONS = [
-  "What AI tools have you built?",
-  "How do you make AI agents safe to run?",
-  "Tell me about Generative Semantic UI",
-  "Introduce yourself",
-  "Show me your creative work",
-  "How do I get in touch?",
-];
+// A failed step never shows raw error text: `limit` is the per-IP rate limit
+// (HTTP 429), `error` is anything else (model failure, timeout, network).
+type Failure = "limit" | "error";
+
+// Generous enough for a slow generation, short enough that a hung upstream
+// turns into the designed fallback instead of an endless "Composing…".
+const REQUEST_TIMEOUT_MS = 45_000;
 
 type Answer = {
   jsx: string;
   element: ReactNode | null;
   error: string | null;
   truncated: boolean;
+  failure?: Failure;
 };
 
 type Current = {
@@ -49,7 +51,6 @@ export default function Page() {
   // is the path the visitor navigated. The deepest entry is on screen.
   const [history, setHistory] = useState<Current[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const reqIdRef = useRef(0);
   const constraintsRef = useRef<HTMLElement>(null);
@@ -71,22 +72,44 @@ export default function Page() {
     const text = prompt.trim();
     if (!text || loading) return;
     const id = ++reqIdRef.current;
-    setError(null);
     setDraft("");
     setHistory((h) => [...h, { question: text, answer: null }]);
     setLoading(true);
-    try {
-      const res = await fetch("/api/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: text }),
+    const settle = (answer: Answer) =>
+      setHistory((h) => {
+        const next = [...h];
+        next[next.length - 1] = { question: text, answer };
+        return next;
       });
-      const data = await res.json();
-      if (reqIdRef.current !== id) return; // a reset or newer question superseded this
-      if (!res.ok) {
-        setError(data.error ?? `HTTP ${res.status}`);
-        return;
+    const fail = (failure: Failure, detail: string) => {
+      console.error("[portfolio] request failed", { failure, detail });
+      settle({ jsx: "", element: null, error: detail, truncated: false, failure });
+    };
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+    try {
+      // Landing-chip prompts have a pre-rendered answer: no network, no model,
+      // no rate-limit spend. Everything else goes to the live model.
+      const canned = getCanned(text);
+      let data: { jsx?: string; truncated?: boolean; reason?: string };
+      if (canned) {
+        data = { jsx: canned.jsx, truncated: false };
+      } else {
+        const res = await fetch("/api/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt: text }),
+          signal: controller.signal,
+        });
+        const body = await res.json().catch(() => ({}));
+        if (reqIdRef.current !== id) return; // a reset or newer question superseded this
+        if (!res.ok || typeof body.jsx !== "string") {
+          fail(res.status === 429 ? "limit" : "error", body.error ?? `HTTP ${res.status}`);
+          return;
+        }
+        data = body;
       }
+      if (reqIdRef.current !== id) return;
       const jsx = data.jsx as string;
       const truncated = Boolean(data.truncated);
       let element: ReactNode | null = null;
@@ -100,18 +123,12 @@ export default function Page() {
       if (truncated) {
         console.warn("[portfolio] response truncated", { reason: data.reason, jsx });
       }
-      setHistory((h) => {
-        const next = [...h];
-        next[next.length - 1] = {
-          question: text,
-          answer: { jsx, element, error: compileError, truncated },
-        };
-        return next;
-      });
+      settle({ jsx, element, error: compileError, truncated });
     } catch (e) {
       if (reqIdRef.current !== id) return;
-      setError(e instanceof Error ? e.message : String(e));
+      fail("error", e instanceof Error ? e.message : String(e));
     } finally {
+      clearTimeout(timer);
       if (reqIdRef.current === id) {
         setLoading(false);
         setTimeout(() => inputRef.current?.focus(), 50);
@@ -124,7 +141,6 @@ export default function Page() {
     reqIdRef.current++; // invalidate any in-flight request so it can't repopulate
     setHistory([]);
     setDraft("");
-    setError(null);
     setLoading(false);
     setTimeout(() => inputRef.current?.focus(), 50);
   }
@@ -134,7 +150,6 @@ export default function Page() {
   // screen. Asking again from there extends the trail anew.
   function goTo(index: number) {
     reqIdRef.current++; // invalidate any in-flight request
-    setError(null);
     setLoading(false);
     setHistory((h) => h.slice(0, index + 1));
     setTimeout(() => inputRef.current?.focus(), 50);
@@ -258,8 +273,29 @@ export default function Page() {
                 </p>
                 {!current!.answer ? (
                   <Thinking />
+                ) : current!.answer.failure === "limit" ? (
+                  <AnswerNotice
+                    title="That's the free tour for this hour."
+                    body="Live questions are rate-limited so the model bill stays sane. The suggestions below are pre-written and always available, or reach me directly."
+                    onAsk={ask}
+                    disabled={loading}
+                  />
+                ) : current!.answer.failure === "error" ? (
+                  <AnswerNotice
+                    title="The model lost the thread."
+                    body="Something went wrong while composing that answer. Try again, or take one of the pre-written tours below."
+                    onRetry={retry}
+                    onAsk={ask}
+                    disabled={loading}
+                  />
                 ) : current!.answer.error || current!.answer.truncated ? (
-                  <IncompleteAnswer onRetry={retry} disabled={loading} />
+                  <AnswerNotice
+                    title="That answer came back incomplete."
+                    body="The model ran out of room mid-thought. Try again, or take one of the pre-written tours below."
+                    onRetry={retry}
+                    onAsk={ask}
+                    disabled={loading}
+                  />
                 ) : (
                   current!.answer.element
                 )}
@@ -314,9 +350,6 @@ export default function Page() {
           placeholder={hasStarted ? "Ask another question…" : "Ask me anything…"}
           autoFocus
         />
-        {error && (
-          <p className="mt-2 text-center text-xs text-red-500">{error}</p>
-        )}
         <p className="mt-2 select-none text-center text-[10px] uppercase tracking-widest text-muted-foreground">
           Drag the box · powered by Mistral · @generative-semantic-ui
         </p>
@@ -495,13 +528,22 @@ function Thinking() {
   );
 }
 
-/* ---------------- Incomplete-answer fallback ---------------- */
+/* ---------------- Answer fallback ---------------- */
 
-function IncompleteAnswer({
+// Shown in place of an answer when the step failed (rate limit, model error,
+// timeout) or came back incomplete. Always leaves the visitor a way forward:
+// the canned suggestions (free, instant) and the direct contact links.
+function AnswerNotice({
+  title,
+  body,
   onRetry,
+  onAsk,
   disabled,
 }: {
-  onRetry: () => void;
+  title: string;
+  body: string;
+  onRetry?: () => void;
+  onAsk: (prompt: string) => void;
   disabled: boolean;
 }) {
   return (
@@ -511,27 +553,48 @@ function IncompleteAnswer({
       transition={{ duration: 0.4 }}
       className="rounded-2xl border border-border bg-background/60 p-5 backdrop-blur-sm"
     >
-      <p className="text-sm text-foreground/80">
-        That answer came back incomplete. The model ran out of room mid-thought —
-        try again, or ask a shorter question.
-      </p>
-      <button
-        type="button"
-        onClick={onRetry}
-        disabled={disabled}
-        className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-border bg-background/80 px-3 py-1.5 text-xs text-foreground/80 transition hover:border-foreground/40 hover:text-foreground disabled:opacity-50"
-      >
-        Try again
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
-          <path
-            d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button>
+      <p className="font-display text-xl tracking-tight">{title}</p>
+      <p className="mt-2 text-sm text-foreground/80">{body}</p>
+      {onRetry && (
+        <button
+          type="button"
+          onClick={onRetry}
+          disabled={disabled}
+          className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-border bg-background/80 px-3 py-1.5 text-xs text-foreground/80 transition hover:border-foreground/40 hover:text-foreground disabled:opacity-50"
+        >
+          Try again
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path
+              d="M3 12a9 9 0 1 0 3-6.7M3 4v5h5"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+      )}
+      <div className="mt-4 flex flex-wrap gap-2">
+        {SUGGESTIONS.map((s) => (
+          <button
+            key={s}
+            type="button"
+            onClick={() => onAsk(s)}
+            disabled={disabled}
+            className="rounded-full border border-border bg-background/60 px-3.5 py-1.5 text-xs text-foreground/70 transition hover:border-foreground/40 hover:text-foreground disabled:opacity-50"
+          >
+            {s}
+          </button>
+        ))}
+      </div>
+      <div className="mt-4 flex items-center gap-4 text-xs text-muted-foreground">
+        <a className="hover:text-foreground" href={portfolio.contact.github} target="_blank" rel="noreferrer">
+          GitHub
+        </a>
+        <a className="hover:text-foreground" href={portfolio.contact.linkedin} target="_blank" rel="noreferrer">
+          LinkedIn
+        </a>
+      </div>
     </motion.div>
   );
 }
