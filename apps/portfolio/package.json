@@ -6,7 +6,8 @@
     "dev": "next dev -p 3002",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "canned": "esbuild scripts/generate-canned.ts --bundle --platform=node --format=esm --packages=external --jsx=automatic --alias:@=. --outfile=.canned-build/generate-canned.mjs --log-level=warning && node --env-file=.env.local .canned-build/generate-canned.mjs"
   },
   "dependencies": {
     "@generative-semantic-ui/core": "*",
@@ -23,6 +24,7 @@
     "@types/react-dom": "^19.2.3",
     "@types/three": "^0.186.0",
     "autoprefixer": "^10.5.0",
+    "esbuild": "^0.27.7",
     "postcss": "^8.5.10",
     "tailwindcss": "^3.4.19",
     "typescript": "^5.9.3"

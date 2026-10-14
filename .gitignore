@@ -35,3 +35,4 @@ dist/
 apps/portfolio/lib/data/sources/linkedin/*
 !apps/portfolio/lib/data/sources/linkedin/README.md
 !apps/portfolio/lib/data/sources/linkedin/.gitkeep
+.canned-build/
