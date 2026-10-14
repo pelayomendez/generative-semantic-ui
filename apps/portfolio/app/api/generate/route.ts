@@ -6,7 +6,7 @@ import { generateJsx, GenerateError } from "@/lib/generate";
 export const runtime = "nodejs";
 
 // Single source of truth for the per-IP limit.
-const RATE_LIMIT = { max: 12, windowMs: 60 * 60 * 1000 }; // 12/hour per IP
+const RATE_LIMIT = { max: 30, windowMs: 60 * 60 * 1000 }; // 30/hour per IP
 
 function getClientIp(req: NextRequest): string {
   const fwd = req.headers.get("x-forwarded-for");
